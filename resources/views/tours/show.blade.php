@@ -46,7 +46,7 @@
     </div>
 
     <!-- Summary Bar -->
-    <div class="bg-[#FFF8D6] p-8">
+    <div class="bg-[#FFF8D6] dark:bg-gray-800 p-8 transition-colors">
         <div class="flex flex-col lg:flex-row items-center justify-between">
             <!-- Title Section -->
             <div class="w-full md:w-auto text-center md:text-left">
@@ -58,8 +58,8 @@
                 <div class="flex items-start gap-3">
                     <i class="fi fi-rr-calendar-check text-3xl text-accent-500"></i>
                     <div>
-                        <p class="text-sm font-bold text-gray-900 leading-none mb-1">From</p>
-                        <p class="font-bold text-lg leading-none">${{ number_format($tour->price, 2) }}</p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white leading-none mb-1">From</p>
+                        <p class="font-bold text-lg leading-none dark:text-gray-200">${{ number_format($tour->price, 2) }}</p>
                     </div>
                 </div>
 
@@ -68,8 +68,8 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
                     <div>
-                        <p class="text-sm font-bold text-gray-900 leading-none mb-1">Duration</p>
-                        <p class="font-bold text-lg leading-none">{{ $tour->duration_days }} days</p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white leading-none mb-1">Duration</p>
+                        <p class="font-bold text-lg leading-none dark:text-gray-200">{{ $tour->duration_days }} days</p>
                     </div>
                 </div>
 
@@ -78,8 +78,8 @@
                       <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
                     </svg>
                     <div>
-                        <p class="text-sm font-bold text-gray-900 leading-none mb-1">Tour Type</p>
-                        <p class="font-bold text-lg text-yellow-600 leading-none">{{ $tour->type ?? 'Standard' }}</p>
+                        <p class="text-sm font-bold text-gray-900 dark:text-white leading-none mb-1">Tour Type</p>
+                        <p class="font-bold text-lg text-yellow-600 dark:text-yellow-500 leading-none">Private Tour</p>
                     </div>
                 </div>
             </div>
@@ -127,35 +127,17 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-12">
             <!-- Left Column: Content -->
             <div class="lg:col-span-2">
-                <div class="prose prose-lg prose-indigo text-gray-600 max-w-none">
-                    <h2 class="font-display text-3xl text-primary-900">Overview</h2>
-                    <div class="mt-6 space-y-2 text-lg">
-                        <div class="flex gap-2">
-                            <span class="font-bold text-gray-900">Duration:</span>
-                            <span class="text-gray-700">{{ $tour->duration_days }} Days / {{ $tour->duration_nights ?? ($tour->duration_days - 1) }} Nights</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <span class="font-bold text-gray-900">Type:</span>
-                            <span class="text-gray-700">{{ $tour->type ?? 'Standard Package' }}</span>
-                        </div>
-                        <div class="flex gap-2">
-                            <span class="font-bold text-gray-900">Availability:</span>
-                            <span class="text-gray-700">{{ $tour->availability ?? 'Daily' }}</span>
-                        </div>
-                        
-                        <div class="pt-4">
-                            <span class="font-bold text-gray-900">Package Description:</span>
-                            <div class="mt-1 text-gray-700">
-                                {!! $tour->description !!}
-                            </div>
-                        </div>
+                <div class="prose prose-lg prose-indigo text-gray-600 dark:text-gray-300 max-w-none">
+                    <h2 class="font-display text-[24px] text-primary-900 dark:text-white">Overview</h2>
+                    <div class="mt-4 text-[14px] text-gray-700 dark:text-gray-300">
+                        {!! $tour->description !!}
                     </div>
                 
                     @if($tour->included || $tour->excluded)
                         <div class="grid md:grid-cols-2 gap-8 mt-12">
                             @if($tour->included)
                                 <div>
-                                    <h3 class="font-display text-xl text-primary-900 mb-4 flex items-center gap-2">
+                                    <h3 class="font-display text-[18px] text-primary-900 dark:text-white mb-4 flex items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
@@ -163,7 +145,7 @@
                                     </h3>
                                     <ul class="space-y-3">
                                         @foreach($tour->included as $item)
-                                            <li class="flex items-start gap-3 text-sm">
+                                            <li class="flex items-start gap-3 text-[14px]">
                                                 <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-500"></span>
                                                 <span>{{ is_array($item) ? $item['item'] : $item }}</span>
                                             </li>
@@ -174,7 +156,7 @@
 
                             @if($tour->excluded)
                                 <div>
-                                    <h3 class="font-display text-xl text-primary-900 mb-4 flex items-center gap-2">
+                                    <h3 class="font-display text-[18px] text-primary-900 dark:text-white mb-4 flex items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
                                         </svg>
@@ -182,7 +164,7 @@
                                     </h3>
                                     <ul class="space-y-3">
                                          @foreach($tour->excluded as $item)
-                                            <li class="flex items-start gap-3 text-sm">
+                                            <li class="flex items-start gap-3 text-[14px]">
                                                 <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-500"></span>
                                                 <span>{{ is_array($item) ? $item['item'] : $item }}</span>
                                             </li>
@@ -195,14 +177,50 @@
 
 
 
+                    @if($tour->has_price_tiers && $tour->price_tiers)
+                        <h2 class="font-display text-[24px] text-primary-900 dark:text-white mt-12 mb-6">Price Tiers</h2>
+                        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-12">
+                            <table class="w-full text-left text-[14px] text-gray-500 dark:text-gray-400 m-auto">
+                                <thead class="bg-gray-50 dark:bg-gray-700 text-xs uppercase text-gray-700 dark:text-gray-200">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-4 font-bold">Number of People</th>
+                                        <th scope="col" class="px-6 py-4 font-bold text-right">Price per Person</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
+                                    @foreach($tour->price_tiers as $tier)
+                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                                {{ $tier['min_people'] }}  
+                                                @if(isset($tier['max_people']) && $tier['max_people'] > $tier['min_people'])
+                                                    - {{ $tier['max_people'] }}
+                                                @elseif(isset($tier['max_people']) && $tier['max_people'] == $tier['min_people'])
+                                                @else
+                                                    +
+                                                @endif
+                                                People
+                                            </td>
+                                            <td class="px-6 py-4 text-right font-bold text-blue-600">
+                                                ${{ number_format($tier['price_per_person'], 2) }}
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+
+
                     @if($tour->itinerary)
-                        <h2 class="font-display text-3xl text-primary-900 mt-12 mb-6">Itinerary</h2>
+                        <h2 class="font-display text-[24px] text-primary-900 dark:text-white mt-12 mb-6">Itinerary</h2>
                         <div class="space-y-8 border-l-2 border-accent-100 ml-3 pl-8 relative">
                             @foreach($tour->itinerary as $day)
                                 <div class="relative">
-                                    <span class="absolute -left-[41px] top-1 h-6 w-6 rounded-full bg-accent-500 border-4 border-white shadow-sm ring-1 ring-accent-100 flex items-center justify-center"></span>
-                                    <h3 class="text-xl font-bold text-primary-900">{{ $day['day_title'] }}</h3>
-                                    <p class="mt-2 text-gray-600">{{ $day['description'] }}</p>
+                                    <span class="absolute -left-[41px] top-1 h-6 w-6 rounded-full bg-accent-500 border-4 border-white dark:border-gray-800 shadow-sm ring-1 ring-accent-100 flex items-center justify-center"></span>
+                                    <h3 class="text-[18px] font-bold text-primary-900 dark:text-white">{{ $day['day_title'] }}</h3>
+                                    <div class="mt-2 text-[14px] text-gray-600 dark:text-gray-300 prose prose-sm max-w-none">
+                                        {!! $day['description'] !!}
+                                    </div>
                                 </div>
                             @endforeach
                         </div>
@@ -214,6 +232,60 @@
 
             <!-- Right Column: Sidebar -->
             <div class="lg:col-span-1 mt-12 lg:mt-0 space-y-8">
+                    <!-- Tour Information Card -->
+                <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 shadow-sm">
+                    <h3 class="text-2xl font-bold text-blue-600 font-display mb-6 border-l-4 border-blue-600 pl-4">Tour Information</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="p-2 text-blue-600">
+                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Max Guests</p>
+                                <p class="text-gray-600 dark:text-gray-400 mt-1">20</p>
+                            </div>
+                        </div>
+
+                         <div class="flex items-start gap-4">
+                            <div class="p-2 text-blue-600">
+                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Min Age</p>
+                                <p class="text-gray-600 dark:text-gray-400 mt-1">+10</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-2 text-blue-600">
+                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Tour Location</p>
+                                <p class="text-blue-600 font-medium mt-1">{{ $tour->destination->name }}</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-2 text-blue-600">
+                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
+                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-bold text-gray-900 dark:text-white">Languages Support</p>
+                                <p class="text-blue-600 font-medium mt-1">English</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                        <div x-data="{
                     date: '',
                     time: '11:45 am',
@@ -278,7 +350,7 @@
                             this.isLoading = false;
                         });
                     }
-                }" class="rounded-2xl border border-gray-200 bg-white p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden">
+                }" class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden lg:sticky top-[160px]">
                     
                     <!-- Success Message Overlay -->
                     <div x-show="showSuccess" 
@@ -289,8 +361,9 @@
                         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
                             <i class="fi fi-rr-check text-2xl text-green-600"></i>
                         </div>
-                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Booking Received!</h3>
-                        <p class="text-gray-600 mb-6 max-w-xs mx-auto">Thank you for booking with us. We will contact you shortly to confirm your details.</p>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Booking Received!</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-xs mx-auto">Thank you for booking with us. We will contact you shortly to confirm your details.</p>
                         <button @click="showSuccess = false; name=''; email=''; phone=''; date=''" class="bg-white border-2 border-green-600 text-green-700 font-bold py-2 px-6 rounded-full hover:bg-green-50 transition transform hover:-translate-y-0.5">
                             Book Another Tour
                         </button>
@@ -308,9 +381,9 @@
                         <form @submit.prevent="submitBooking">
                             <!-- Date -->
                             <div class="mb-6">
-                                <label class="block text-base font-bold text-gray-900 mb-2">From:</label>
+                                <label class="block text-base font-bold text-gray-900 dark:text-white mb-2">From:</label>
                                 <div class="relative">
-                                     <input type="text" x-model="date" required class="block w-full rounded-lg border-gray-300 pl-10 focus:border-blue-500 focus:ring-blue-500 py-3 font-medium text-gray-700" placeholder="Select Date" id="booking-date">
+                                     <input type="text" x-model="date" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 pl-10 focus:border-blue-500 focus:ring-blue-500 py-3 font-medium text-gray-700 dark:text-white dark:bg-gray-900 dark:placeholder-gray-400" placeholder="Select Date" id="booking-date">
                                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                          <i class="fi fi-rr-calendar text-blue-600 text-lg"></i>
                                      </div>
@@ -320,25 +393,25 @@
                             <div x-show="date" x-transition.opacity.duration.500ms>
                                 <!-- Time -->
                                 <div class="mb-6">
-                                     <label class="block text-base font-bold text-gray-900 mb-3">Time:</label>
+                                     <label class="block text-base font-bold text-gray-900 dark:text-white mb-3">Time:</label>
                                      <div class="flex flex-wrap gap-4">
                                          <label class="flex items-center gap-2 cursor-pointer group">
                                              <div class="relative flex items-center">
-                                                <input type="radio" name="time" value="11:45 am" x-model="time" class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-gray-300 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
+                                                <input type="radio" name="time" value="11:45 am" x-model="time" class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-gray-300 dark:border-gray-600 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
                                                 <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
                                                     <svg class="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                 </div>
                                              </div>
-                                             <span class="text-gray-700 font-bold group-hover:text-blue-600 transition">11:45 am</span>
+                                             <span class="text-gray-700 dark:text-gray-300 font-bold group-hover:text-blue-600 transition">11:45 am</span>
                                          </label>
                                          <label class="flex items-center gap-2 cursor-pointer group">
                                              <div class="relative flex items-center">
-                                                <input type="radio" name="time" value="12:05 pm" x-model="time" class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-gray-300 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
+                                                <input type="radio" name="time" value="12:05 pm" x-model="time" class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-gray-300 dark:border-gray-600 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
                                                 <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
                                                     <svg class="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                                 </div>
                                              </div>
-                                             <span class="text-gray-700 font-bold group-hover:text-blue-600 transition">12:05 pm</span>
+                                             <span class="text-gray-700 dark:text-gray-300 font-bold group-hover:text-blue-600 transition">12:05 pm</span>
                                          </label>
                                      </div>
                                 </div>
@@ -347,21 +420,21 @@
 
                                 <!-- Tickets -->
                                 <div class="mb-6">
-                                    <label class="block text-base font-bold text-gray-900 mb-4">Tickets:</label>
+                                    <label class="block text-base font-bold text-gray-900 dark:text-white mb-4">Tickets:</label>
                                     
                                     <div class="flex items-center justify-between mb-4">
-                                         <span class="text-gray-500 font-medium">Adult <span class="text-blue-600 font-bold ml-1">${{ number_format($tour->price, 2) }}</span></span>
+                                         <span class="text-gray-500 dark:text-gray-400 font-medium">Adult <span class="text-blue-600 font-bold ml-1">${{ number_format($tour->price, 2) }}</span></span>
                                          <div class="relative">
-                                             <select x-model="adults" class="block w-20 rounded-lg border-gray-300 py-2 pl-3 pr-8 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm font-bold text-gray-700">
+                                             <select x-model="adults" class="block w-20 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-2 pl-3 pr-8 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm font-bold text-gray-700">
                                                  @for($i=1; $i<=10; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
                                              </select>
                                          </div>
                                     </div>
                                     
                                      <div class="flex items-center justify-between">
-                                         <span class="text-gray-500 font-medium">Child <span class="text-blue-600 font-bold ml-1">${{ number_format($tour->price * 0.5, 2) }}</span></span>
+                                         <span class="text-gray-500 dark:text-gray-400 font-medium">Child <span class="text-blue-600 font-bold ml-1">${{ number_format($tour->price * 0.5, 2) }}</span></span>
                                          <div class="relative">
-                                             <select x-model="children" class="block w-20 rounded-lg border-gray-300 py-2 pl-3 pr-8 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm font-bold text-gray-700">
+                                             <select x-model="children" class="block w-20 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-2 pl-3 pr-8 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm font-bold text-gray-700">
                                                   @for($i=0; $i<=10; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
                                              </select>
                                          </div>
@@ -372,32 +445,32 @@
                                 
                                 <!-- Add Extra -->
                                 <div class="mb-6">
-                                    <label class="block text-base font-bold text-gray-900 mb-4">Add Extra</label>
+                                    <label class="block text-base font-bold text-gray-900 dark:text-white mb-4">Add Extra</label>
                                     
                                     <label class="flex items-center justify-between cursor-pointer mb-3 group">
                                          <div class="flex items-center gap-3">
                                             <div class="relative flex items-center">
-                                             <input type="checkbox" x-model="servicePerBooking" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
+                                             <input type="checkbox" x-model="servicePerBooking" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
                                              <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
                                                 <svg class="h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                             </div>
                                             </div>
                                              <span class="text-blue-600 font-medium group-hover:text-blue-700 transition">Service per booking</span>
                                          </div>
-                                         <span class="font-bold text-gray-900">$30.00</span>
+                                         <span class="font-bold text-gray-900 dark:text-white">$30.00</span>
                                     </label>
                                     
                                     <label class="flex items-center justify-between cursor-pointer group">
                                          <div class="flex items-center gap-3">
                                             <div class="relative flex items-center">
-                                             <input type="checkbox" x-model="servicePerPerson" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
+                                             <input type="checkbox" x-model="servicePerPerson" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
                                              <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
                                                 <svg class="h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                                             </div>
                                             </div>
                                              <span class="text-blue-600 font-medium group-hover:text-blue-700 transition">Service per person</span>
                                          </div>
-                                         <span class="font-bold text-gray-900">$15.00</span>
+                                         <span class="font-bold text-gray-900 dark:text-white">$15.00</span>
                                     </label>
                                 </div>
                                 
@@ -405,17 +478,17 @@
 
                                 <!-- Client Details -->
                                 <div class="mb-6 space-y-4">
-                                     <label class="block text-base font-bold text-gray-900">Your Details</label>
-                                     <input type="text" x-model="name" required class="block w-full rounded-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm" placeholder="Full Name">
-                                     <input type="email" x-model="email" required class="block w-full rounded-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm" placeholder="Email Address">
-                                     <input type="tel" x-model="phone" required class="block w-full rounded-lg border-gray-300 py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm" placeholder="Phone Number">
+                                     <label class="block text-base font-bold text-gray-900 dark:text-white">Your Details</label>
+                                     <input type="text" x-model="name" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="Full Name">
+                                     <input type="email" x-model="email" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="Email Address">
+                                     <input type="tel" x-model="phone" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="Phone Number">
                                 </div>
                                 
                                 <div class="h-px bg-gray-100 my-6"></div>
                                 
                                 <!-- Total -->
                                 <div class="flex items-center justify-between mb-6">
-                                    <span class="text-2xl font-bold text-gray-900">Total:</span>
+                                    <span class="text-2xl font-bold text-gray-900 dark:text-white">Total:</span>
                                     <span class="text-3xl font-bold text-blue-600" x-text="'$' + total.toFixed(2)"></span>
                                 </div>
                             </div>
@@ -457,60 +530,7 @@
                     });
                 </script>
                 @endpush
-                <!-- Tour Information Card -->
-                <div class="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
-                    <h3 class="text-2xl font-bold text-blue-600 font-display mb-6 border-l-4 border-blue-600 pl-4">Tour Information</h3>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="p-2 text-blue-600">
-                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900">Max Guests</p>
-                                <p class="text-gray-600 mt-1">20</p>
-                            </div>
-                        </div>
-
-                         <div class="flex items-start gap-4">
-                            <div class="p-2 text-blue-600">
-                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900">Min Age</p>
-                                <p class="text-gray-600 mt-1">+10</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="p-2 text-blue-600">
-                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900">Tour Location</p>
-                                <p class="text-blue-600 font-medium mt-1">{{ $tour->destination->name }}</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="p-2 text-blue-600">
-                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900">Languages Support</p>
-                                <p class="text-blue-600 font-medium mt-1">English</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            
 
          
             </div>

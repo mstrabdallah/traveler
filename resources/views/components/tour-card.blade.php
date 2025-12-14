@@ -1,6 +1,6 @@
 @props(['tour'])
 
-<article class="bg-white shadow-sm hover:shadow-xl transition-all duration-300 group h-full flex flex-col rounded-[12px] overflow-hidden border border-gray-100">
+<article class="bg-white dark:bg-gray-800 shadow-sm hover:shadow-xl transition-all duration-300 group h-full flex flex-col rounded-[12px] overflow-hidden border border-gray-100 dark:border-gray-700">
     <!-- Image Area -->
     <div class="relative h-64 overflow-hidden  mx-4 mt-4">
         <a href="{{ route('tours.show', $tour) }}">
@@ -18,24 +18,24 @@
     <div class="px-4 pb-4 pt-6 flex flex-col flex-1">
         <!-- Camera Icon Counter Placeholder -->
         <div class="flex justify-end mb-2">
-             <div class="flex items-center gap-1 text-gray-500 text-sm">
+             <div class="flex items-center gap-1 text-gray-500 dark:text-gray-400 text-sm">
                 <i class="fi fi-rr-camera"></i>
                 <span>{{ count($tour->images ?? []) }}</span>
             </div>
         </div>
 
-        <h3 class="text-xl font-bold text-accent-500 line-clamp-2 leading-tight mb-6">
+        <h3 class="text-xl font-bold text-accent-500 dark:text-blue-400 line-clamp-2 leading-tight mb-6">
             <a href="{{ route('tours.show', $tour) }}">{{ $tour->name }}</a>
         </h3>
         
-        <div class="mt-auto bg-gray-50 rounded-xl p-4 flex items-center justify-between">
-            <div class="flex items-center gap-6 text-sm text-primary-900 font-medium">
+        <div class="mt-auto bg-gray-50 dark:bg-gray-700 rounded-xl p-4 flex items-center justify-between">
+            <div class="flex items-center gap-6 text-sm text-primary-900 dark:text-white font-medium">
                  <div class="flex items-center gap-2">
-                    <i class="fi fi-rr-clock text-primary-400"></i>
+                    <i class="fi fi-rr-clock text-primary-400 dark:text-gray-300"></i>
                     <span>{{ $tour->duration_days }} days</span>
                 </div>
                  <div class="flex items-center gap-2">
-                    <i class="fi fi-rr-users text-primary-400"></i>
+                    <i class="fi fi-rr-users text-primary-400 dark:text-gray-300"></i>
                     <span>{{ $tour->max_people ?? 50 }}</span>
                 </div>
             </div>

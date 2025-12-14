@@ -53,13 +53,54 @@ class TourResource extends Resource
                                 Forms\Components\TextInput::make('duration_nights')
                                     ->numeric()
                                     ->suffix('Nights'),
-                                Forms\Components\TextInput::make('type')
-                                    ->placeholder('e.g. Private Comprehensive Package'),
-                                Forms\Components\TextInput::make('availability')
-                                    ->placeholder('e.g. Daily'),
                             ])->columns(2),
 
                         Forms\Components\Section::make('Images')
+                            ->headerActions([
+                                Forms\Components\Actions\Action::make('import_url')
+                                    ->label('Fetch URL')
+                                    ->icon('heroicon-o-link')
+                                    ->form([
+                                        Forms\Components\TextInput::make('url')
+                                            ->label('Image URL')
+                                            ->required()
+                                            ->url(),
+                                    ])
+                                    ->action(function (array $data, Forms\Get $get, Forms\Set $set) {
+                                        try {
+                                            $url = $data['url'];
+                                            $contents = file_get_contents($url);
+                                            
+                                            if ($contents === false) {
+                                                throw new \Exception('Failed to download image.');
+                                            }
+
+                                            $name = Str::random(40) . '.jpg';
+                                            $path = 'tours/' . $name;
+                                            
+                                            \Illuminate\Support\Facades\Storage::disk('public')->put($path, $contents);
+
+                                            $state = $get('images') ?? [];
+                                            if (! is_array($state)) {
+                                                $state = [];
+                                            }
+                                            
+                                            $state[] = $path;
+                                            $set('images', $state);
+
+                                            \Filament\Notifications\Notification::make()
+                                                ->title('Image uploaded successfully')
+                                                ->success()
+                                                ->send();
+                                        } catch (\Exception $e) {
+                                            \Filament\Notifications\Notification::make()
+                                                ->title('Failed to upload image')
+                                                ->body($e->getMessage())
+                                                ->danger()
+                                                ->send();
+                                        }
+                                    }),
+                            ])
                             ->schema([
                                 Forms\Components\FileUpload::make('images')
                                     ->image()
@@ -89,11 +130,14 @@ class TourResource extends Resource
                          Forms\Components\Repeater::make('itinerary')
                             ->schema([
                                 Forms\Components\TextInput::make('day_title')->required(),
-                                Forms\Components\Textarea::make('description')->rows(3),
+                                Forms\Components\RichEditor::make('description'),
                             ])
                             ->collapsible()
                             ->itemLabel(fn (array $state): ?string => $state['day_title'] ?? null)
                             ->columnSpanFull(),
+                         Forms\Components\Toggle::make('has_price_tiers')
+                            ->label('Enable Price Tiers')
+                            ->live(),
                          Forms\Components\Repeater::make('price_tiers')
                             ->schema([
                                 Forms\Components\TextInput::make('min_people')->numeric()->required(),
@@ -101,6 +145,7 @@ class TourResource extends Resource
                                 Forms\Components\TextInput::make('price_per_person')->numeric()->prefix('$')->required(),
                             ])
                             ->columns(3)
+                            ->hidden(fn (Forms\Get $get) => ! $get('has_price_tiers'))
                             ->columnSpanFull(),
                          Forms\Components\Repeater::make('included')
                             ->simple(

@@ -24,14 +24,14 @@
                 @endforeach
             </div>
             
-            <div class="swiper-button-next !w-12 !h-12 !bg-white/10 !backdrop-blur-sm !rounded-full !text-white hover:!bg-white/20 transition-all after:!text-xl"></div>
-            <div class="swiper-button-prev !w-12 !h-12 !bg-white/10 !backdrop-blur-sm !rounded-full !text-white hover:!bg-white/20 transition-all after:!text-xl"></div>
+            <div class="swiper-button-next !w-12 !h-12 !bg-white/10 max-sm:!hidden !backdrop-blur-sm !rounded-full !text-white hover:!bg-white/20 transition-all after:!text-xl"></div>
+            <div class="swiper-button-prev !w-12 !h-12 !bg-white/10 max-sm:!hidden !backdrop-blur-sm !rounded-full !text-white hover:!bg-white/20 transition-all after:!text-xl"></div>
         </div>
 
         <!-- Search Form -->
-        <div class="absolute bottom-0 left-0 right-0 z-20 transform translate-y-1/2 px-4">
-            <div class="max-w-5xl mx-auto bg-white/95 backdrop-blur-xl border border-white/40 rounded-3xl shadow-2xl p-6 md:p-8 animate-fade-in-up delay-300">
-                <form action="{{ route('tours.index') }}" method="GET" class="flex flex-col md:flex-row gap-6 items-center">
+        <div class="relative z-20 -mt-24 px-4 w-full">
+            <div class="max-w-5xl mx-auto bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-white/40 dark:border-gray-700 rounded-3xl shadow-2xl p-6 md:p-8 animate-fade-in-up delay-300">
+                <form action="{{ route('tours.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                     
                     <!-- Hidden Filters -->
                     <input type="hidden" name="search" value="">
@@ -39,33 +39,34 @@
                     <input type="hidden" name="max_price" value="5000">
 
                     <!-- Date From -->
-                    <div class="w-full md:w-1/3 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 pb-4 md:pb-0 md:pr-6 relative group">
-                        <label for="date_from" class="flex items-center gap-2 text-[#345BA8] font-bold mb-2 group-focus-within:text-[#2A4A8A] transition-colors">
+                    <div class="col-span-1 md:col-span-4 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 dark:border-gray-700 pb-4 md:pb-0 md:pr-6 relative group">
+                        <label for="date_from" class="flex items-center gap-2 text-[#345BA8] dark:text-blue-400 font-bold mb-2 group-focus-within:text-[#2A4A8A] dark:group-focus-within:text-blue-300 transition-colors">
                              <i class="fi fi-rr-calendar-clock text-xl"></i>
                              <span class="text-sm uppercase tracking-wider">When</span>
                         </label>
-                        <input type="text" id="date_from" name="date_from" placeholder="Select Date" class="w-full border-0 p-0 text-gray-900 font-bold focus:ring-0 placeholder:text-gray-400 bg-transparent text-lg cursor-pointer">
+                        <input type="text" id="date_from" name="date_from" placeholder="Select Date" class="w-full border-0 p-0 text-gray-900 dark:text-white font-bold focus:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-transparent text-lg cursor-pointer">
                     </div>
 
                     <!-- Guests Dropdown -->
-                    <div class="w-full md:w-1/3 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 pb-4 md:pb-0 md:pr-6 md:pl-6 relative" 
-                         x-data="{ 
-                            open: false,
-                            counts: { person: 1, adult: 1, child: 0 },
-                            get total() { return this.counts.person + this.counts.adult + this.counts.child; }
-                         }"
-                         @click.outside="open = false">
-                        
-                        <label @click="open = !open" class="flex items-center gap-2 text-[#345BA8] font-bold mb-2 cursor-pointer hover:text-[#2A4A8A] transition-colors">
-                             <i class="fi fi-rr-users-alt text-xl"></i>
-                             <span class="text-sm uppercase tracking-wider">Guests</span>
-                        </label>
+                     <div class="col-span-1 md:col-span-4 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 dark:border-gray-700 pb-4 md:pb-0 md:pr-6 md:pl-6 relative" 
+                          x-data="{ 
+                             open: false,
+                             counts: { person: 0, adult: 0, child: 0 },
+                             get total() { return this.counts.person + this.counts.adult + this.counts.child; }
+                          }"
+                          @click.outside="open = false">
+                         
+                         <label @click="open = !open" class="flex items-center gap-2 text-[#345BA8] dark:text-blue-400 font-bold mb-2 cursor-pointer hover:text-[#2A4A8A] dark:hover:text-blue-300 transition-colors">
+                              <i class="fi fi-rr-users-alt text-xl"></i>
+                              <span class="text-sm uppercase tracking-wider">Guests</span>
+                         </label>
                         
                         <!-- Main Display Input -->
                         <div @click="open = !open" class="cursor-pointer">
                             <input type="text" readonly 
-                                   :value="total ? total + ' Guests' : 'Add Guests'" 
-                                   class="w-full border-0 p-0 text-gray-900 font-bold focus:ring-0 cursor-pointer text-lg bg-transparent"
+                                   :value="total ? total + ' Guests' : ''"
+                                   placeholder="Add Guests" 
+                                   class="w-full border-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-0 text-gray-900 dark:text-white font-bold focus:ring-0 cursor-pointer text-lg bg-transparent"
                             >
                         </div>
                         <!-- Actual Input for Form Submission -->
@@ -79,17 +80,17 @@
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 translate-y-0"
                              x-transition:leave-end="opacity-0 translate-y-4"
-                             class="absolute top-full left-0 mt-6 w-72 bg-white rounded-2xl shadow-2xl p-6 z-50 border border-gray-100 ring-1 ring-black/5"
+                             class="absolute top-full left-0 mt-6 w-72 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 z-50 border border-gray-100 dark:border-gray-700 ring-1 ring-black/5"
                              style="display: none;">
                             
                             <!-- Person Row -->
-                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-50">
-                                <span class="text-gray-700 font-medium"><span x-text="counts.person"></span> person</span>
+                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-50 dark:border-gray-700">
+                                <span class="text-gray-700 dark:text-gray-200 font-medium"><span x-text="counts.person"></span> person</span>
                                 <div class="flex items-center gap-3">
-                                    <button type="button" @click="if(counts.person > 0) counts.person--" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.person <= 0">
+                                    <button type="button" @click="if(counts.person > 0) counts.person--" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.person <= 0">
                                         <i class="fi fi-rr-minus text-xs"></i>
                                     </button>
-                                    <button type="button" @click="counts.person++" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition">
+                                    <button type="button" @click="counts.person++" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition">
                                         <i class="fi fi-rr-plus text-xs"></i>
                                     </button>
                                 </div>
@@ -129,7 +130,7 @@
                     </div>
 
                     <!-- Search Button -->
-                    <div class="w-full md:w-auto flex-shrink-0">
+                    <div class="col-span-1 md:col-span-4 w-full">
                         <button type="submit" class="w-full md:w-auto px-10 py-5 bg-[#345BA8] text-white font-bold rounded-2xl hover:bg-[#2A4A8A] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-3 uppercase tracking-wide text-sm group">
                             <i class="fi fi-rr-search text-lg group-hover:scale-110 transition-transform"></i>
                             Search
@@ -139,7 +140,7 @@
             </div>
         </div>
     </div>
-    <div class="h-32 bg-white"></div> <!-- Spacer for the floating search form -->
+    <div class="h-32 bg-white dark:bg-gray-900 max-md:h-[238px]"></div> <!-- Spacer for the floating search form -->
 
     @push('scripts')
     <script>
@@ -162,7 +163,6 @@
             flatpickr("#date_from", {
                 minDate: "today",
                 dateFormat: "Y-m-d",
-                defaultDate: "today"
             });
         });
     </script>
@@ -170,12 +170,12 @@
 
     <!-- Featured Destinations -->
     <!-- Featured Destinations -->
-    <div id="featured-destinations" class="py-20 bg-white">
+    <div id="featured-destinations" class="py-20 max-lg:py-10 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <!-- Header -->
             <div class="text-center mb-12">
                 <span class="font-handwriting text-3xl text-yellow-500">Destinations lists</span>
-                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E]">Discover With Us</h2>
+                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">Discover With Us</h2>
             </div>
 
             <!-- Bento Grid -->
@@ -211,7 +211,7 @@
 
             <!-- Footer Button -->
             <div class="mt-12 text-center">
-                <a href="{{ route('destinations.index') }}" class="inline-block px-10 py-4 bg-[#2A2C3E] text-white font-bold rounded-lg shadow-lg hover:bg-opacity-90 transition transform hover:-translate-y-1">
+                <a href="{{ route('destinations.index') }}" class="inline-block px-10 py-4 bg-[#2A2C3E] dark:bg-gray-700 text-white font-bold rounded-lg shadow-lg hover:bg-opacity-90 transition transform hover:-translate-y-1">
                     All Destinations
                 </a>
             </div>
@@ -220,7 +220,7 @@
 
 
     <!-- Plan Your Trip Section -->
-    <div class="py-20 bg-white overflow-hidden">
+    <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-900 overflow-hidden transition-colors duration-300 max-md:py-16">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
                 
@@ -231,13 +231,13 @@
                     </div>
                      
                     <!-- Floating Contact Card -->
-                    <div class="absolute top-1/2 -left-4 lg:-left-12 transform -translate-y-1/2 bg-white p-4 pr-8 rounded-xl shadow-xl z-20 flex items-center gap-4 border-l-4 border-[#345BA8] animate-fade-in-up">
+                    <div class="absolute top-1/2 -left-4 lg:-left-12 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-4 pr-8 rounded-xl shadow-xl z-20 flex items-center gap-4 border-l-4 border-[#345BA8] animate-fade-in-up">
                         <div class="w-12 h-12 bg-[#345BA8] rounded-full flex items-center justify-center text-white">
                              <i class="fi fi-ss-phone-call text-xl"></i>
                         </div>
                         <div>
-                            <span class="block text-xs font-bold text-gray-500 uppercase tracking-wider">Book Your Trip Now</span>
-                            <span class="block text-xl font-bold text-[#2A2C3E]">01141812709</span>
+                            <span class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Book Your Trip Now</span>
+                            <span class="block text-xl font-bold text-[#2A2C3E] dark:text-white">01141812709</span>
                         </div>
                     </div>
                 </div>
@@ -247,30 +247,30 @@
                     <div class="relative">
                         <span class="font-handwriting text-4xl text-yellow-500 block mb-2 relative z-10">Get to know us</span>
                          <!-- Decorative line element hint -->
-                         <svg class="absolute -top-6 right-0 w-32 h-auto text-gray-200" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+                         <svg class="absolute -top-6 right-0 w-32 h-auto text-gray-200 dark:text-gray-700" viewBox="0 0 100 100" fill="none" stroke="currentColor">
                             <path d="M0 50 Q 25 25, 50 50 T 100 50" stroke-width="2" stroke-dasharray="4" />
                          </svg>
-                        <h2 class="text-4xl lg:text-5xl font-display font-bold text-[#345BA8] leading-tight">
+                        <h2 class="text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400 leading-tight">
                             Plan Your Trip With <br> Traveler Egypt Tours
                         </h2>
                     </div>
 
-                    <p class="text-gray-600 text-lg leading-relaxed">
+                    <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                         Traveler Egypt Tours is The Best travel agency that offers a variety of tour packages throughout Egypt. Their services include day tours, multi-day tours, and specialized packages that encompass history and cultural sightseeing, shore excursions, city tours, safari and diving adventures, and holiday special packages. The company emphasizes safety and security for all travelers.
                     </p>
 
                     <ul class="space-y-4">
                         <li class="flex items-center gap-3">
                             <i class="fi fi-ss-check-circle text-yellow-500 text-xl"></i>
-                            <span class="text-[#345BA8] font-bold text-lg">Safety and Security</span>
+                            <span class="text-[#345BA8] dark:text-blue-400 font-bold text-lg">Safety and Security</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fi fi-ss-check-circle text-yellow-500 text-xl"></i>
-                            <span class="text-[#345BA8] font-bold text-lg">Specialized Tours</span>
+                            <span class="text-[#345BA8] dark:text-blue-400 font-bold text-lg">Specialized Tours</span>
                         </li>
                         <li class="flex items-center gap-3">
                             <i class="fi fi-ss-check-circle text-yellow-500 text-xl"></i>
-                            <span class="text-[#345BA8] font-bold text-lg">Tour Packages</span>
+                            <span class="text-[#345BA8] dark:text-blue-400 font-bold text-lg">Tour Packages</span>
                         </li>
                     </ul>
 
@@ -284,12 +284,12 @@
         </div>
     </div>
     <!-- Featured Tours (Most Popular) -->
-    <div class="py-20 bg-gray-50">
+    <div class="py-20 max-lg:py-10 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <!-- Header -->
             <div class="text-center mb-12">
                 <span class="font-handwriting text-3xl text-yellow-500">Featured tours</span>
-                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E]">Most Popular Tours</h2>
+                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">Most Popular Tours</h2>
             </div>
             
             <!-- Swiper Carousel -->
@@ -298,51 +298,58 @@
                 <div class="swiper-wrapper py-8 pb-12"> <!-- Added padding for shadow overflow -->
                     @foreach($featuredTours as $tour)
                         <div class="swiper-slide h-auto">
-                            <div class="group relative bg-white rounded-2xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">
-                                <!-- Image Container -->
-                                <div class="relative h-64 overflow-hidden">
-                                    <img src="{{ Storage::url(is_array($tour->images) ? ($tour->images[0] ?? '') : (json_decode($tour->images)[0] ?? '')) }}" 
+                            <a href="{{ route('tours.show', $tour) }}" class="flex flex-col h-full bg-white dark:bg-gray-700 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100 dark:border-gray-600 block text-left w-full max-w-sm mx-auto">
+                                <!-- Image Section -->
+                                <div class="relative w-full aspect-[4/3] overflow-hidden">
+                                    <img src="{{ Storage::url(is_array($tour->images) ? ($tour->images[0] ?? '') : '') }}" 
                                          alt="{{ $tour->title }}" 
-                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                                         class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
                                     
-                                    <!-- Wishlist Button -->
-                                    <button class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-white transition-colors shadow-lg z-10">
-                                        <i class="fi fi-rr-heart text-xl mt-1"></i>
-                                    </button>
-
-                                    <!-- Price Tag -->
-                                    <div class="absolute bottom-4 right-4 bg-white/95 backdrop-blur px-4 py-2 rounded-lg shadow-lg">
-                                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wide block text-right">From</span>
-                                        <span class="text-[#345BA8] font-bold text-lg">${{ $tour->price }}</span>
-                                    </div>
-                                    
-                                    <!-- Duration Badge -->
-                                    <div class="absolute top-4 left-4 bg-[#345BA8]/90 backdrop-blur px-3 py-1 rounded-md shadow-md text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1">
-                                        <i class="fi fi-rr-clock"></i>
-                                        {{ $tour->duration_days }} Days
+                                    <!-- Photos Count Badge -->
+                                    <div class="absolute bottom-3 right-3 bg-[#345BA8] text-white text-xs px-2 py-1 rounded-md flex items-center gap-1 shadow-sm">
+                                        <i class="fi fi-rr-camera"></i>
+                                        <span>{{ is_array($tour->images) ? count($tour->images) : 0 }}</span>
                                     </div>
                                 </div>
 
-                                <!-- Content -->
-                                <div class="p-6 flex flex-col flex-grow">
-                                    <div class="flex items-center gap-2 mb-3 text-yellow-500 text-sm font-medium">
-                                        <div class="flex">
-                                            <i class="fi fi-ss-star"></i>
-                                            <i class="fi fi-ss-star"></i>
-                                            <i class="fi fi-ss-star"></i>
-                                            <i class="fi fi-ss-star"></i>
-                                            <i class="fi fi-ss-star"></i>
+                                <!-- Content Section -->
+                                <div class="p-6 flex flex-col flex-grow justify-between">
+                                    <div>
+                                        <h3 class="text-lg font-bold text-yellow-500 leading-tight mb-4 line-clamp-2">
+                                            {{ $tour->title }}
+                                        </h3>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-600 text-sm text-gray-500 dark:text-gray-300">
+                                        <div class="flex items-center gap-4">
+                                            <div class="flex items-center gap-1">
+                                                <i class="fi fi-rr-clock-five"></i>
+                                                <span>{{ $tour->duration_days }} Days</span>
+                                            </div>
+                                            <div class="flex items-center gap-1">
+                                                <i class="fi fi-rr-user"></i>
+                                                <span>20</span>
+                                            </div>
                                         </div>
-                                        <a href="{{ route('tours.show', $tour) }}" class="text-[#345BA8] font-bold flex items-center gap-1 hover:text-[#2A4A8A] transition">
+                                        
+                                        <div class="text-[#345BA8] dark:text-blue-400 font-bold flex items-center gap-1 group-hover:text-[#2A4A8A] dark:group-hover:text-blue-300 transition">
                                             Explore 
                                             <i class="fi fi-rr-arrow-small-right text-lg translate-y-[1px]"></i>
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </article>
+                            </a>
                         </div>
                      @endforeach
                 </div>
+                <!-- Navigation Buttons -->
+                <div class="swiper-button-next !w-12 !h-12 !bg-white !rounded-full !text-[#2A2C3E] !shadow-lg after:!content-none flex items-center justify-center hover:!bg-[#345BA8] hover:!text-white transition-all opacity-0 group-hover:opacity-100 absolute top-1/2 -right-4 z-10 translate-x-1/2">
+                    <i class="fi fi-rr-arrow-small-right text-2xl mt-1"></i>
+                </div>
+                <div class="swiper-button-prev !w-12 !h-12 !bg-white !rounded-full !text-[#2A2C3E] !shadow-lg after:!content-none flex items-center justify-center hover:!bg-[#345BA8] hover:!text-white transition-all opacity-0 group-hover:opacity-100 absolute top-1/2 -left-4 z-10 -translate-x-1/2">
+                    <i class="fi fi-rr-arrow-small-left text-2xl mt-1"></i>
+                </div>
+
                 <!-- Pagination -->
                 <div class="swiper-pagination !bottom-0"></div>
             </div>
@@ -357,11 +364,11 @@
     </div>
     
     <!-- Testimonials Section -->
-    <div class="py-20 bg-gray-50 relative">
+    <div class="py-20 max-lg:py-10 bg-gray-50 dark:bg-gray-800 relative transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-16">
                 <span class="font-handwriting text-3xl text-yellow-500">Testimonials & reviews</span>
-                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8]">What They're Saying</h2>
+                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400">What They're Saying</h2>
             </div>
 
             <!-- Swiper -->
@@ -376,8 +383,8 @@
                             <div class="flex justify-center text-yellow-400 mb-6 gap-1">
                                 <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
                             </div>
-                            <p class="text-gray-600 text-center mb-8 leading-relaxed italic flex-grow px-4">"I will definitely book with Traveler Egypt Tours again. The entire team was professional and friendly, and they went out of their way to ensure we had a great time."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] text-xl">John P</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"I will definitely book with Traveler Egypt Tours again. The entire team was professional and friendly, and they went out of their way to ensure we had a great time."</p>
+                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">John P</h4>
                         </div>
                     </div>
 
@@ -390,8 +397,8 @@
                             <div class="flex justify-center text-yellow-400 mb-6 gap-1">
                                 <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
                             </div>
-                            <p class="text-gray-600 text-center mb-8 leading-relaxed italic flex-grow px-4">"Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic. We visited all the major sites and learned so much about Egyptian culture and history."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] text-xl">Mark T</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic. We visited all the major sites and learned so much about Egyptian culture and history."</p>
+                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Mark T</h4>
                         </div>
                     </div>
 
@@ -404,8 +411,8 @@
                             <div class="flex justify-center text-yellow-400 mb-6 gap-1">
                                 <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
                             </div>
-                            <p class="text-gray-600 text-center mb-8 leading-relaxed italic flex-grow px-4">"Our trip with Traveler Egypt Tours was nothing short of amazing. The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] text-xl">Emily R</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Our trip with Traveler Egypt Tours was nothing short of amazing. The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized."</p>
+                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Emily R</h4>
                         </div>
                     </div>
 
@@ -418,8 +425,8 @@
                             <div class="flex justify-center text-yellow-400 mb-6 gap-1">
                                 <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
                             </div>
-                            <p class="text-gray-600 text-center mb-8 leading-relaxed italic flex-grow px-4">"Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend! The guides were incredibly knowledgeable."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] text-xl">Sarah J</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend! The guides were incredibly knowledgeable."</p>
+                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Sarah J</h4>
                         </div>
                     </div>
                 </div>
@@ -481,22 +488,22 @@
 
         <!-- Stats Counter (Overlapping) -->
         <div class="relative max-w-7xl mx-auto px-6 lg:px-8 -mt-20 z-20 pb-20">
-            <div class="bg-white rounded-3xl shadow-xl p-8 lg:p-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-x divide-gray-100">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 lg:p-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-x divide-gray-100 dark:divide-gray-700 transition-colors duration-300">
                 <div class="space-y-2">
-                    <span class="font-handwriting text-5xl text-[#345BA8] block">50</span>
-                    <span class="text-gray-600 font-medium">Tours</span>
+                    <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">{{ $toursCount }}</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">Tours</span>
                 </div>
                 <div class="space-y-2">
-                    <span class="font-handwriting text-5xl text-[#345BA8] block">10</span>
-                    <span class="text-gray-600 font-medium">Destinations</span>
+                    <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">{{ $destinationsCount }}</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">Destinations</span>
                 </div>
                 <div class="space-y-2">
-                    <span class="font-handwriting text-5xl text-[#345BA8] block">500</span>
-                    <span class="text-gray-600 font-medium">Happy Customers</span>
+                    <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">500</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">Happy Customers</span>
                 </div>
                  <div class="space-y-2 border-l-0 lg:border-l"> <!-- Fix for grid layout border on mobile -->
-                    <span class="font-handwriting text-5xl text-[#345BA8] block">100</span>
-                    <span class="text-gray-600 font-medium">Reviews</span>
+                    <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">100</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">Reviews</span>
                 </div>
             </div>
         </div>
@@ -511,7 +518,7 @@
         </div>
 
         <!-- Content Half -->
-        <div class="w-full lg:w-1/2 bg-[#2A2C3E] p-12 lg:p-24 flex flex-col justify-center relative overflow-hidden">
+        <div class="w-full lg:w-1/2 bg-[#2A2C3E] dark:bg-gray-800 p-12 lg:p-24 flex flex-col justify-center relative overflow-hidden transition-colors duration-300">
  
 
              <div class="relative z-10">
@@ -545,13 +552,13 @@
         </div>
     </div>
     <!-- News & Articles Section -->
-    <div class="py-20 bg-white">
+    <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <!-- Header -->
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+            <div class="flex flex-col md:flex-row justify-between items-end max-lg:items-center mb-12 gap-6">
                 <div class="text-center md:text-left">
                     <span class="font-handwriting text-3xl text-yellow-500 block mb-2">From the blog post</span>
-                    <h2 class="text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E]">News & Articles</h2>
+                    <h2 class="text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">News & Articles</h2>
                 </div>
                 <div>
                      <a href="{{ route('articles.index') }}" class="inline-block px-8 py-3 bg-[#2A4A8A] text-white font-bold rounded-lg shadow-md hover:bg-opacity-90 transition transform hover:-translate-y-1">
@@ -563,12 +570,12 @@
             <!-- Blog Grid -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                  @foreach($latestArticles as $article)
-                    <article class="p-8 border border-gray-100 rounded-2xl hover:shadow-xl transition-all duration-300 group bg-white flex flex-col justify-between h-full">
+                    <article class="p-8 border border-gray-100 dark:border-gray-700 rounded-2xl hover:shadow-xl transition-all duration-300 group bg-white dark:bg-gray-800 flex flex-col justify-between h-full">
                         <div>
-                            <div class="flex items-center gap-2 mb-4 text-[#345BA8]">
+                            <div class="flex items-center gap-2 mb-4 text-[#345BA8] dark:text-blue-400">
                                 <i class="fi fi-rr-user"></i>
                              </div>
-                            <h3 class="text-xl font-bold text-[#2A2C3E] mb-6 leading-snug group-hover:text-[#345BA8] transition-colors">
+                            <h3 class="text-xl font-bold text-[#2A2C3E] dark:text-white mb-6 leading-snug group-hover:text-[#345BA8] dark:group-hover:text-blue-400 transition-colors">
                                 <a href="{{ route('articles.show', $article) }}">
                                     {{ $article->title }}
                                 </a>
@@ -576,7 +583,7 @@
                         </div>
                         
                         <div class="mt-4">
-                            <a href="{{ route('articles.show', $article) }}" class="text-[#345BA8] text-xs font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
+                            <a href="{{ route('articles.show', $article) }}" class="text-[#345BA8] dark:text-blue-400 text-xs font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
                                 Read More 
                                 <i class="fi fi-rr-arrow-small-right text-lg translate-y-[1px]"></i>
                             </a>

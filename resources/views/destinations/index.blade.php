@@ -10,7 +10,7 @@
         </div>
     </div>
 
-    <div class="py-24 sm:py-32 bg-white">
+    <div class="py-24 sm:py-32 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[300px]">
                 @php
@@ -46,7 +46,7 @@
                 @endforeach
 
                 <!-- Contact / Special Offer Card -->
-                <div class="relative flex flex-col justify-center items-center text-center overflow-hidden rounded-3xl bg-[#2e406e] p-6 lg:col-span-1">
+                <div class="relative flex flex-col justify-center items-center text-center overflow-hidden rounded-3xl bg-[#2e406e] dark:bg-gray-800 p-6 lg:col-span-1">
                      <!-- Decorative Elements -->
                     <div class="absolute top-0 right-0 -mr-8 -mt-8 w-32 h-32 rounded-full bg-white/5 blur-2xl"></div>
                     <div class="absolute bottom-0 left-0 -ml-8 -mb-8 w-32 h-32 rounded-full bg-white/5 blur-2xl"></div>
@@ -56,7 +56,7 @@
                         <h3 class="text-4xl font-handwriting text-white rotating-text">Special <br> Offer</h3>
                         
                         <div class="pt-6">
-                            <a href="{{ route('contact') }}" class="inline-block px-6 py-3 bg-white text-[#2e406e] text-xs font-bold uppercase tracking-wider rounded transition-transform hover:scale-105">
+                            <a href="{{ route('contact') }}" class="inline-block px-6 py-3 bg-white dark:bg-gray-700 text-[#2e406e] dark:text-white text-xs font-bold uppercase tracking-wider rounded transition-transform hover:scale-105">
                                 Contact Us
                             </a>
                         </div>

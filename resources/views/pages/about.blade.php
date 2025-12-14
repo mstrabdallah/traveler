@@ -4,7 +4,7 @@
     <x-hero-slider :destinations="$destinations" title="About Us" />
 
     <!-- Discover Section -->
-    <div class="py-16 lg:py-24 bg-white">
+    <div class="py-16 lg:py-24 bg-white dark:bg-gray-900 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class=" flex max-lg:flex-col gap-12 lg:gap-20 items-center">
                 <!-- Image -->
@@ -22,12 +22,12 @@
                 <div class="space-y-8">
                     <div>
                         <span class="font-handwriting text-3xl text-yellow-500">Learn about us</span>
-                        <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] leading-tight">
+                        <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400 leading-tight">
                             Discover with Traveler Egypt Tours
                         </h2>
                     </div>
 
-                    <p class="text-gray-600 text-lg leading-relaxed">
+                    <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
                         We are trusted by our clients and have a reputation for the best services in the field. We provide custom-made tours designed to fit your unique needs and preferences, offering you an authentic experience of Egypt.
                     </p>
 
@@ -36,31 +36,31 @@
                         <!-- Item 1 -->
                         <div>
                             <div class="flex justify-between mb-2">
-                                <span class="font-bold text-[#2A2C3E]">Best Services</span>
-                                <span class="text-gray-500">88%</span>
+                                <span class="font-bold text-[#2A2C3E] dark:text-white">Best Services</span>
+                                <span class="text-gray-500 dark:text-gray-400">88%</span>
                             </div>
-                            <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-[#345BA8] rounded-full" style="width: 88%"></div>
+                            <div class="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-[#345BA8] dark:bg-blue-500 rounded-full" style="width: 88%"></div>
                             </div>
                         </div>
                         
                         <!-- Item 2 -->
                         <div>
                             <div class="flex justify-between mb-2">
-                                <span class="font-bold text-[#2A2C3E]">Tour Agents</span>
-                                <span class="text-gray-500">75%</span>
+                                <span class="font-bold text-[#2A2C3E] dark:text-white">Tour Agents</span>
+                                <span class="text-gray-500 dark:text-gray-400">75%</span>
                             </div>
-                            <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-[#345BA8] rounded-full" style="width: 75%"></div>
+                            <div class="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
+                                <div class="h-full bg-[#345BA8] dark:bg-blue-500 rounded-full" style="width: 75%"></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="pt-6 flex gap-4 max-sm:flex-col">
-                        <a href="https://gaviaspreview.com/wp/tevily/about/" class="px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition font-medium">
+                        <a href="https://gaviaspreview.com/wp/tevily/about/" class="px-8 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg transition font-medium">
                             / Get Right Solutions
                         </a>
-                        <a href="https://gaviaspreview.com/wp/tevily/about/" class="px-8 py-3 bg-gray-100 hover:bg-gray-200 text-gray-800 rounded-lg transition font-medium">
+                        <a href="https://gaviaspreview.com/wp/tevily/about/" class="px-8 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg transition font-medium">
                             / Expert Architecture
                         </a>
         
@@ -88,11 +88,11 @@
     </div>
 
     <!-- Testimonials Section -->
-    <div class="py-20 bg-gray-50 relative">
+    <div class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300 relative">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <div class="text-center mb-16">
                 <span class="font-handwriting text-3xl text-yellow-500">Testimonials & reviews</span>
-                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8]">What They're Saying</h2>
+                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400">What They're Saying</h2>
             </div>
 
             <!-- Swiper -->
@@ -107,8 +107,8 @@
                             <div class="flex justify-center text-yellow-400 mb-6 gap-1">
                                 <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
                             </div>
-                            <p class="text-gray-600 text-center mb-8 leading-relaxed italic flex-grow px-4">"I will definitely book with Traveler Egypt Tours again. The entire team was professional and friendly, and they went out of their way to ensure we had a great time."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] text-xl">John P</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"I will definitely book with Traveler Egypt Tours again. The entire team was professional and friendly, and they went out of their way to ensure we had a great time."</p>
+                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">John P</h4>
                         </div>
                     </div>
 
@@ -121,8 +121,8 @@
                             <div class="flex justify-center text-yellow-400 mb-6 gap-1">
                                 <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
                             </div>
-                            <p class="text-gray-600 text-center mb-8 leading-relaxed italic flex-grow px-4">"Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic. We visited all the major sites and learned so much about Egyptian culture and history."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] text-xl">Mark T</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic. We visited all the major sites and learned so much about Egyptian culture and history."</p>
+                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Mark T</h4>
                         </div>
                     </div>
 
@@ -135,8 +135,8 @@
                             <div class="flex justify-center text-yellow-400 mb-6 gap-1">
                                 <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
                             </div>
-                            <p class="text-gray-600 text-center mb-8 leading-relaxed italic flex-grow px-4">"Our trip with Traveler Egypt Tours was nothing short of amazing. The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] text-xl">Emily R</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Our trip with Traveler Egypt Tours was nothing short of amazing. The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized."</p>
+                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Emily R</h4>
                         </div>
                     </div>
 
@@ -149,8 +149,8 @@
                             <div class="flex justify-center text-yellow-400 mb-6 gap-1">
                                 <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
                             </div>
-                            <p class="text-gray-600 text-center mb-8 leading-relaxed italic flex-grow px-4">"Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend! The guides were incredibly knowledgeable."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] text-xl">Sarah J</h4>
+                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend! The guides were incredibly knowledgeable."</p>
+                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Sarah J</h4>
                         </div>
                     </div>
                 </div>
@@ -246,22 +246,22 @@
 
         <!-- Stats Counter (Overlapping) -->
         <div class="relative max-w-7xl mx-auto px-6 lg:px-8 -mt-20 z-20 pb-20">
-            <div class="bg-white rounded-3xl shadow-xl p-8 lg:p-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-x divide-gray-100">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 lg:p-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-x divide-gray-100 dark:divide-gray-700 transition-colors duration-300">
                 <div class="space-y-2">
-                    <span class="font-handwriting text-5xl text-[#345BA8] block">50</span>
-                    <span class="text-gray-600 font-medium">Tours</span>
+                    <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">{{ $toursCount }}</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">Tours</span>
                 </div>
                 <div class="space-y-2">
-                    <span class="font-handwriting text-5xl text-[#345BA8] block">10</span>
-                    <span class="text-gray-600 font-medium">Destinations</span>
+                    <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">{{ $destinationsCount }}</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">Destinations</span>
                 </div>
                 <div class="space-y-2">
-                    <span class="font-handwriting text-5xl text-[#345BA8] block">500</span>
-                    <span class="text-gray-600 font-medium">Happy Customers</span>
+                    <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">500</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">Happy Customers</span>
                 </div>
                  <div class="space-y-2 border-l-0 lg:border-l"> <!-- Fix for grid layout border on mobile -->
-                    <span class="font-handwriting text-5xl text-[#345BA8] block">100</span>
-                    <span class="text-gray-600 font-medium">Reviews</span>
+                    <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">100</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">Reviews</span>
                 </div>
             </div>
         </div>

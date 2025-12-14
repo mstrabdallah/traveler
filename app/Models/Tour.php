@@ -18,6 +18,7 @@ class Tour extends Model
         'excluded' => 'array',
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
+        'has_price_tiers' => 'boolean',
     ];
 
     public function destination(): BelongsTo

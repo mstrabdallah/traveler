@@ -11,7 +11,11 @@ Route::get('/', function () {
     $featuredTours = Tour::where('is_active', true)->where('is_featured', true)->with('destination')->take(6)->get();
     $destinations = Destination::where('is_active', true)->take(5)->get();
     $latestArticles = Article::where('is_visible', true)->latest()->take(3)->get();
-    return view('welcome', compact('featuredTours', 'destinations', 'latestArticles'));
+    
+    $toursCount = Tour::where('is_active', true)->count();
+    $destinationsCount = Destination::where('is_active', true)->count();
+    
+    return view('welcome', compact('featuredTours', 'destinations', 'latestArticles', 'toursCount', 'destinationsCount'));
 });
 
 Route::get('/destinations', [DestinationController::class, 'index'])->name('destinations.index');
