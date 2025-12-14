@@ -508,47 +508,82 @@
             </div>
         </div>
     </div>
-    <!-- Why Choose Us Section -->
-    <div class="flex flex-col lg:flex-row min-h-[500px]">
-        <!-- Image Half -->
-        <div class="w-full lg:w-1/2 relative h-[400px] lg:h-auto">
-            <img src="{{ asset('images/Untitled-design-2024-07-07T171358.232.webp') }}" 
-                 alt="Why Choose Traveler Egypt Tours" 
-                 class="absolute inset-0 w-full h-full object-cover">
-        </div>
-
-        <!-- Content Half -->
-        <div class="w-full lg:w-1/2 bg-[#2A2C3E] dark:bg-gray-800 p-12 lg:p-24 flex flex-col justify-center relative overflow-hidden transition-colors duration-300">
- 
-
-             <div class="relative z-10">
-                <span class="font-handwriting text-3xl text-yellow-500 mb-2 block">Our benefit lists</span>
-                <h2 class="text-4xl lg:text-5xl font-display font-bold text-white mb-12 max-w-lg">
-                    Why Choose Traveler Egypt Tours
-                </h2>
-
-                <div class="space-y-10">
-                    <!-- Benefit 1 -->
-                    <div class="flex items-start gap-6">
-                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                            <i class="fi fi-rr-badge-check text-4xl text-yellow-500"></i>
-                        </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white mb-2">Professional and Certified</h3>
-                         </div>
+    <!-- Why Choose Us / About Section -->
+    <div class="py-16 bg-[#fff] dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+                
+                <!-- Left Column: Image Composition -->
+                <div class="relative w-full max-w-[500px] mx-auto lg:mx-0 h-[500px] hidden md:block">
+                    <!-- Rotated Image 1 -->
+                    <div class="absolute top-0 left-8 w-[340px] aspect-[3/4] p-3 bg-white shadow-2xl transform -rotate-[8deg] rounded-2xl z-10 border-4 border-white/50">
+                        <img src="{{ asset('images/about-1.png') }}" 
+                             alt="About Traveler Egypt" 
+                             class="w-full h-full object-cover rounded-xl hover:scale-105 transition duration-700">
+                    </div>
+                    
+                    <!-- Overlapping Image 2 -->
+                    <div class="absolute bottom-8 right-0 w-[260px] aspect-[3/4] p-3 bg-white shadow-2xl transform rotate-[6deg] rounded-2xl z-20 border-4 border-white/50">
+                        <img src="{{ asset('images/about-2.png') }}" 
+                             alt="Happy Traveler" 
+                             class="w-full h-full object-cover rounded-xl hover:scale-105 transition duration-700">
                     </div>
 
-                    <!-- Benefit 2 -->
-                    <div class="flex items-start gap-6">
-                        <div class="flex-shrink-0 w-16 h-16 rounded-full bg-yellow-500/10 flex items-center justify-center">
-                             <i class="fi fi-rr-chart-histogram text-4xl text-yellow-500"></i>
+                     <!-- Decorative Element -->
+                     <div class="absolute -top-12 right-12 z-0 opacity-10 dark:opacity-5">
+                        <i class="fi fi-rr-plane-alt text-9xl text-gray-900 dark:text-white"></i>
+                     </div>
+                </div>
+
+                <!-- Right Column: Content -->
+                <div class="space-y-10">
+                    <!-- Heading -->
+                    <div>
+                        <span class="font-handwriting text-3xl text-yellow-400 block mb-3">Our benefit lists</span>
+                        <h2 class="text-4xl lg:text-5xl font-display font-bold text-neutral-950 dark:text-white leading-tight">
+                            Why Choose Traveler Egypt Tours
+                        </h2>
+                        <p class="mt-6 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                            Discover breathtaking destinations handpicked for unforgettable experiences. From tropical beaches to cultural landmarks, we make your dream vacation a reality.
+                        </p>
+                    </div>
+
+                    <!-- Feature Cards -->
+                    <div class="space-y-4">
+                        <!-- Card 1 -->
+                        <div class="bg-gray-50/50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex items-start gap-5 hover:bg-white dark:hover:bg-gray-800 transition shadow-sm hover:shadow-md">
+                            <div class="w-14 h-14 rounded-full bg-[#fff] flex items-center justify-center flex-shrink-0">
+                                <i class="fi fi-rr-badge-check text-2xl text-yellow-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Professional and Certified</h4>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Our team consists of certified experts dedicated to providing the best travel experiences.</p>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="text-xl font-bold text-white mb-2">Positive Reviews and Testimonials</h3>
-                         </div>
+
+                        <!-- Card 2 -->
+                        <div class="bg-gray-50/50 dark:bg-gray-800/50 p-4 rounded-xl border border-gray-200 dark:border-gray-700 flex items-start gap-5 hover:bg-white dark:hover:bg-gray-800 transition shadow-sm hover:shadow-md">
+                            <div class="w-14 h-14 rounded-full bg-[#fff] flex items-center justify-center flex-shrink-0">
+                                <i class="fi fi-rr-chart-histogram text-2xl text-yellow-400 h-[26px]"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Positive Reviews and Testimonials</h4>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Trusted by thousands of travelers worldwide with 5-star reviews and feedback.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="pt-2">
+                         <a href="{{ route('about') }}" class="inline-flex items-center gap-3 bg-[#355fbf] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#355fbf] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
+                            Know About Us
+                            <div class="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition">
+                                <i class="fi fi-rr-arrow-small-right text-lg h-[24px]"></i>
+                            </div>
+                        </a>
                     </div>
                 </div>
-             </div>
+            </div>
         </div>
     </div>
     <!-- News & Articles Section -->
