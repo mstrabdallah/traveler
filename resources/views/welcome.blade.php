@@ -30,7 +30,7 @@
 
         <!-- Search Form -->
         <div class="absolute bottom-0 left-0 right-0 z-20 transform translate-y-1/2 px-4">
-            <div class="max-w-5xl mx-auto bg-white rounded-3xl shadow-xl p-6 md:p-8">
+            <div class="max-w-5xl mx-auto bg-white/95 backdrop-blur-xl border border-white/40 rounded-3xl shadow-2xl p-6 md:p-8 animate-fade-in-up delay-300">
                 <form action="{{ route('tours.index') }}" method="GET" class="flex flex-col md:flex-row gap-6 items-center">
                     
                     <!-- Hidden Filters -->
@@ -39,12 +39,12 @@
                     <input type="hidden" name="max_price" value="5000">
 
                     <!-- Date From -->
-                    <div class="w-full md:w-1/3 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 pb-4 md:pb-0 md:pr-6">
-                        <label for="date_from" class="flex items-center gap-2 text-[#345BA8] font-bold mb-2">
+                    <div class="w-full md:w-1/3 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 pb-4 md:pb-0 md:pr-6 relative group">
+                        <label for="date_from" class="flex items-center gap-2 text-[#345BA8] font-bold mb-2 group-focus-within:text-[#2A4A8A] transition-colors">
                              <i class="fi fi-rr-calendar-clock text-xl"></i>
                              <span class="text-sm uppercase tracking-wider">When</span>
                         </label>
-                        <input type="text" id="date_from" name="date_from" placeholder="Date From" class="w-full border-0 p-0 text-gray-900 font-bold focus:ring-0 placeholder:text-gray-400">
+                        <input type="text" id="date_from" name="date_from" placeholder="Select Date" class="w-full border-0 p-0 text-gray-900 font-bold focus:ring-0 placeholder:text-gray-400 bg-transparent text-lg cursor-pointer">
                     </div>
 
                     <!-- Guests Dropdown -->
@@ -56,86 +56,82 @@
                          }"
                          @click.outside="open = false">
                         
-                        <label @click="open = !open" class="flex items-center gap-2 text-[#345BA8] font-bold mb-2 cursor-pointer">
+                        <label @click="open = !open" class="flex items-center gap-2 text-[#345BA8] font-bold mb-2 cursor-pointer hover:text-[#2A4A8A] transition-colors">
                              <i class="fi fi-rr-users-alt text-xl"></i>
                              <span class="text-sm uppercase tracking-wider">Guests</span>
                         </label>
                         
                         <!-- Main Display Input -->
-                        <input type="text" readonly 
-                               :value="total" 
-                               @click="open = !open"
-                               class="w-full border-0 p-0 text-gray-900 font-bold focus:ring-0 cursor-pointer text-lg"
-                        >
+                        <div @click="open = !open" class="cursor-pointer">
+                            <input type="text" readonly 
+                                   :value="total ? total + ' Guests' : 'Add Guests'" 
+                                   class="w-full border-0 p-0 text-gray-900 font-bold focus:ring-0 cursor-pointer text-lg bg-transparent"
+                            >
+                        </div>
                         <!-- Actual Input for Form Submission -->
                         <input type="hidden" name="guests" :value="total">
 
                         <!-- Dropdown -->
                         <div x-show="open" 
                              x-transition:enter="transition ease-out duration-200"
-                             x-transition:enter-start="opacity-0 translate-y-2"
+                             x-transition:enter-start="opacity-0 translate-y-4"
                              x-transition:enter-end="opacity-100 translate-y-0"
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 translate-y-0"
-                             x-transition:leave-end="opacity-0 translate-y-2"
-                             class="absolute top-full left-0 mt-4 w-72 bg-white rounded-xl shadow-2xl p-6 z-50 border border-gray-100"
+                             x-transition:leave-end="opacity-0 translate-y-4"
+                             class="absolute top-full left-0 mt-6 w-72 bg-white rounded-2xl shadow-2xl p-6 z-50 border border-gray-100 ring-1 ring-black/5"
                              style="display: none;">
                             
                             <!-- Person Row -->
-                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-50">
                                 <span class="text-gray-700 font-medium"><span x-text="counts.person"></span> person</span>
                                 <div class="flex items-center gap-3">
-                                    <button type="button" @click="if(counts.person > 0) counts.person--" class="w-8 h-8 rounded-lg bg-[#2A2C3E] text-white flex items-center justify-center hover:bg-opacity-90 transition disabled:opacity-50" :disabled="counts.person <= 0">
+                                    <button type="button" @click="if(counts.person > 0) counts.person--" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.person <= 0">
                                         <i class="fi fi-rr-minus text-xs"></i>
                                     </button>
-                                    <button type="button" @click="counts.person++" class="w-8 h-8 rounded-lg bg-[#2A2C3E] text-white flex items-center justify-center hover:bg-opacity-90 transition">
+                                    <button type="button" @click="counts.person++" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition">
                                         <i class="fi fi-rr-plus text-xs"></i>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Adult Row -->
-                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-50">
                                 <span class="text-gray-700 font-medium"><span x-text="counts.adult"></span> Adult</span>
                                 <div class="flex items-center gap-3">
-                                    <button type="button" @click="if(counts.adult > 0) counts.adult--" class="w-8 h-8 rounded-lg bg-[#2A2C3E] text-white flex items-center justify-center hover:bg-opacity-90 transition disabled:opacity-50" :disabled="counts.adult <= 0">
+                                    <button type="button" @click="if(counts.adult > 0) counts.adult--" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.adult <= 0">
                                         <i class="fi fi-rr-minus text-xs"></i>
                                     </button>
-                                    <button type="button" @click="counts.adult++" class="w-8 h-8 rounded-lg bg-[#2A2C3E] text-white flex items-center justify-center hover:bg-opacity-90 transition">
+                                    <button type="button" @click="counts.adult++" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition">
                                         <i class="fi fi-rr-plus text-xs"></i>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Child Row -->
-                            <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-100">
+                            <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-50">
                                 <span class="text-gray-700 font-medium"><span x-text="counts.child"></span> child</span>
                                 <div class="flex items-center gap-3">
-                                    <button type="button" @click="if(counts.child > 0) counts.child--" class="w-8 h-8 rounded-lg bg-[#2A2C3E] text-white flex items-center justify-center hover:bg-opacity-90 transition disabled:opacity-50" :disabled="counts.child <= 0">
+                                    <button type="button" @click="if(counts.child > 0) counts.child--" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.child <= 0">
                                         <i class="fi fi-rr-minus text-xs"></i>
                                     </button>
-                                    <button type="button" @click="counts.child++" class="w-8 h-8 rounded-lg bg-[#2A2C3E] text-white flex items-center justify-center hover:bg-opacity-90 transition">
+                                    <button type="button" @click="counts.child++" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition">
                                         <i class="fi fi-rr-plus text-xs"></i>
                                     </button>
                                 </div>
                             </div>
 
                             <!-- Apply Button -->
-                            <button type="button" @click="open = false" class="w-full py-3 bg-[#345BA8] text-white font-bold rounded-lg hover:bg-[#2A4A8A] transition text-sm tracking-wider uppercase">
-                                Apply
+                            <button type="button" @click="open = false" class="w-full py-3 bg-[#345BA8] text-white font-bold rounded-lg hover:bg-[#2A4A8A] transition text-sm tracking-wider uppercase shadow-lg shadow-blue-900/10">
+                                Apply Selection
                             </button>
                         </div>
                     </div>
 
-                    <!-- Filter Icon (Visual Only) -->
-                    <div class="hidden md:flex items-center justify-center px-4 text-[#345BA8]">
-                         <i class="fi fi-rr-settings-sliders text-2xl"></i>
-                    </div>
-
                     <!-- Search Button -->
-                    <div class="w-full md:w-auto">
-                        <button type="submit" class="w-full md:w-auto px-10 py-4 bg-[#345BA8] text-white font-bold rounded-xl hover:bg-[#2A4A8A] transition-all shadow-lg flex items-center justify-center gap-2 uppercase tracking-wide text-sm">
-                            <i class="fi fi-rr-search"></i>
+                    <div class="w-full md:w-auto flex-shrink-0">
+                        <button type="submit" class="w-full md:w-auto px-10 py-5 bg-[#345BA8] text-white font-bold rounded-2xl hover:bg-[#2A4A8A] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-3 uppercase tracking-wide text-sm group">
+                            <i class="fi fi-rr-search text-lg group-hover:scale-110 transition-transform"></i>
                             Search
                         </button>
                     </div>
@@ -143,7 +139,7 @@
             </div>
         </div>
     </div>
-    <div class="h-24 bg-white"></div> <!-- Spacer for the overlapping form -->
+    <div class="h-32 bg-white"></div> <!-- Spacer for the floating search form -->
 
     @push('scripts')
     <script>
@@ -298,45 +294,45 @@
             
             <!-- Swiper Carousel -->
             <div class="swiper toursSwiper !pb-12 !px-4">
-                <div class="swiper-wrapper">
-                     @foreach($featuredTours as $tour)
+                <!-- Swiper Wrapper -->
+                <div class="swiper-wrapper py-8 pb-12"> <!-- Added padding for shadow overflow -->
+                    @foreach($featuredTours as $tour)
                         <div class="swiper-slide h-auto">
-                            <article class="flex flex-col h-full bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100">
-                                <!-- Image Section -->
-                                <div class="relative w-full aspect-[4/3] overflow-hidden">
-                                    <img src="{{ $tour->images ? Storage::url($tour->images[0]) : 'https://placehold.co/600x400' }}" 
-                                         alt="{{ $tour->name }}" 
-                                         class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                            <div class="group relative bg-white rounded-2xl overflow-hidden shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-2 h-full flex flex-col">
+                                <!-- Image Container -->
+                                <div class="relative h-64 overflow-hidden">
+                                    <img src="{{ Storage::url(is_array($tour->images) ? ($tour->images[0] ?? '') : (json_decode($tour->images)[0] ?? '')) }}" 
+                                         alt="{{ $tour->title }}" 
+                                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                     
-                                    <!-- Photos Count Badge -->
-                                    <div class="absolute bottom-3 right-3 bg-[#345BA8] text-white text-xs px-2 py-1 rounded-md flex items-center gap-1 shadow-sm">
-                                        <i class="fi fi-rr-camera"></i>
-                                        <span>{{ $tour->images ? count($tour->images) : 0 }}</span>
+                                    <!-- Wishlist Button -->
+                                    <button class="absolute top-4 right-4 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center text-gray-400 hover:text-red-500 hover:bg-white transition-colors shadow-lg z-10">
+                                        <i class="fi fi-rr-heart text-xl mt-1"></i>
+                                    </button>
+
+                                    <!-- Price Tag -->
+                                    <div class="absolute bottom-4 right-4 bg-white/95 backdrop-blur px-4 py-2 rounded-lg shadow-lg">
+                                        <span class="text-xs font-bold text-gray-500 uppercase tracking-wide block text-right">From</span>
+                                        <span class="text-[#345BA8] font-bold text-lg">${{ $tour->price }}</span>
+                                    </div>
+                                    
+                                    <!-- Duration Badge -->
+                                    <div class="absolute top-4 left-4 bg-[#345BA8]/90 backdrop-blur px-3 py-1 rounded-md shadow-md text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                                        <i class="fi fi-rr-clock"></i>
+                                        {{ $tour->duration_days }} Days
                                     </div>
                                 </div>
 
-                                <!-- Content Section -->
-                                <div class="p-6 flex flex-col flex-grow justify-between">
-                                    <div>
-                                        <h3 class="text-lg font-bold text-yellow-500 leading-tight mb-4 line-clamp-2">
-                                            <a href="{{ route('tours.show', $tour) }}">
-                                                {{ $tour->name }}
-                                            </a>
-                                        </h3>
-                                    </div>
-                                    
-                                    <div class="flex items-center justify-between pt-4 border-t border-gray-100 text-sm text-gray-500">
-                                        <div class="flex items-center gap-4">
-                                            <div class="flex items-center gap-1">
-                                                 <i class="fi fi-rr-clock-five text-[#345BA8]"></i>
-                                                 <span>{{ $tour->duration_days }} days</span>
-                                            </div>
-                                            <div class="flex items-center gap-1">
-                                                 <i class="fi fi-rr-user text-[#345BA8]"></i>
-                                                 <span>20</span> <!-- Static for now as requested in screenshot, or dynamic if available -->
-                                            </div>
+                                <!-- Content -->
+                                <div class="p-6 flex flex-col flex-grow">
+                                    <div class="flex items-center gap-2 mb-3 text-yellow-500 text-sm font-medium">
+                                        <div class="flex">
+                                            <i class="fi fi-ss-star"></i>
+                                            <i class="fi fi-ss-star"></i>
+                                            <i class="fi fi-ss-star"></i>
+                                            <i class="fi fi-ss-star"></i>
+                                            <i class="fi fi-ss-star"></i>
                                         </div>
-                                        
                                         <a href="{{ route('tours.show', $tour) }}" class="text-[#345BA8] font-bold flex items-center gap-1 hover:text-[#2A4A8A] transition">
                                             Explore 
                                             <i class="fi fi-rr-arrow-small-right text-lg translate-y-[1px]"></i>
