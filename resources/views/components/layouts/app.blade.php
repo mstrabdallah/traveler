@@ -312,48 +312,11 @@
         {{ $slot }}
     </main>
     
-    <footer class="relative mt-4 md:mt-[80px] lg:mt-48 pb-12" aria-labelledby="footer-heading">
-        <!-- Floating Newsletter Card -->
-        <div class="relative lg:absolute lg:-top-32 left-0 right-0 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto z-20">
-            <div class="bg-[#4976e7] rounded-[32px] shadow-[0px_20px_40px_rgba(73,118,231,0.3)] relative p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 h-auto lg:h-[324px]">
-                 <!-- Decorative Blurred Circles -->
-                 <div class="absolute w-[229px] h-[13px] left-[120px] bottom-[20px] bg-[#152a7d]/40 rounded-full blur-[18px] pointer-events-none hidden md:block"></div>
-
-                 <!-- Mailbox Image -->
-                 <div class="hidden md:flex relative z-10 md:w-1/2 justify-center md:justify-start -mt-20 md:-mt-32 md:-ml-12 pointer-events-none order-last md:order-first">
-                      <img src="{{ asset('images/newsletter-mailbox-new.png') }}" class="w-64 md:w-[450px] h-auto object-contain transform hover:scale-105 transition duration-500" alt="Newsletter">
-                 </div>
-
-                 <!-- Content -->
-                 <div class="relative z-10 md:w-1/2 text-center md:text-left space-y-6">
-                      <h3 class="text-2xl md:text-[28px] font-semibold text-white leading-tight font-display">
-                          Subscribe to our newsletter for the latest updates and insights.
-                      </h3>
-                      <form class="flex flex-col sm:flex-row gap-2 max-w-md mx-auto md:mx-0 bg-[#658de9] p-1 pr-1.5 rounded-full max-md:rounded-[20px] border border-white/20">
-                          <div class="relative flex-grow">
-                              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                  <!-- Custom icon or standard one -->
-                               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path fill-rule="evenodd" clip-rule="evenodd" d="M11.5 6C8.189 6 5.5 8.689 5.5 12C5.5 15.311 8.189 18 11.5 18C14.811 18 17.5 15.311 17.5 12C17.5 8.689 14.811 6 11.5 6ZM11.5 8C13.708 8 15.5 9.792 15.5 12C15.5 14.208 13.708 16 11.5 16C9.292 16 7.5 14.208 7.5 12C7.5 9.792 9.292 8 11.5 8Z" fill="white"/>
-<path fill-rule="evenodd" clip-rule="evenodd" d="M19.25 17L19.343 16.999C20.304 16.975 21.22 16.583 21.902 15.902C22.605 15.198 23 14.245 23 13.25V11C23 5.52 18.592 1.07 13.129 1.001L13 1H12C5.929 1 1 5.929 1 12C1 18.071 5.929 23 12 23C12.552 23 13 22.552 13 22C13 21.448 12.552 21 12 21C7.033 21 3 16.967 3 12C3 7.033 7.033 3 12 3H13C17.418 3 21 6.582 21 11V13.25C21 13.714 20.816 14.159 20.487 14.487C20.159 14.816 19.714 15 19.25 15M19.25 15C18.786 15 18.341 14.816 18.013 14.487C17.684 14.159 17.5 13.714 17.5 13.25V8C17.5 7.465 17.08 7.028 16.551 7.001L16.5 7C15.948 7 15.5 7.448 15.5 8C15.5 8 15.5 10.935 15.5 13.25C15.5 14.245 15.895 15.198 16.598 15.902C17.302 16.605 18.255 17 19.25 17" fill="white"/>
-</svg>
-
-                              </div>
-                              <input type="email" placeholder="Enter your email" class="w-full pl-11 pr-4 py-2.5 bg-transparent border-none text-white placeholder-white focus:outline-none focus:ring-0 text-sm font-medium">
-                          </div>
-                          <button type="submit" class="px-6 py-2.5 bg-white text-[#3a3a3a] text-sm font-semibold rounded-full hover:bg-gray-50 transition shadow-sm">
-                              Subscribe
-                          </button>
-                      </form>
-                      <p class="text-white text-sm">
-                          Stay ahead with the latest updates, insights, and events from Traveler Egypt.
-                      </p>
-                 </div>
-            </div>
-        </div>
+    <footer class="relative mt-4   lg:pb-12" aria-labelledby="footer-heading">
+  
 
         <!-- Main Footer Card -->
-        <div class="bg-white dark:bg-gray-800 rounded-[40px] pt-12 lg:pt-48 pb-8 px-6 lg:px-8 shadow-[0px_20px_84px_0px_rgba(73,118,231,0.20)] relative z-10 max-w-7xl mx-auto max-md:mt-5 max-md:bg-[#e2e2e2]">
+        <div class="bg-white dark:bg-gray-800 rounded-[40px] pt-4 pb-8 px-6 lg:px-8 shadow-[0px_20px_84px_0px_rgba(73,118,231,0.20)] dark:shadow-none relative z-10 max-w-7xl mx-auto max-md:mt-5 max-md:bg-white max-md:dark:bg-gray-800 border dark:border-gray-700">
              <div class="max-w-7xl mx-auto mt-7">
                  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 border-b border-gray-200 dark:border-gray-700 pb-12">
                       <!-- Brand -->
@@ -372,6 +335,23 @@
                                 <a href="https://www.instagram.com/mohammed_fayed_eg" class="w-10 h-10 rounded-full bg-[#29385f] flex items-center justify-center text-white hover:bg-[#1e2a4a] transition">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                                 </a>
+                           </div>
+
+                           <!-- Subscription Form -->
+                           <div class="pt-4">
+                               <h5 class="text-sm font-bold text-[#272727] dark:text-white mb-3">Subscribe to our newsletter</h5>
+                               <form class="flex flex-col sm:flex-row gap-2">
+                                   <div class="relative flex-grow">
+                                       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                           <i class="fi fi-rr-envelope text-gray-400"></i>
+                                       </div>
+                                       <input type="email" placeholder="Email address" class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+                                   </div>
+                                   <button type="submit" class="px-5 py-2.5 bg-[#355fbf] text-white text-sm font-semibold rounded-lg hover:bg-[#2a4a9a] transition shadow-md flex items-center justify-center gap-2">
+                                       <span>Join</span>
+                                       <i class="fi fi-rr-paper-plane"></i>
+                                   </button>
+                               </form>
                            </div>
                       </div>
 
@@ -399,6 +379,8 @@
                                 </ul>
                            </div>
 
+
+                   
                            <!-- Contact Info -->
                            <div class="space-y-4">
                                 <h4 class="text-base font-bold text-[#272727] dark:text-white">Contact</h4>
