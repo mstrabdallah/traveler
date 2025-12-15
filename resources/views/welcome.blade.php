@@ -220,69 +220,92 @@
 
 
     <!-- Plan Your Trip Section -->
-    <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-900 overflow-hidden transition-colors duration-300 max-md:py-16">
+    <section class="py-24 max-lg:py-16 bg-white dark:bg-gray-900 overflow-hidden relative">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
-                
-                <!-- Image Column -->
-                <div class="w-full lg:w-1/2 relative lg:pr-12"> <!-- Added padding right to create space for the overlap feel -->
-                    <div class="relative z-10">
-                        <img src="{{ asset('images/about-image.png') }}" alt="Plan Your Trip" class="w-full h-auto object-contain scale-110"> <!-- Scale up slightly to mimic the brush effect overflowing -->
-                    </div>
-                     
-                    <!-- Floating Contact Card -->
-                    <div class="absolute top-1/2 -left-4 lg:-left-12 transform -translate-y-1/2 bg-white dark:bg-gray-800 p-4 pr-8 rounded-xl shadow-xl z-20 flex items-center gap-4 border-l-4 border-[#345BA8] animate-fade-in-up">
-                        <div class="w-12 h-12 bg-[#345BA8] rounded-full flex items-center justify-center text-white">
-                             <i class="fi fi-ss-phone-call text-xl"></i>
+                     <!-- Headings -->
+                    <div class="mb-9 relative text-center">
+                        <div class="relative inline-block mb-1">
+                            <span class="  font-handwriting  text-yellow-500 text-5xl text-[#040404] dark:text-white relative z-10">Get to know us</span>
                         </div>
-                        <div>
-                            <span class="block text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Book Your Trip Now</span>
-                            <span class="block text-xl font-bold text-[#2A2C3E] dark:text-white">01141812709</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Content Column -->
-                <div class="w-full lg:w-1/2 space-y-8">
-                    <div class="relative">
-                        <span class="font-handwriting text-4xl text-yellow-500 block mb-2 relative z-10">Get to know us</span>
-                         <!-- Decorative line element hint -->
-                         <svg class="absolute -top-6 right-0 w-32 h-auto text-gray-200 dark:text-gray-700" viewBox="0 0 100 100" fill="none" stroke="currentColor">
-                            <path d="M0 50 Q 25 25, 50 50 T 100 50" stroke-width="2" stroke-dasharray="4" />
-                         </svg>
-                        <h2 class="text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400 leading-tight">
+                        <h2 class="text-5xl lg:text-[4rem] font-display font-extrabold text-[#040404] dark:text-white leading-[1.1] uppercase tracking-tight">
                             Plan Your Trip With <br> Traveler Egypt Tours
                         </h2>
                     </div>
+            <div class="flex flex-col lg:flex-row gap-12 lg:gap-24 relative">
+                
+            
+                <!-- Left Column: Title & Main Image -->
+                <div class="w-full lg:w-[45%] relative z-10">
+           
 
-                    <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
-                        Traveler Egypt Tours is The Best travel agency that offers a variety of tour packages throughout Egypt. Their services include day tours, multi-day tours, and specialized packages that encompass history and cultural sightseeing, shore excursions, city tours, safari and diving adventures, and holiday special packages. The company emphasizes safety and security for all travelers.
-                    </p>
-
-                    <ul class="space-y-4">
-                        <li class="flex items-center gap-3">
-                            <i class="fi fi-ss-check-circle text-yellow-500 text-xl"></i>
-                            <span class="text-[#345BA8] dark:text-blue-400 font-bold text-lg">Safety and Security</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fi fi-ss-check-circle text-yellow-500 text-xl"></i>
-                            <span class="text-[#345BA8] dark:text-blue-400 font-bold text-lg">Specialized Tours</span>
-                        </li>
-                        <li class="flex items-center gap-3">
-                            <i class="fi fi-ss-check-circle text-yellow-500 text-xl"></i>
-                            <span class="text-[#345BA8] dark:text-blue-400 font-bold text-lg">Tour Packages</span>
-                        </li>
-                    </ul>
-
-                    <div class="pt-4">
-                        <a href="{{ route('tours.index') }}" class="inline-block px-10 py-4 bg-[#345BA8] text-white font-bold rounded-lg shadow-lg hover:bg-[#2A4A8A] transition transform hover:-translate-y-1">
-                            Book Now
-                        </a>
+                    <!-- Main Image -->
+                    <div class="rounded-[30px] overflow-hidden shadow-2xl h-[550px] w-full relative group">
+                         <img src="{{ asset('images/about-image.png') }}" alt="Plan Your Trip" class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
                     </div>
                 </div>
+
+                <!-- Right Column: Content -->
+                <div class="w-full lg:w-[55%] relative pt-4 lg:pt-5">
+                    
+                    <!-- Intro Paragraph -->
+                    <p class="text-xl text-[#040404] dark:text-gray-300 font-display font-medium leading-relaxed mb-12 max-w-lg">
+                        Traveler Egypt Tours is The Best travel agency that offers a variety of tour packages throughout Egypt. Their services include day tours, multi-day tours, and specialized packages.
+                    </p>
+
+                    <!-- Features List -->
+                    <div class="space-y-10 mb-12 relative z-10">
+                        
+                        <!-- Feature 1 -->
+                        <div class="flex gap-6 items-start">
+                             <div class="w-14 h-14 bg-[#040404] dark:bg-white rounded-xl flex items-center justify-center rotate-3 shrink-0 shadow-lg">
+                                <i class="fi fi-ss-shield-check text-white dark:text-black text-2xl"></i>
+                             </div>
+                             <div>
+                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">Safety and Security</h3>
+                                <p class="text-lg font-display text-gray-600 dark:text-gray-400 leading-snug">
+                                    The company emphasizes safety and security for all travelers.
+                                </p>
+                             </div>
+                        </div>
+
+                        <!-- Feature 2 -->
+                        <div class="flex gap-6 items-start">
+                             <div class="w-14 h-14 bg-[#040404] dark:bg-white rounded-xl flex items-center justify-center -rotate-2 shrink-0 shadow-lg">
+                                <i class="fi fi-ss-star text-white dark:text-black text-2xl"></i>
+                             </div>
+                             <div>
+                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">Specialized Tours</h3>
+                                <p class="text-lg font-display text-gray-600 dark:text-gray-400 leading-snug">
+                                    History, cultural sightseeing, safari, and holiday packages.
+                                </p>
+                             </div>
+                        </div>
+
+                         <!-- Feature 3 -->
+                        <div class="flex gap-6 items-start">
+                             <div class="w-14 h-14 bg-[#040404] dark:bg-white rounded-xl flex items-center justify-center rotate-1 shrink-0 shadow-lg">
+                                <i class="fi fi-ss-world text-white dark:text-black text-2xl"></i>
+                             </div>
+                             <div>
+                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">Tour Packages</h3>
+                                <p class="text-lg font-display text-gray-600 dark:text-gray-400 leading-snug">
+                                    Variety of packages including day tours and multi-day adventures.
+                                </p>
+                             </div>
+                        </div>
+                    </div>
+
+                    <!-- CTA Button -->
+                    <a href="{{ route('tours.index') }}" class="inline-flex items-center justify-center px-10 py-4 bg-[#fad71b] hover:bg-[#eaca18] text-[#040404] font-display font-extrabold text-lg uppercase tracking-wider rounded-lg transition-transform hover:-translate-y-1 shadow-lg relative z-20">
+                        Book Now
+                    </a>
+
+                  
+                </div>
+
             </div>
         </div>
-    </div>
+    </section>
     <!-- Featured Tours (Most Popular) -->
     <div class="py-20 max-lg:py-10 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
@@ -364,84 +387,194 @@
     </div>
     
     <!-- Testimonials Section -->
-    <div class="py-20 max-lg:py-10 bg-gray-50 dark:bg-gray-800 relative transition-colors duration-300">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <span class="font-handwriting text-3xl text-yellow-500">Testimonials & reviews</span>
+    <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-800 relative transition-colors duration-300 overflow-hidden" 
+         x-data="{ 
+            active: 2,
+            touchStartX: 0,
+            touchEndX: 0,
+            testimonials: [
+                { 
+                    name: 'Sarah Jenkins', 
+                    role: 'Solo Traveler', 
+                    image: '{{ asset('images/testimonials/testimonial-1.jpg') }}', 
+                    rate: '5.0', 
+                    description: 'Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend!' 
+                },
+                { 
+                    name: 'Mark Thompson', 
+                    role: 'Adventure Seeker', 
+                    image: '{{ asset('images/testimonials/testimonial-2.jpg') }}', 
+                    rate: '5.0', 
+                    description: 'Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic.' 
+                },
+                { 
+                    name: 'Yusuf Mahtow', 
+                    role: 'Egypt Tour Guide', 
+                    image: '{{ asset('images/testimonials/testimonial-3.jpg') }}', 
+                    rate: '4.8', 
+                    description: 'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing.' 
+                },
+                { 
+                    name: 'Emily Roberts', 
+                    role: 'History Buff', 
+                    image: '{{ asset('images/testimonials/testimonial-4.jpg') }}', 
+                    rate: '4.9', 
+                    description: 'The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized.' 
+                },
+                { 
+                    name: 'Michael Chen', 
+                    role: 'Food Blogger', 
+                    image: '{{ asset('images/testimonials/testimonial-2.jpg') }}', 
+                    rate: '4.7', 
+                    description: 'An absolute culinary delight! The local food tours were the highlight of our trip. Highly recommended.' 
+                }
+            ],
+            next() {
+                this.active = (this.active + 1) % this.testimonials.length;
+            },
+            prev() {
+                this.active = (this.active - 1 + this.testimonials.length) % this.testimonials.length;
+            },
+            jump(offset) {
+                this.active = (this.active + offset + this.testimonials.length) % this.testimonials.length;
+            },
+            checkSwipe() {
+                if (this.touchEndX < this.touchStartX - 50) this.next();
+                if (this.touchEndX > this.touchStartX + 50) this.prev();
+            },
+            get visibleTestimonials() {
+                const len = this.testimonials.length;
+                return [
+                    this.testimonials[(this.active - 2 + len) % len],
+                    this.testimonials[(this.active - 1 + len) % len],
+                    this.testimonials[this.active],
+                    this.testimonials[(this.active + 1) % len],
+                    this.testimonials[(this.active + 2) % len]
+                ];
+            }
+         }">
+        <div class="text-center mb-16">
+                <span class="font-handwriting text-3xl text-yellow-500">Testimonials &amp; reviews</span>
                 <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400">What They're Saying</h2>
             </div>
-
-            <!-- Swiper -->
-            <div class="swiper testimonialSwiper px-4 pb-12 group">
-                <div class="swiper-wrapper">
-                    <!-- Slide 1 -->
-                    <div class="swiper-slide h-auto">
-                        <div class="p-8 pt-0 rounded-2xl shadow-sm transition h-full flex flex-col items-center mt-12 relative">
-                            <div class="-mt-12 mb-6 relative z-10">
-                                <img src="{{ asset('images/testimonials/testimonial-3.jpg') }}" alt="Jessica Brown" class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
-                            </div>
-                            <div class="flex justify-center text-yellow-400 mb-6 gap-1">
-                                <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
-                            </div>
-                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"I will definitely book with Traveler Egypt Tours again. The entire team was professional and friendly, and they went out of their way to ensure we had a great time."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">John P</h4>
-                        </div>
-                    </div>
-
-                    <!-- Slide 2 -->
-                    <div class="swiper-slide h-auto">
-                        <div class="p-8 pt-0 rounded-2xl shadow-sm transition h-full flex flex-col items-center mt-12 relative">
-                            <div class="-mt-12 mb-6 relative z-10">
-                                <img src="{{ asset('images/testimonials/testimonial-2.jpg') }}" alt="Mark T" class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
-                            </div>
-                            <div class="flex justify-center text-yellow-400 mb-6 gap-1">
-                                <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
-                            </div>
-                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic. We visited all the major sites and learned so much about Egyptian culture and history."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Mark T</h4>
-                        </div>
-                    </div>
-
-                    <!-- Slide 3 -->
-                    <div class="swiper-slide h-auto">
-                        <div class="p-8 pt-0 rounded-2xl shadow-sm transition h-full flex flex-col items-center mt-12 relative">
-                            <div class="-mt-12 mb-6 relative z-10">
-                                <img src="{{ asset('images/testimonials/testimonial-4.jpg') }}" alt="Emily R" class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
-                            </div>
-                            <div class="flex justify-center text-yellow-400 mb-6 gap-1">
-                                <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
-                            </div>
-                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Our trip with Traveler Egypt Tours was nothing short of amazing. The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Emily R</h4>
-                        </div>
-                    </div>
-
-                    <!-- Slide 4 -->
-                    <div class="swiper-slide h-auto">
-                        <div class="p-8 pt-0 rounded-2xl shadow-sm transition h-full flex flex-col items-center mt-12 relative">
-                            <div class="-mt-12 mb-6 relative z-10">
-                                <img src="{{ asset('images/testimonials/testimonial-1.jpg') }}" alt="Sarah J" class="w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
-                            </div>
-                            <div class="flex justify-center text-yellow-400 mb-6 gap-1">
-                                <i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i><i class="fi fi-ss-star text-lg"></i>
-                            </div>
-                            <p class="text-gray-600 dark:text-gray-300 text-center mb-8 leading-relaxed italic flex-grow px-4">"Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend! The guides were incredibly knowledgeable."</p>
-                            <h4 class="text-center font-bold text-[#2A2C3E] dark:text-white text-xl">Sarah J</h4>
-                        </div>
-                    </div>
-                </div>
+        <div class="max-w-[1600px] mx-auto px-4 lg:px-8 relative">
+            
+            <!-- 1. Avatars Display (Fixed 5 Slots) -->
+            <!-- Added Swipe/Drag Listeners -->
+            <div class="relative h-[320px] mb-8 flex items-center justify-center gap-4 lg:gap-12 select-none cursor-grab active:cursor-grabbing"
+                 @touchstart="touchStartX = $event.changedTouches[0].screenX"
+                 @touchend="touchEndX = $event.changedTouches[0].screenX; checkSwipe()"
+                 @mousedown="touchStartX = $event.screenX"
+                 @mouseup="touchEndX = $event.screenX; checkSwipe()">
                 
-                <div class="swiper-button-next  opacity-0 group-hover:opacity-100 !w-12 !h-12 !bg-white !rounded-full !text-[#1c1c1c] !shadow-lg after:!content-none flex items-center justify-center hover:!bg-yellow-400 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="!w-4 !h-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                <!-- Helper for Sparkles -->
+                <template x-if="true">
+                    <svg style="display: none;">
+                        <symbol id="sparkle-icon" viewBox="0 0 91 43">
+                            <path d="M45.5 0L48 8L56 8.5L49 15L51 23L45.5 18.5L40 23L42 15L35 8.5L43 8L45.5 0Z" fill="#dd9e36"/>
+                            <path d="M20 20L22 25L27 25.5L23 29L24 34L20 31L16 34L17 29L13 25.5L18 25L20 20Z" fill="#dd9e36"/>
+                            <path d="M71 20L73 25L78 25.5L74 29L75 34L71 31L67 34L68 29L64 25.5L69 25L71 20Z" fill="#dd9e36"/>
+                        </symbol>
                     </svg>
+                </template>
+
+                <!-- Slot 1 (Far Left) - Clickable -->
+                <div class="flex flex-col items-center transition-all duration-500 transform scale-75 opacity-60 blur-[1px] hidden md:flex cursor-pointer hover:opacity-80"
+                     @click.stop="jump(-2)">
+                    <div class="mb-4">
+                        <svg class="w-16 h-8 text-gray-800 dark:text-gray-200"><use href="#sparkle-icon"></use></svg>
+                    </div>
+                    <div class="w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                         <img :src="visibleTestimonials[0].image" class="w-full h-full object-cover">
+                    </div>
                 </div>
-                <div class="swiper-button-prev  opacity-0 group-hover:opacity-100 !w-12 !h-12 !bg-white !rounded-full !text-[#1c1c1c] !shadow-lg after:!content-none flex items-center justify-center hover:!bg-yellow-400 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="!w-4 !h-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                    </svg>
+
+                <!-- Slot 2 (Left) - Clickable -->
+                <div class="flex flex-col items-center transition-all duration-500 transform scale-90 opacity-80 z-10 cursor-pointer hover:opacity-100 hover:scale-95"
+                     @click.stop="jump(-1)">
+                    <div class="mb-4">
+                        <svg class="w-16 h-8 text-gray-800 dark:text-gray-200"><use href="#sparkle-icon"></use></svg>
+                    </div>
+                    <div class="w-32 h-32 lg:w-48 lg:h-48 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gray-200">
+                         <img :src="visibleTestimonials[1].image" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Slot 3 (Center - Active) -->
+                <div class="flex flex-col items-center transition-all duration-500 z-20 transform scale-110 -translate-y-4">
+                    <!-- No Sparkle for Center -->
+                    <div class="w-48 h-48 lg:w-72 lg:h-72 rounded-full overflow-hidden border-[6px] border-[#dd9e36] shadow-2xl relative">
+                         <img :src="visibleTestimonials[2].image" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Slot 4 (Right) - Clickable -->
+                 <div class="flex flex-col items-center transition-all duration-500 transform scale-90 opacity-80 z-10 cursor-pointer hover:opacity-100 hover:scale-95"
+                      @click.stop="jump(1)">
+                    <div class="mb-4">
+                        <svg class="w-16 h-8 text-gray-800 dark:text-gray-200"><use href="#sparkle-icon"></use></svg>
+                    </div>
+                    <div class="w-32 h-32 lg:w-48 lg:h-48 rounded-full overflow-hidden border-4 border-white shadow-lg bg-gray-200">
+                         <img :src="visibleTestimonials[3].image" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- Slot 5 (Far Right) - Clickable -->
+                <div class="flex flex-col items-center transition-all duration-500 transform scale-75 opacity-60 blur-[1px] hidden md:flex cursor-pointer hover:opacity-80"
+                     @click.stop="jump(2)">
+                    <div class="mb-4">
+                        <svg class="w-16 h-8 text-gray-800 dark:text-gray-200"><use href="#sparkle-icon"></use></svg>
+                    </div>
+                    <div class="w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                         <img :src="visibleTestimonials[4].image" class="w-full h-full object-cover">
+                    </div>
                 </div>
             </div>
+
+            <!-- 2. Content Info -->
+            <div class="text-center max-w-4xl mx-auto px-4">
+                
+                <!-- Badge + Info Row -->
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 mb-8">
+                     <!-- Rating Badge -->
+                    <div class="bg-[#dd9e36] text-white px-5 py-2 rounded-full flex items-center gap-2 shadow-sm">
+                        <i class="fi fi-ss-star text-sm"></i>
+                        <span class="font-extrabold text-lg leading-none pt-0.5" x-text="testimonials[active].rate"></span>
+                    </div>
+
+                    <!-- Name & Role -->
+                    <div class="text-center md:text-left">
+                        <h3 class="text-3xl font-extrabold text-[#040404] dark:text-white uppercase font-display leading-none" x-text="testimonials[active].name"></h3>
+                        <p class="text-[#9CA3AF] text-lg font-medium font-display tracking-widest uppercase mt-1" x-text="testimonials[active].role"></p>
+                    </div>
+                </div>
+
+                <!-- Navigation + Text Row -->
+                <div class="flex items-center justify-between gap-4 md:gap-12">
+                     <!-- Prev Button -->
+                    <button @click="prev()" class="flex-shrink-0 w-14 h-14 rounded-full bg-[#F3F4F6] dark:bg-gray-700 hover:bg-[#FAD71B] dark:hover:bg-[#FAD71B] text-black dark:text-white transition-all flex items-center justify-center group shadow-sm z-10">
+                        <i class="fi fi-rr-arrow-small-left text-2xl group-hover:-translate-x-1 transition-transform"></i>
+                    </button>
+
+                    <!-- Quote Text -->
+                    <div class="relative min-h-[100px] flex items-center justify-center"> <!-- Min Height to prevent jumping -->
+                        <p class="text-[#0B0B0B] dark:text-gray-300 text-lg md:text-xl font-normal leading-relaxed md:px-8 transition-all duration-300"
+                           x-key="active"
+                           x-transition:enter="transition ease-out duration-300"
+                           x-transition:enter-start="opacity-0 transform translate-y-2"
+                           x-transition:enter-end="opacity-100 transform translate-y-0"
+                           x-text="testimonials[active].description">
+                        </p>
+                    </div>
+
+                    <!-- Next Button -->
+                    <button @click="next()" class="flex-shrink-0 w-14 h-14 rounded-full bg-[#F3F4F6] dark:bg-gray-700 hover:bg-[#FAD71B] dark:hover:bg-[#FAD71B] text-black dark:text-white transition-all flex items-center justify-center group shadow-sm z-10">
+                        <i class="fi fi-rr-arrow-small-right text-2xl group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </div>
+
+            </div>
+
         </div>
     </div>
 
@@ -634,30 +767,34 @@
             // ... (existing scripts)
 
             // Testimonial Swiper
+            // Testimonial Swiper
             new Swiper(".testimonialSwiper", {
-                slidesPerView: 1,
-                spaceBetween: 30,
+                slidesPerView: 3,
+                spaceBetween: 0,
+                centeredSlides: true,
                 loop: true,
+                slideToClickedSlide: true,
                 autoplay: {
-                    delay: 4500,
+                    delay: 5000,
                     disableOnInteraction: false,
                 },
                 navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev",
+                    nextEl: ".swiper-button-next-custom",
+                    prevEl: ".swiper-button-prev-custom",
+                },
+                on: {
+                    slideChange: function () {
+                        // Dispatch event for AlpineJS to update active index
+                        // We use realIndex because of the loop
+                        window.dispatchEvent(new CustomEvent('testimonial-change', { detail: this.realIndex }));
+                    },
                 },
                 breakpoints: {
                     640: {
-                        slidesPerView: 1,
-                        spaceBetween: 20,
-                    },
-                    768: {
-                        slidesPerView: 2,
-                        spaceBetween: 30,
+                        slidesPerView: 3,
                     },
                     1024: {
-                        slidesPerView: 3,
-                        spaceBetween: 30,
+                        slidesPerView: 5,
                     },
                 },
             });
