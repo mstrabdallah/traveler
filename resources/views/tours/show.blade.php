@@ -213,13 +213,41 @@
 
                     @if($tour->itinerary)
                         <h2 class="font-display text-[24px] text-primary-900 dark:text-white mt-12 mb-6">Itinerary</h2>
-                        <div class="space-y-8 border-l-2 border-accent-100 ml-3 pl-8 relative">
-                            @foreach($tour->itinerary as $day)
-                                <div class="relative">
-                                    <span class="absolute -left-[41px] top-1 h-6 w-6 rounded-full bg-accent-500 border-4 border-white dark:border-gray-800 shadow-sm ring-1 ring-accent-100 flex items-center justify-center"></span>
-                                    <h3 class="text-[18px] font-bold text-primary-900 dark:text-white">{{ $day['day_title'] }}</h3>
-                                    <div class="mt-2 text-[14px] text-gray-600 dark:text-gray-300 prose prose-sm max-w-none">
-                                        {!! $day['description'] !!}
+                        
+                        <div class="space-y-6" x-data="{ activeItems: [0] }">
+                            @foreach($tour->itinerary as $index => $day)
+                                <div class="bg-white dark:bg-gray-800 rounded-[10px] shadow-[0px_20px_95px_0px_rgba(201,203,204,0.30)] dark:shadow-none border border-[#e7ebee] dark:border-gray-700 overflow-hidden transition-all duration-300">
+                                    <button 
+                                        @click="activeItems.includes({{ $index }}) ? activeItems = activeItems.filter(i => i !== {{ $index }}) : activeItems.push({{ $index }})"
+                                        class="w-full flex items-center justify-start p-4 md:p-6 text-left focus:outline-none bg-neutral-50 dark:bg-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
+                                    >
+                                        <!-- Icon container -->
+                                        <div class="relative w-[30px] h-[30px] flex items-center justify-center mr-3 md:mr-8 shrink-0 ml-0 md:ml-4 transform scale-75 md:scale-100">
+                                            <!-- Horizontal Bar -->
+                                            <div class="absolute w-[30px] h-[3px] rounded-[20px] transition-colors duration-300"
+                                                 :class="activeItems.includes({{ $index }}) ? 'bg-[#fc5757]' : 'bg-[#1a1039] dark:bg-white'">
+                                            </div>
+                                            <!-- Vertical Bar -->
+                                            <div class="absolute w-[30px] h-[3px] rounded-[20px] bg-[#1a1039] dark:bg-white rotate-90 transition-all duration-300 origin-center"
+                                                 :class="activeItems.includes({{ $index }}) ? 'rotate-0 opacity-0' : 'rotate-90 opacity-100'">
+                                            </div>
+                                        </div>
+                                        
+                                        <h3 class="text-base md:text-lg font-medium text-[#313131] dark:text-gray-100 flex-1 leading-6">
+                                            {{ $day['day_title'] }}
+                                        </h3>
+                                    </button>
+                                    
+                                    <div x-show="activeItems.includes({{ $index }})" 
+                                         x-transition:enter="transition ease-out duration-200"
+                                         x-transition:enter-start="opacity-0 -translate-y-2"
+                                         x-transition:enter-end="opacity-100 translate-y-0"
+                                         class="bg-white dark:bg-gray-800"
+                                         style="display: none;"
+                                    >
+                                        <div class="p-4 md:p-8 pt-2 md:pt-2 pl-4 md:pl-[86px] text-[#575757] dark:text-gray-400 text-sm md:text-lg font-normal leading-relaxed prose prose-sm max-w-none">
+                                            {!! str_replace('<p><br></p>', '', $day['description']) !!}
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
@@ -350,7 +378,7 @@
                             this.isLoading = false;
                         });
                     }
-                }" class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden lg:sticky top-[160px]">
+                }" class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden lg:sticky lg:top-[160px]">
                     
                     <!-- Success Message Overlay -->
                     <div x-show="showSuccess" 
@@ -361,7 +389,7 @@
                         <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
                             <i class="fi fi-rr-check text-2xl text-green-600"></i>
                         </div>
-                        </div>
+
                         <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Booking Received!</h3>
                         <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-xs mx-auto">Thank you for booking with us. We will contact you shortly to confirm your details.</p>
                         <button @click="showSuccess = false; name=''; email=''; phone=''; date=''" class="bg-white border-2 border-green-600 text-green-700 font-bold py-2 px-6 rounded-full hover:bg-green-50 transition transform hover:-translate-y-0.5">

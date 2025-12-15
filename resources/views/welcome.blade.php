@@ -211,8 +211,11 @@
 
             <!-- Footer Button -->
             <div class="mt-12 text-center">
-                <a href="{{ route('destinations.index') }}" class="inline-block px-10 py-4 bg-[#2A2C3E] dark:bg-gray-700 text-white font-bold rounded-lg shadow-lg hover:bg-opacity-90 transition transform hover:-translate-y-1">
+                <a href="{{ route('destinations.index') }}" class="inline-flex items-center gap-3 bg-[#355fbf] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#2a4a9a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
                     All Destinations
+                    <div class="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition">
+                        <i class="fi fi-rr-arrow-small-right text-lg"></i>
+                    </div>
                 </a>
             </div>
         </div>
@@ -225,7 +228,7 @@
                      <!-- Headings -->
                     <div class="mb-9 relative text-center">
                         <div class="relative inline-block mb-1">
-                            <span class="  font-handwriting  text-yellow-500 text-5xl text-[#040404] dark:text-white relative z-10">Get to know us</span>
+                            <span class="  font-handwriting  text-yellow-500 text-5xl   dark:text-white relative z-10">Get to know us</span>
                         </div>
                         <h2 class="text-5xl lg:text-[4rem] font-display font-extrabold text-[#040404] dark:text-white leading-[1.1] uppercase tracking-tight">
                             Plan Your Trip With <br> Traveler Egypt Tours
@@ -296,8 +299,11 @@
                     </div>
 
                     <!-- CTA Button -->
-                    <a href="{{ route('tours.index') }}" class="inline-flex items-center justify-center px-10 py-4 bg-[#fad71b] hover:bg-[#eaca18] text-[#040404] font-display font-extrabold text-lg uppercase tracking-wider rounded-lg transition-transform hover:-translate-y-1 shadow-lg relative z-20">
+                    <a href="{{ route('tours.index') }}" class="inline-flex items-center gap-3 bg-[#355fbf] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#2a4a9a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group relative z-20">
                         Book Now
+                        <div class="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition">
+                            <i class="fi fi-rr-arrow-small-right text-lg"></i>
+                        </div>
                     </a>
 
                   
@@ -728,9 +734,12 @@
                     <span class="font-handwriting text-3xl text-yellow-500 block mb-2">From the blog post</span>
                     <h2 class="text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">News & Articles</h2>
                 </div>
-                <div>
-                     <a href="{{ route('articles.index') }}" class="inline-block px-8 py-3 bg-[#2A4A8A] text-white font-bold rounded-lg shadow-md hover:bg-opacity-90 transition transform hover:-translate-y-1">
+                <div class="hidden md:block">
+                     <a href="{{ route('articles.index') }}" class="inline-flex items-center gap-3 bg-[#355fbf] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#2a4a9a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
                         All Blogs
+                        <div class="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition">
+                            <i class="fi fi-rr-arrow-small-right text-lg"></i>
+                        </div>
                     </a>
                 </div>
             </div>
