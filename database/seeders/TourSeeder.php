@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Destination;
 use App\Models\Tour;
+use App\Models\TourCategory;
 use Illuminate\Database\Seeder;
 
 class TourSeeder extends Seeder
@@ -15,17 +16,23 @@ class TourSeeder extends Seeder
         $luxor = Destination::where('slug', 'luxor')->first();
         $sharm = Destination::where('slug', 'sharm-el-sheikh')->first();
 
+        // Get Categories
+        $travelPackages = TourCategory::where('slug', 'travel-packages')->first();
+        $dayTours = TourCategory::where('slug', 'day-tours')->first();
+        $nileCruises = TourCategory::where('slug', 'nile-cruises')->first();
+        $shoreExcursions = TourCategory::where('slug', 'shore-excursions')->first();
+
         // Tour 1: Alexandria City Tour
         if ($alexandria) {
-            Tour::updateOrCreate(
+            $tour = Tour::updateOrCreate(
                 ['slug' => 'alexandria-city-tour-from-alexandria-port'],
                 [
                     'name' => 'Alexandria City Tour from Alexandria Port',
                     'destination_id' => $alexandria->id,
-                    'price' => 119.00, // Lowest price for visual reference
+                    'price' => 119.00,
                     'duration_days' => 1,
                     'duration_nights' => 0,
-                    'type' => 'Private Day Tour',
+                    'tour_type' => 'Private Day Tour',
                     'availability' => 'Daily',
                     'description' => '<p>See the wonders of the second city of Egypt by leaving your ship in port. Explore the Kom Al Shoqafa Catacombs, the Qaitbay Citadel, the rebuilt Bibliotheca Alexandrina, and more…</p>
                     <p><strong>Overview:</strong></p>
@@ -64,11 +71,15 @@ class TourSeeder extends Seeder
                     ]
                 ]
             );
+
+            if ($dayTours && $shoreExcursions) {
+                $tour->categories()->sync([$dayTours->id, $shoreExcursions->id]);
+            }
         }
 
         // Tour 2: Pyramids Day Tour
         if ($cairo) {
-            Tour::updateOrCreate(
+            $tour = Tour::updateOrCreate(
                 ['slug' => 'giza-pyramids-sphinx-tour'],
                 [
                     'name' => 'Giza Pyramids & Sphinx Half Day Tour',
@@ -76,10 +87,11 @@ class TourSeeder extends Seeder
                     'price' => 60.00,
                     'duration_days' => 1,
                     'duration_nights' => 0,
-                    'type' => 'Private Half Day Tour',
+                    'tour_type' => 'Private Half Day Tour',
                     'availability' => 'Daily',
                     'description' => '<p>Visit the Great Pyramids of Giza and the Sphinx with a private guide.</p>',
                     'is_featured' => true,
+                    'is_active' => true,
                     'itinerary' => [
                         [
                             'day_title' => 'Pyramids & Sphinx',
@@ -100,11 +112,15 @@ class TourSeeder extends Seeder
                     ]
                 ]
             );
+
+            if ($dayTours) {
+                $tour->categories()->sync([$dayTours->id]);
+            }
         }
 
          // Tour 3: Sharm El-Sheikh Adventure
          if ($sharm) {
-            Tour::updateOrCreate(
+            $tour = Tour::updateOrCreate(
                 ['slug' => 'sharm-el-sheikh-complete-adventure'],
                 [
                     'name' => 'Sharm El-Sheikh Complete Adventure',
@@ -112,10 +128,11 @@ class TourSeeder extends Seeder
                     'price' => 450.00,
                     'duration_days' => 4,
                     'duration_nights' => 3,
-                    'type' => 'Adventure Package',
+                    'tour_type' => 'Adventure Package',
                     'availability' => 'Sundays',
                     'description' => '<p>4 days of fun in the sun including snorkeling, desert safari, and relaxation.</p>',
                     'is_featured' => true,
+                    'is_active' => true,
                     'itinerary' => [
                         ['day_title' => 'Day 1', 'description' => 'Arrival and Hotel Check-in'],
                         ['day_title' => 'Day 2', 'description' => 'Ras Mohammed Snorkeling Trip'],
@@ -135,6 +152,10 @@ class TourSeeder extends Seeder
                     ]
                 ]
             );
+
+            if ($travelPackages) {
+                $tour->categories()->sync([$travelPackages->id]);
+            }
         }
     }
 }

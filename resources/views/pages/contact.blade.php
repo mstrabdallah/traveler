@@ -27,7 +27,10 @@
                             
                             <input type="email" name="email" required placeholder="Email Address" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
                             
-                            <input type="tel" name="phone" placeholder="Phone Number" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
+                            <div class="relative w-full">
+                                <input type="tel" id="phone" name="phone_input" placeholder="Phone Number" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
+                                <input type="hidden" name="phone" id="full_phone">
+                            </div>
                             
                             <input type="text" name="subject" placeholder="Subject" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
                         </div>
@@ -44,24 +47,30 @@
 
                 <!-- Right Column: Contact Info Card -->
                 <div class="lg:col-span-1">
-                    <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm h-full flex flex-col justify-center">
+                    <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm  flex flex-col justify-center">
                         <h2 class="text-4xl font-bold text-yellow-500 mb-10">Contact us</h2>
                         
                         <div class="space-y-8 mb-12">
-                            <div class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400">
-                                <i class="fi fi-rr-phone-call text-xl"></i>
+                            <a href="tel:01141812709" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-yellow-100 dark:group-hover:bg-yellow-900/30 transition-colors">
+                                    <i class="fi fi-rr-phone-call text-xl"></i>
+                                </div>
                                 <span class="text-lg font-medium">01141812709</span>
-                            </div>
+                            </a>
                             
-                            <div class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400">
-                                <i class="fi fi-rr-envelope text-xl"></i>
+                            <a href="mailto:info@traveleregypt.com" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-yellow-100 dark:group-hover:bg-yellow-900/30 transition-colors">
+                                    <i class="fi fi-rr-envelope text-xl"></i>
+                                </div>
                                 <span class="text-lg font-medium">info@traveleregypt.com</span>
-                            </div>
+                            </a>
                             
-                            <div class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400">
-                                <i class="fi fi-rr-marker text-xl"></i>
+                            <a href="https://maps.app.goo.gl/9u3J3Y5P7mD6hEFA9" target="_blank" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
+                                <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-yellow-100 dark:group-hover:bg-yellow-900/30 transition-colors">
+                                    <i class="fi fi-rr-marker text-xl"></i>
+                                </div>
                                 <span class="text-lg font-medium">72 King Faisal Street</span>
-                            </div>
+                            </a>
                         </div>
 
                         <div class="flex gap-4">
@@ -91,4 +100,59 @@
             </iframe>
         </div>
     </div>
+
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const phoneInput = document.querySelector("#phone");
+                const fullPhoneInput = document.querySelector("#full_phone");
+                
+                const iti = window.intlTelInput(phoneInput, {
+                    initialCountry: "auto",
+                    geoIpLookup: function(success, failure) {
+                        fetch("https://ipapi.co/json")
+                            .then(res => res.json())
+                            .then(data => success(data.country_code))
+                            .catch(() => success("eg"));
+                    },
+                    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/js/utils.js",
+                    separateDialCode: true,
+                    preferredCountries: ["eg", "ae", "sa", "us", "gb"]
+                });
+
+                // Update hidden input with full number on change
+                const handleChange = () => {
+                    fullPhoneInput.value = iti.getNumber();
+                };
+
+                phoneInput.addEventListener('change', handleChange);
+                phoneInput.addEventListener('keyup', handleChange);
+            });
+        </script>
+        <style>
+            .iti { width: 100% !important; display: block !important; }
+            .iti__country-list { 
+                background-color: white !important;
+                color: #333 !important;
+                border-radius: 12px !important;
+                margin-top: 10px !important;
+                border: 1px solid #eee !important;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1) !important;
+                z-index: 100 !important;
+            }
+            .dark .iti__country-list {
+                background-color: #1f2937 !important;
+                color: #e5e7eb !important;
+                border: 1px solid #374151 !important;
+            }
+            .iti__selected-flag {
+                background-color: transparent !important;
+                border-radius: 12px 0 0 12px !important;
+                padding-left: 15px !important;
+            }
+            .dark .iti__country-list .iti__country.iti__highlight {
+                background-color: #374151 !important;
+            }
+        </style>
+    @endpush
 </x-layouts.app>

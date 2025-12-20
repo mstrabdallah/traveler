@@ -12,74 +12,99 @@
         }
     @endphp
 
-    <!-- Hero Slider -->
-    <div class="relative h-[450px] bg-gray-900 group">
+    <!-- Hero Slider Section -->
+    <div class="relative h-[500px] lg:h-[600px] w-full overflow-hidden group">
         <!-- Swiper -->
-        <div class="swiper mySwiper h-full">
+        <div class="swiper mySwiper h-full w-full">
             <div class="swiper-wrapper">
                  @foreach($heroImages as $image)
-                    <div class="swiper-slide relative border-r-4 border-white h-full">
+                    <div class="swiper-slide h-full w-full">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 z-10"></div>
                          @if($image === 'placeholder')
-                            <img src="https://placehold.co/1200x600" class="h-full w-full object-cover">
+                            <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=2000&q=80" class="h-full w-full object-cover transform transition-transform duration-[10s] group-hover:scale-110">
                          @else
-                            <img src="{{ Storage::url($image) }}" class="h-full w-full object-cover">
+                            <img src="{{ Storage::url($image) }}" class="h-full w-full object-cover transform transition-transform duration-[10s] group-hover:scale-110">
                          @endif
                     </div>
                 @endforeach
             </div>
             
             <!-- Navigation Buttons -->
-            <div class="swiper-button-next !text-gray-900 !w-12 !h-12 !bg-white !shadow-lg !rounded-full after:!text-lg hover:!scale-105 transition-transform !z-50"></div>
-            <div class="swiper-button-prev !text-gray-900 !w-12 !h-12 !bg-white !shadow-lg !rounded-full after:!text-lg hover:!scale-105 transition-transform !z-50"></div>
+            <div class="swiper-button-next !w-14 !h-14 !bg-white/10 !backdrop-blur-md !border !border-white/20 !rounded-2xl !text-white after:!text-xl hover:!bg-blue-600 transition-all duration-300 !right-8"></div>
+            <div class="swiper-button-prev !w-14 !h-14 !bg-white/10 !backdrop-blur-md !border !border-white/20 !rounded-2xl !text-white after:!text-xl hover:!bg-blue-600 transition-all duration-300 !left-8"></div>
+            
+            <!-- Pagination -->
+            <div class="swiper-pagination !bottom-8"></div>
         </div>
 
-        <!-- Camera Badge -->
-        <div class="absolute bottom-6 right-6 z-20 pointer-events-none">
-             <span class="bg-gray-900/80 backdrop-blur text-white px-3 py-1.5 rounded-lg text-sm font-semibold flex items-center gap-2">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
-                  <path d="M12 9a3.75 3.75 0 1 0 0 7.5A3.75 3.75 0 0 0 12 9Z" />
-                  <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 0 1 5.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 0 1-3 3h-15a3 3 0 0 1-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 0 0 1.11-.71l.822-1.315a2.942 2.942 0 0 1 2.332-1.39ZM6.75 12.75a5.25 5.25 0 1 1 10.5 0 5.25 5.25 0 0 1-10.5 0Zm12-1.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
-                </svg>
-                {{ count($tour->images ?? []) }}
-             </span>
+        <!-- Floating Badge: Image Count -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
+             <div class="flex items-center gap-2 bg-black/30 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-full text-white text-xs font-black uppercase tracking-widest shadow-2xl">
+                <i class="fi fi-rr-camera text-blue-400"></i>
+                <span class="opacity-80">Explore Gallery</span>
+                <span class="w-px h-3 bg-white/20 mx-1"></span>
+                <span>{{ count($tour->images ?? []) }} Photos</span>
+             </div>
         </div>
     </div>
 
-    <!-- Summary Bar -->
-    <div class="bg-[#FFF8D6] dark:bg-gray-800 p-8 transition-colors">
-        <div class="flex flex-col lg:flex-row items-center justify-between">
-            <!-- Title Section -->
-            <div class="w-full md:w-auto text-center md:text-left">
-                <h1 class="text-3xl font-bold text-accent-600 font-display leading-tight">{{ $tour->name }}</h1>
-            </div>
-            
-            <!-- Details Section -->
-            <div class="w-full md:w-auto flex flex-wrap items-center justify-center md:justify-end gap-6 sm:gap-8 lg:gap-12 text-gray-800">
-                <div class="flex items-start gap-3">
-                    <i class="fi fi-rr-calendar-check text-3xl text-accent-500"></i>
-                    <div>
-                        <p class="text-sm font-bold text-gray-900 dark:text-white leading-none mb-1">From</p>
-                        <p class="font-bold text-lg leading-none dark:text-gray-200">${{ number_format($tour->price, 2) }}</p>
-                    </div>
+    <!-- Redesigned Summary Bar -->
+    <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 shadow-sm relative z-30">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 lg:py-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+                <!-- Title Section -->
+                <div class="flex-1 text-center lg:text-left">
+                    <h1 class="text-3xl lg:text-5xl font-black text-gray-900 dark:text-white font-display leading-[1.1] tracking-tight">
+                        {{ $tour->name }}
+                    </h1>
                 </div>
-
-                <div class="flex items-start gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-accent-600 flex-shrink-0">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                    <div>
-                        <p class="text-sm font-bold text-gray-900 dark:text-white leading-none mb-1">Duration</p>
-                        <p class="font-bold text-lg leading-none dark:text-gray-200">{{ $tour->duration_days }} days</p>
+                
+                <!-- Metrics Section -->
+                <div class="flex flex-wrap items-center justify-center lg:justify-end gap-6 lg:gap-12">
+                    <!-- Price Card -->
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 flex-shrink-0 border border-blue-100 dark:border-blue-800">
+                            <i class="fi fi-rr-usd-circle text-2xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">Price From</p>
+                            @if($tour->sale_price)
+                                <div class="flex items-center gap-2">
+                                    <p class="text-3xl font-black text-gray-900 dark:text-white">${{ number_format($tour->sale_price) }}</p>
+                                    <p class="text-sm font-bold text-gray-400 line-through">${{ number_format($tour->price) }}</p>
+                                </div>
+                            @else
+                                <p class="text-3xl font-black text-gray-900 dark:text-white">${{ number_format($tour->price) }}</p>
+                            @endif
+                        </div>
                     </div>
-                </div>
 
-                 <div class="flex items-start gap-3">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-accent-600 flex-shrink-0">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                    </svg>
-                    <div>
-                        <p class="text-sm font-bold text-gray-900 dark:text-white leading-none mb-1">Tour Type</p>
-                        <p class="font-bold text-lg text-yellow-600 dark:text-yellow-500 leading-none">Private Tour</p>
+                    <!-- Vertical Divider -->
+                    <div class="hidden lg:block w-px h-16 bg-gray-100 dark:bg-gray-800"></div>
+
+                    <!-- Duration Card -->
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-500 flex-shrink-0 border border-orange-100 dark:border-orange-800">
+                            <i class="fi fi-rr-clock text-2xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">Duration</p>
+                            <p class="text-2xl font-black text-gray-900 dark:text-white">{{ $tour->duration_days }} <span class="text-sm font-bold opacity-60">Days</span></p>
+                        </div>
+                    </div>
+
+                    <!-- Type Card -->
+                    <div class="flex items-center gap-5 p-4 lg:p-0">
+                        <div class="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-500 flex-shrink-0 border border-green-100 dark:border-green-800">
+                            <i class="fi fi-rr-map-marker text-2xl"></i>
+                        </div>
+                        <div class="text-left">
+                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">Tour Type</p>
+                            <a href="/tailor-made" class="text-xl font-black text-gray-900 dark:text-white hover:text-blue-600 transition-colors flex items-center gap-1 group/link">
+                                Private
+                                <i class="fi fi-rr-arrow-small-right text-gray-400 group-hover/link:translate-x-1 group-hover/link:text-blue-600 transition-all"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -127,193 +152,339 @@
         <div class="lg:grid lg:grid-cols-3 lg:gap-12">
             <!-- Left Column: Content -->
             <div class="lg:col-span-2">
-                <div class="prose prose-lg prose-indigo text-gray-600 dark:text-gray-300 max-w-none">
-                    <h2 class="font-display text-[24px] text-primary-900 dark:text-white">Overview</h2>
-                    <div class="mt-4 text-[14px] text-gray-700 dark:text-gray-300">
-                        {!! $tour->description !!}
-                    </div>
-                
-                    @if($tour->included || $tour->excluded)
-                        <div class="grid md:grid-cols-2 gap-8 mt-12">
-                            @if($tour->included)
-                                <div>
-                                    <h3 class="font-display text-[18px] text-primary-900 dark:text-white mb-4 flex items-center gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Included
-                                    </h3>
-                                    <ul class="space-y-3">
-                                        @foreach($tour->included as $item)
-                                            <li class="flex items-start gap-3 text-[14px]">
-                                                <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-green-500"></span>
-                                                <span>{{ is_array($item) ? $item['item'] : $item }}</span>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
-
-                            @if($tour->excluded)
-                                <div>
-                                    <h3 class="font-display text-[18px] text-primary-900 dark:text-white mb-4 flex items-center gap-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                        </svg>
-                                        Excluded
-                                    </h3>
-                                    <ul class="space-y-3">
-                                         @foreach($tour->excluded as $item)
-                                            <li class="flex items-start gap-3 text-[14px]">
-                                                <span class="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-red-500"></span>
-                                                <span>{{ is_array($item) ? $item['item'] : $item }}</span>
-                                            </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                            @endif
+                <div class="mb-12">
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+                        <!-- Card Header -->
+                        <div class="bg-[#F0FAFF] dark:bg-blue-900/20 px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center gap-3">
+                            <span class="p-2 bg-blue-500 rounded-lg shadow-lg shadow-blue-500/20 h-[39px]">
+                                <i class="fi fi-rr-paper-plane text-white text-lg"></i>
+                            </span>
+                            <h2 class="font-display text-xl font-bold text-[#1a1039] dark:text-white m-0">Tour Details</h2>
                         </div>
-                    @endif
-
-
-
-                    @if($tour->has_price_tiers && $tour->price_tiers)
-                        <h2 class="font-display text-[24px] text-primary-900 dark:text-white mt-12 mb-6">Price Tiers</h2>
-                        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm mb-12">
-                            <table class="w-full text-left text-[14px] text-gray-500 dark:text-gray-400 m-auto">
-                                <thead class="bg-gray-50 dark:bg-gray-700 text-xs uppercase text-gray-700 dark:text-gray-200">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-4 font-bold">Number of People</th>
-                                        <th scope="col" class="px-6 py-4 font-bold text-right">Price per Person</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-800">
-                                    @foreach($tour->price_tiers as $tier)
-                                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-                                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                                                {{ $tier['min_people'] }}  
-                                                @if(isset($tier['max_people']) && $tier['max_people'] > $tier['min_people'])
-                                                    - {{ $tier['max_people'] }}
-                                                @elseif(isset($tier['max_people']) && $tier['max_people'] == $tier['min_people'])
-                                                @else
-                                                    +
-                                                @endif
-                                                People
-                                            </td>
-                                            <td class="px-6 py-4 text-right font-bold text-blue-600">
-                                                ${{ number_format($tier['price_per_person'], 2) }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    @endif
-
-
-                    @if($tour->itinerary)
-                        <h2 class="font-display text-[24px] text-primary-900 dark:text-white mt-12 mb-6">Itinerary</h2>
                         
-                        <div class="space-y-6" x-data="{ activeItems: [0] }">
-                            @foreach($tour->itinerary as $index => $day)
-                                <div class="bg-white dark:bg-gray-800 rounded-[10px] shadow-[0px_20px_95px_0px_rgba(201,203,204,0.30)] dark:shadow-none border border-[#e7ebee] dark:border-gray-700 overflow-hidden transition-all duration-300">
-                                    <button 
-                                        @click="activeItems.includes({{ $index }}) ? activeItems = activeItems.filter(i => i !== {{ $index }}) : activeItems.push({{ $index }})"
-                                        class="w-full flex items-center justify-start p-4 md:p-6 text-left focus:outline-none bg-neutral-50 dark:bg-gray-800/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors"
-                                    >
-                                        <!-- Icon container -->
-                                        <div class="relative w-[30px] h-[30px] flex items-center justify-center mr-3 md:mr-8 shrink-0 ml-0 md:ml-4 transform scale-75 md:scale-100">
-                                            <!-- Horizontal Bar -->
-                                            <div class="absolute w-[30px] h-[3px] rounded-[20px] transition-colors duration-300"
-                                                 :class="activeItems.includes({{ $index }}) ? 'bg-[#fc5757]' : 'bg-[#1a1039] dark:bg-white'">
-                                            </div>
-                                            <!-- Vertical Bar -->
-                                            <div class="absolute w-[30px] h-[3px] rounded-[20px] bg-[#1a1039] dark:bg-white rotate-90 transition-all duration-300 origin-center"
-                                                 :class="activeItems.includes({{ $index }}) ? 'rotate-0 opacity-0' : 'rotate-90 opacity-100'">
-                                            </div>
+                        <!-- Card Body -->
+                        <div class="divide-y divide-gray-100 dark:divide-gray-700">
+                            <!-- Duration -->
+                            <div class="flex items-center justify-between px-6 py-4 group hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                <div class="flex items-center gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center">
+                                        <i class="fi fi-rr-hourglass-end text-orange-500"></i>
+                                    </div>
+                                    <span class="text-[#313131] dark:text-gray-200 font-medium">Duration</span>
+                                </div>
+                                <span class="text-[#575757] dark:text-gray-400 font-bold">
+                                    {{ $tour->duration_days }} Days / {{ $tour->duration_nights ?? ($tour->duration_days - 1) }} Nights
+                                </span>
+                            </div>
+
+                            <!-- Tour Location -->
+                            <div class="flex items-center justify-between px-6 py-4 bg-[#F0FAFF]/30 dark:bg-blue-900/5 group hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                <div class="flex items-center gap-4">
+                                     <div class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center">
+                                        <i class="fi fi-rr-map-marker text-green-500"></i>
+                                    </div>
+                                    <span class="text-[#313131] dark:text-gray-200 font-medium">Tour Location</span>
+                                </div>
+                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->destination->name }}</span>
+                            </div>
+
+                            <!-- Tour Availability -->
+                            <div class="flex items-center justify-between px-6 py-4 group hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                <div class="flex items-center gap-4">
+                                     <div class="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
+                                        <i class="fi fi-rr-calendar text-red-500"></i>
+                                    </div>
+                                    <span class="text-[#313131] dark:text-gray-200 font-medium">Tour Availability</span>
+                                </div>
+                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->availability ?? 'Everyday' }}</span>
+                            </div>
+
+                            <!-- Pickup & Drop Off -->
+                            <div class="flex items-center justify-between px-6 py-4 bg-[#F0FAFF]/30 dark:bg-blue-900/5 group hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                <div class="flex items-center gap-4">
+                                     <div class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
+                                        <i class="fi fi-rr-marker text-blue-500"></i>
+                                    </div>
+                                    <span class="text-[#313131] dark:text-gray-200 font-medium">Pickup & Drop Off</span>
+                                </div>
+                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->pickup_location ?? 'Cairo Airport' }}</span>
+                            </div>
+
+                             <!-- Tour Type -->
+                             <div class="flex items-center justify-between px-6 py-4 group hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                 <div class="flex items-center gap-4">
+                                      <div class="w-10 h-10 rounded-full bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center">
+                                         <i class="fi fi-rr-plane-alt text-sky-500"></i>
+                                     </div>
+                                     <span class="text-[#313131] dark:text-gray-200 font-medium">Tour Categories</span>
+                                 </div>
+                                 <div class="flex flex-wrap justify-end gap-2">
+                                     @forelse($tour->categories as $category)
+                                         <span class="px-3 py-1 bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-xs font-bold rounded-full">
+                                             {{ $category->name }}
+                                         </span>
+                                     @empty
+                                         <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->tour_type ?? 'General Tour' }}</span>
+                                     @endforelse
+                                 </div>
+                             </div>
+                        </div>
+
+                        <!-- Tour Overview (Merged) -->
+                        @if($tour->description)
+                            <div class="px-6 py-8 border-t border-gray-100 dark:border-gray-700 bg-gray-50/30 dark:bg-gray-800/50">
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                                    <i class="fi fi-rr-info text-blue-500 text-sm"></i> Tour Overview
+                                </h3>
+                                <div class="text-gray-600 dark:text-gray-300 leading-relaxed text-[15px] prose prose-sm dark:prose-invert max-w-none">
+                                    {!! $tour->description !!}
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="space-y-10">
+                    <!-- Included / Excluded Section -->
+                    @if($tour->included || $tour->excluded)
+                        <section>
+                            <h2 class="font-display text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                                <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                                What's Included
+                            </h2>
+                            <div class="grid md:grid-cols-2 gap-6">
+                                @if($tour->included)
+                                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden flex flex-col">
+                                        <div class="px-6 py-4 border-b border-gray-50 dark:border-gray-700">
+                                            <h3 class="text-sm font-bold text-gray-800 dark:text-white m-0 flex items-center gap-2">
+                                                <i class="fi fi-rr-check-circle text-green-500"></i> Included
+                                            </h3>
                                         </div>
-                                        
-                                        <h3 class="text-base md:text-lg font-medium text-[#313131] dark:text-gray-100 flex-1 leading-6">
-                                            {{ $day['day_title'] }}
-                                        </h3>
-                                    </button>
-                                    
-                                    <div x-show="activeItems.includes({{ $index }})" 
-                                         x-transition:enter="transition ease-out duration-200"
-                                         x-transition:enter-start="opacity-0 -translate-y-2"
-                                         x-transition:enter-end="opacity-100 translate-y-0"
-                                         class="bg-white dark:bg-gray-800"
-                                         style="display: none;"
-                                    >
-                                        <div class="p-4 md:p-8 pt-2 md:pt-2 pl-4 md:pl-[86px] text-[#575757] dark:text-gray-400 text-sm md:text-lg font-normal leading-relaxed prose prose-sm max-w-none">
-                                            {!! str_replace('<p><br></p>', '', $day['description']) !!}
+                                        <div class="p-6 flex-1">
+                                            <ul class="space-y-3">
+                                                @foreach($tour->included as $item)
+                                                    <li class="flex items-start gap-3 group">
+                                                        <i class="fi fi-rr-check text-green-500/70 mt-1 text-[10px]"></i>
+                                                        <span class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">{{ is_array($item) ? $item['item'] : $item }}</span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                         </div>
                                     </div>
-                                </div>
-                            @endforeach
-                        </div>
+                                @endif
+
+                                @if($tour->excluded)
+                                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden flex flex-col">
+                                        <div class="px-6 py-4 border-b border-gray-50 dark:border-gray-700">
+                                            <h3 class="text-sm font-bold text-gray-800 dark:text-white m-0 flex items-center gap-2">
+                                                <i class="fi fi-rr-cross-circle text-red-500"></i> Excluded
+                                            </h3>
+                                        </div>
+                                        <div class="p-6 flex-1">
+                                            <ul class="space-y-3">
+                                                @foreach($tour->excluded as $item)
+                                                    <li class="flex items-start gap-3 group">
+                                                        <i class="fi fi-rr-cross text-red-500/70 mt-1 text-[10px]"></i>
+                                                        <span class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">{{ is_array($item) ? $item['item'] : $item }}</span>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        </section>
                     @endif
 
 
+
+                    <!-- Pricing Section -->
+                    @if($tour->has_price_tiers || $tour->has_seasonal_prices)
+                        <section class="mt-12">
+                            <h2 class="font-display text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                                <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                                {{ $tour->has_price_tiers ? 'Group Discount Rates' : 'Seasonal Price Variations' }}
+                            </h2>
+                            
+                            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
+                                {{-- Group Discount Tiers (Table View) --}}
+                                @if($tour->has_price_tiers && $tour->price_tiers)
+                                    <div class="overflow-x-auto">
+                                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                            <thead>
+                                                <tr class="bg-[#F0FAFF] dark:bg-blue-900/10">
+                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider border-r border-gray-100 dark:border-gray-700 last:border-0">Number of Guests</th>
+                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider border-r border-gray-100 dark:border-gray-700 last:border-0">Adult Price</th>
+                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Child Price</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                                                {{-- Solo Row --}}
+                                                @if($tour->solo_price)
+                                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                                        <td class="px-6 py-4 whitespace-nowrap border-r border-gray-50 dark:border-gray-700 last:border-0">
+                                                            <div class="flex items-center gap-3 text-gray-900 dark:text-white font-bold">
+                                                                <i class="fi fi-rr-user text-blue-500/50"></i>
+                                                                <span>Solo Traveler</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap border-r border-gray-50 dark:border-gray-700 last:border-0">
+                                                            <span class="text-lg font-black text-gray-900 dark:text-white">${{ number_format($tour->solo_price) }}</span>
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                            <span class="text-sm font-bold text-blue-600 dark:text-blue-400">${{ $tour->child_solo_price ? number_format($tour->child_solo_price) : '-' }}</span>
+                                                        </td>
+                                                    </tr>
+                                                @endif
+
+                                                {{-- Tier Rows --}}
+                                                @foreach($tour->price_tiers as $tier)
+                                                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                                        <td class="px-6 py-4 whitespace-nowrap border-r border-gray-50 dark:border-gray-700 last:border-0">
+                                                            <div class="flex items-center gap-3 text-gray-600 dark:text-gray-300 font-medium">
+                                                                <i class="fi fi-rr-users text-gray-400"></i>
+                                                                <span>{{ $tier['min_people'] }}{{ (isset($tier['max_people']) && $tier['max_people'] > $tier['min_people']) ? '-' . $tier['max_people'] : '+' }} Persons</span>
+                                                            </div>
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap border-r border-gray-50 dark:border-gray-700 last:border-0">
+                                                            <span class="text-lg font-black text-gray-900 dark:text-white">${{ number_format($tier['price_per_person']) }}</span>
+                                                        </td>
+                                                        <td class="px-6 py-4 whitespace-nowrap">
+                                                            <span class="text-sm font-bold text-blue-600 dark:text-blue-400">
+                                                                ${{ isset($tier['child_price_per_person']) ? number_format($tier['child_price_per_person']) : number_format($tier['price_per_person'] * 0.5) }}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                @endif
+
+                                {{-- Seasonal Variations (Card Grid View) --}}
+                                @if($tour->has_seasonal_prices && $tour->seasonal_prices)
+                                    <div class="p-6 sm:p-8">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                            @foreach($tour->seasonal_prices as $season)
+                                                <div class="bg-gray-50/50 dark:bg-gray-900/50 rounded-2xl border border-gray-100 dark:border-gray-700 p-5 group hover:border-orange-500 hover:bg-white dark:hover:bg-gray-900 transition-all duration-300 shadow-sm hover:shadow-md">
+                                                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-gray-100 dark:border-gray-800">
+                                                        <div class="flex items-center gap-2">
+                                                            <div class="w-8 h-8 rounded-lg bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center">
+                                                                <i class="fi fi-rr-calendar-star text-orange-600 text-sm"></i>
+                                                            </div>
+                                                            <span class="text-sm font-bold text-gray-900 dark:text-white tracking-tight">{{ $season['name'] }}</span>
+                                                        </div>
+                                                        <span class="text-[10px] font-black text-orange-600/60 uppercase tracking-widest">Season</span>
+                                                    </div>
+                                                    
+                                                    <div class="space-y-4">
+                                                        <div class="flex justify-between items-end bg-white dark:bg-gray-800 p-3 rounded-xl border border-gray-50 dark:border-gray-700 shadow-sm">
+                                                            <div class="text-left">
+                                                                <p class="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase flex items-center gap-1"><i class="fi fi-rr-user"></i> Solo Adult</p>
+                                                                <h4 class="text-xl font-black text-gray-900 dark:text-white">${{ number_format($season['solo_price'] ?? $tour->solo_price) }}</h4>
+                                                            </div>
+                                                            <div class="text-right">
+                                                                <p class="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase flex items-center justify-end gap-1"><i class="fi fi-rr-child-head"></i> Solo Child</p>
+                                                                <h4 class="text-lg font-black text-orange-600 dark:text-orange-400">${{ number_format($season['child_solo_price'] ?? $tour->child_solo_price) }}</h4>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <div class="bg-blue-600/5 dark:bg-blue-400/5 px-4 py-2 rounded-lg flex items-center justify-center gap-3 text-gray-500 dark:text-gray-400">
+                                                            <i class="fi fi-rr-calendar-check text-xs"></i>
+                                                            <span class="text-[11px] font-bold uppercase tracking-widest">
+                                                                {{ \Carbon\Carbon::parse($season['start_date'])->format('d M') }} - {{ \Carbon\Carbon::parse($season['end_date'])->format('d M') }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                            </div>
+                        </section>
+                    @endif
+
+
+                    <!-- Itinerary Section -->
+                    @if($tour->itinerary)
+                        <section>
+                            <h2 class="font-display text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                                <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                                Daily Itinerary
+                            </h2>
+                            <div class="space-y-4" x-data="{ activeItems: [0] }">
+                                @foreach($tour->itinerary as $index => $day)
+                                    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden transition-all duration-300">
+                                        <button 
+                                            @click="activeItems.includes({{ $index }}) ? activeItems = activeItems.filter(i => i !== {{ $index }}) : activeItems.push({{ $index }})"
+                                            class="w-full flex items-center justify-between p-5 text-left focus:outline-none hover:bg-gray-50/50 dark:hover:bg-gray-700/50 transition-colors"
+                                        >
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-colors"
+                                                     :class="activeItems.includes({{ $index }}) ? 'bg-blue-600 text-white' : 'bg-blue-50 text-blue-600 dark:bg-blue-900/20'">
+                                                    {{ $index + 1 }}
+                                                </div>
+                                                <h3 class="text-base font-bold text-gray-800 dark:text-gray-100 leading-tight">
+                                                    {{ $day['day_title'] }}
+                                                </h3>
+                                            </div>
+                                            <i class="fi fi-rr-angle-small-down transform transition-transform duration-300 text-lg text-gray-400"
+                                               :class="activeItems.includes({{ $index }}) ? 'rotate-180 text-blue-600' : ''"></i>
+                                        </button>
+                                        
+                                        <div x-show="activeItems.includes({{ $index }})" 
+                                             x-collapse
+                                             class="bg-white dark:bg-gray-800"
+                                        >
+                                            <div class="px-5 pb-6 pt-0 ml-[52px] text-gray-600 dark:text-gray-400 text-sm leading-relaxed border-l border-gray-100 dark:border-gray-700">
+                                                <div class="prose prose-sm dark:prose-invert max-w-none">
+                                                    {!! str_replace('<p><br></p>', '', $day['description']) !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </section>
+                    @endif
+                    
+                    <!-- Map Section -->
+                    @if($tour->map_url)
+                        <section>
+                            <h2 class="font-display text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
+                                <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+                                Location Map
+                            </h2>
+                            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden p-3 group">
+                                @if(str_contains($tour->map_url, 'google.com/maps') || str_contains($tour->map_url, 'maps.google.com'))
+                                    <div class="rounded-xl overflow-hidden relative">
+                                        <iframe 
+                                            src="{{ $tour->map_url }}" 
+                                            width="100%" 
+                                            height="400" 
+                                            style="border:0;" 
+                                            allowfullscreen="" 
+                                            loading="lazy" 
+                                            referrerpolicy="no-referrer-when-downgrade"
+                                            class="grayscale-[30%] group-hover:grayscale-0 transition-all duration-700"
+                                        ></iframe>
+                                    </div>
+                                @else
+                                    <div class="h-[300px] flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-xl space-y-3">
+                                        <i class="fi fi-rr-map-marker text-2xl text-gray-300"></i>
+                                        <p class="text-gray-400 text-xs font-medium">Map location not available</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </section>
+                    @endif
                 </div>
             </div>
 
             <!-- Right Column: Sidebar -->
             <div class="lg:col-span-1 mt-12 lg:mt-0 space-y-8">
-                    <!-- Tour Information Card -->
-                <div class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-8 shadow-sm">
-                    <h3 class="text-2xl font-bold text-blue-600 font-display mb-6 border-l-4 border-blue-600 pl-4">Tour Information</h3>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-start gap-4">
-                            <div class="p-2 text-blue-600">
-                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Max Guests</p>
-                                <p class="text-gray-600 dark:text-gray-400 mt-1">20</p>
-                            </div>
-                        </div>
 
-                         <div class="flex items-start gap-4">
-                            <div class="p-2 text-blue-600">
-                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Min Age</p>
-                                <p class="text-gray-600 dark:text-gray-400 mt-1">+10</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="p-2 text-blue-600">
-                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Tour Location</p>
-                                <p class="text-blue-600 font-medium mt-1">{{ $tour->destination->name }}</p>
-                            </div>
-                        </div>
-
-                        <div class="flex items-start gap-4">
-                            <div class="p-2 text-blue-600">
-                                <svg style="width: 24px; height: 24px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418" />
-                                </svg>
-                            </div>
-                            <div>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">Languages Support</p>
-                                <p class="text-blue-600 font-medium mt-1">English</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                        <div x-data="{
                     date: '',
                     time: '11:45 am',
@@ -321,21 +492,89 @@
                     children: 0,
                     servicePerBooking: false,
                     servicePerPerson: false,
+                    extras: {{ json_encode($tour->extras ?? []) }},
+                    selectedExtras: [], // Stores indexes of selected extras
                     name: '',
                     email: '',
                     phone: '',
                     isLoading: false,
                     showSuccess: false,
-                    basePrice: {{ $tour->price }},
-                    childPrice: {{ $tour->price * 0.5 }}, 
-                    serviceBookingPrice: 30,
-                    servicePersonPrice: 15,
+                    hasTiers: {{ $tour->has_price_tiers ? 'true' : 'false' }},
+                    tiers: {{ json_encode($tour->price_tiers ?? []) }},
+                    hasSeasonalPrices: {{ $tour->has_seasonal_prices ? 'true' : 'false' }},
+                    seasonalPrices: {{ json_encode($tour->seasonal_prices ?? []) }},
+                    defaultPrice: {{ $tour->price }},
+                    defaultChildPrice: {{ $tour->child_price ?? 'null' }},
+                    defaultSoloPrice: {{ $tour->solo_price ?? 'null' }},
+                    defaultChildSoloPrice: {{ $tour->child_solo_price ?? 'null' }},
+                    
+                    get activeSeason() {
+                        if (!this.date || !this.hasSeasonalPrices || this.seasonalPrices.length === 0) {
+                            return null;
+                        }
+                        const selectedDate = new Date(this.date);
+                        selectedDate.setHours(0, 0, 0, 0);
+                        return this.seasonalPrices.find(s => {
+                            const start = new Date(s.start_date);
+                            const end = new Date(s.end_date);
+                            start.setHours(0, 0, 0, 0);
+                            end.setHours(0, 0, 0, 0);
+                            return selectedDate >= start && selectedDate <= end;
+                        });
+                    },
+
+                    get currentPrices() {
+                        const adultsCount = parseInt(this.adults) || 0;
+                        const childrenCount = parseInt(this.children) || 0;
+                        const season = this.activeSeason;
+                        const currentTiers = (season && season.tiers && season.tiers.length > 0) ? season.tiers : this.tiers;
+                        const sortedTiers = currentTiers.length > 0 ? [...currentTiers].sort((a, b) => parseInt(a.min_people) - parseInt(b.min_people)) : [];
+
+                        let adultPrice = this.defaultPrice;
+                        let childPrice = (this.defaultChildPrice ? this.defaultChildPrice : this.defaultPrice * 0.5);
+
+                        // 1. Calculate Adult Price independently
+                        if (adultsCount === 1) {
+                            adultPrice = (season && season.solo_price) ? parseFloat(season.solo_price) : (this.defaultSoloPrice || this.defaultPrice);
+                        } else if (adultsCount > 1 && sortedTiers.length > 0) {
+                            let tier = sortedTiers.find(t => adultsCount >= parseInt(t.min_people) && adultsCount <= parseInt(t.max_people));
+                            if (!tier) {
+                                const highestTier = sortedTiers[sortedTiers.length - 1];
+                                tier = (adultsCount > parseInt(highestTier.max_people)) ? highestTier : sortedTiers[0];
+                            }
+                            adultPrice = parseFloat(tier.price_per_person);
+                        }
+
+                        // 2. Calculate Child Price independently
+                        if (childrenCount === 1) {
+                            childPrice = (season && season.child_solo_price) ? parseFloat(season.child_solo_price) : (this.defaultChildSoloPrice || childPrice);
+                        } else if (childrenCount > 1 && sortedTiers.length > 0) {
+                            let tier = sortedTiers.find(t => childrenCount >= parseInt(t.min_people) && childrenCount <= parseInt(t.max_people));
+                            if (!tier) {
+                                const highestTier = sortedTiers[sortedTiers.length - 1];
+                                tier = (childrenCount > parseInt(highestTier.max_people)) ? highestTier : sortedTiers[0];
+                            }
+                            childPrice = tier.child_price_per_person ? parseFloat(tier.child_price_per_person) : parseFloat(tier.price_per_person) * 0.5;
+                        }
+
+                        return { adult: adultPrice, child: childPrice };
+                    },
+                    
                     get total() {
+                        const prices = this.currentPrices;
                         let t = 0;
-                        t += this.adults * this.basePrice;
-                        t += this.children * this.childPrice;
-                        if (this.servicePerBooking) t += this.serviceBookingPrice;
-                        if (this.servicePerPerson) t += this.servicePersonPrice * (this.adults + this.children);
+                        t += this.adults * prices.adult;
+                        t += this.children * prices.child;
+                        
+                        // Calculate dynamic extras
+                        this.selectedExtras.forEach(idx => {
+                            const extra = this.extras[idx];
+                            if (extra.type === 'per_booking') {
+                                t += parseFloat(extra.price);
+                            } else {
+                                t += parseFloat(extra.price) * (parseInt(this.adults) + parseInt(this.children));
+                            }
+                        });
                         return t;
                     },
                     submitBooking() {
@@ -378,7 +617,7 @@
                             this.isLoading = false;
                         });
                     }
-                }" class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden lg:sticky lg:top-[160px]">
+                }" class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden lg:sticky lg:top-[160px] overflow-y-auto">
                     
                     <!-- Success Message Overlay -->
                     <div x-show="showSuccess" 
@@ -419,51 +658,28 @@
                             </div>
                             
                             <div x-show="date" x-transition.opacity.duration.500ms>
-                                <!-- Time -->
-                                <div class="mb-6">
-                                     <label class="block text-base font-bold text-gray-900 dark:text-white mb-3">Time:</label>
-                                     <div class="flex flex-wrap gap-4">
-                                         <label class="flex items-center gap-2 cursor-pointer group">
-                                             <div class="relative flex items-center">
-                                                <input type="radio" name="time" value="11:45 am" x-model="time" class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-gray-300 dark:border-gray-600 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
-                                                <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
-                                                    <svg class="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                </div>
-                                             </div>
-                                             <span class="text-gray-700 dark:text-gray-300 font-bold group-hover:text-blue-600 transition">11:45 am</span>
-                                         </label>
-                                         <label class="flex items-center gap-2 cursor-pointer group">
-                                             <div class="relative flex items-center">
-                                                <input type="radio" name="time" value="12:05 pm" x-model="time" class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-gray-300 dark:border-gray-600 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
-                                                <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
-                                                    <svg class="h-3 w-3 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                                </div>
-                                             </div>
-                                             <span class="text-gray-700 dark:text-gray-300 font-bold group-hover:text-blue-600 transition">12:05 pm</span>
-                                         </label>
-                                     </div>
-                                </div>
-                                
-                                <div class="h-px bg-gray-100 my-6"></div>
-
                                 <!-- Tickets -->
                                 <div class="mb-6">
                                     <label class="block text-base font-bold text-gray-900 dark:text-white mb-4">Tickets:</label>
                                     
                                     <div class="flex items-center justify-between mb-4">
-                                         <span class="text-gray-500 dark:text-gray-400 font-medium">Adult <span class="text-blue-600 font-bold ml-1">${{ number_format($tour->price, 2) }}</span></span>
+                                         <span class="text-gray-500 dark:text-gray-400 font-medium">Adult 
+                                             <span class="text-blue-600 font-bold ml-1" x-text="'$' + currentPrices.adult.toFixed(2)"></span>
+                                         </span>
                                          <div class="relative">
                                              <select x-model="adults" class="block w-20 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-2 pl-3 pr-8 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm font-bold text-gray-700">
-                                                 @for($i=1; $i<=10; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
+                                                 @for($i=1; $i<=20; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
                                              </select>
                                          </div>
                                     </div>
                                     
                                      <div class="flex items-center justify-between">
-                                         <span class="text-gray-500 dark:text-gray-400 font-medium">Child <span class="text-blue-600 font-bold ml-1">${{ number_format($tour->price * 0.5, 2) }}</span></span>
+                                         <span class="text-gray-500 dark:text-gray-400 font-medium">Child 
+                                             <span class="text-blue-600 font-bold ml-1" x-text="'$' + currentPrices.child.toFixed(2)"></span>
+                                         </span>
                                          <div class="relative">
                                              <select x-model="children" class="block w-20 rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-2 pl-3 pr-8 text-base focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm font-bold text-gray-700">
-                                                  @for($i=0; $i<=10; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
+                                                  @for($i=0; $i<=15; $i++) <option value="{{$i}}">{{$i}}</option> @endfor
                                              </select>
                                          </div>
                                     </div>
@@ -472,35 +688,34 @@
                                 <div class="h-px bg-gray-100 my-6"></div>
                                 
                                 <!-- Add Extra -->
-                                <div class="mb-6">
-                                    <label class="block text-base font-bold text-gray-900 dark:text-white mb-4">Add Extra</label>
-                                    
-                                    <label class="flex items-center justify-between cursor-pointer mb-3 group">
-                                         <div class="flex items-center gap-3">
-                                            <div class="relative flex items-center">
-                                             <input type="checkbox" x-model="servicePerBooking" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
-                                             <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
-                                                <svg class="h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                            </div>
-                                            </div>
-                                             <span class="text-blue-600 font-medium group-hover:text-blue-700 transition">Service per booking</span>
-                                         </div>
-                                         <span class="font-bold text-gray-900 dark:text-white">$30.00</span>
-                                    </label>
-                                    
-                                    <label class="flex items-center justify-between cursor-pointer group">
-                                         <div class="flex items-center gap-3">
-                                            <div class="relative flex items-center">
-                                             <input type="checkbox" x-model="servicePerPerson" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
-                                             <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
-                                                <svg class="h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                                            </div>
-                                            </div>
-                                             <span class="text-blue-600 font-medium group-hover:text-blue-700 transition">Service per person</span>
-                                         </div>
-                                         <span class="font-bold text-gray-900 dark:text-white">$15.00</span>
-                                    </label>
-                                </div>
+                                <template x-if="extras.length > 0">
+                                    <div class="mb-6">
+                                        <label class="block text-base font-bold text-gray-900 dark:text-white mb-4 uppercase tracking-tighter flex items-center gap-2">
+                                            <i class="fi fi-rr-plus-small text-blue-600"></i>
+                                            Enhance Your Trip
+                                        </label>
+                                        
+                                        <div class="space-y-3">
+                                            <template x-for="(extra, index) in extras" :key="index">
+                                                <label class="flex items-center justify-between cursor-pointer group bg-gray-50 dark:bg-gray-900/50 p-3 rounded-xl border border-transparent hover:border-blue-500/30 transition-all">
+                                                     <div class="flex items-center gap-3">
+                                                        <div class="relative flex items-center">
+                                                            <input type="checkbox" :value="index" x-model="selectedExtras" class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-gray-300 dark:border-gray-600 dark:bg-gray-800 text-blue-600 transition-all checked:border-blue-600 checked:bg-blue-600 hover:border-blue-400">
+                                                            <div class="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 peer-checked:opacity-100">
+                                                                <svg class="h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <span class="text-blue-600 font-bold group-hover:text-blue-700 transition block text-sm" x-text="extra.name"></span>
+                                                            <span class="text-[10px] text-gray-400 dark:text-gray-500 uppercase font-bold" x-text="extra.type === 'per_person' ? 'Per Person' : 'Per Booking'"></span>
+                                                        </div>
+                                                     </div>
+                                                     <span class="font-black text-gray-900 dark:text-white" x-text="'$' + parseFloat(extra.price).toFixed(2)"></span>
+                                                </label>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </template>
                                 
                                 <div class="h-px bg-gray-100 my-6"></div>
 

@@ -19,6 +19,9 @@ class Tour extends Model
         'is_featured' => 'boolean',
         'is_active' => 'boolean',
         'has_price_tiers' => 'boolean',
+        'has_seasonal_prices' => 'boolean',
+        'seasonal_prices' => 'array',
+        'extras' => 'array',
     ];
 
     public function destination(): BelongsTo
@@ -29,5 +32,10 @@ class Tour extends Model
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);
+    }
+
+    public function categories(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(TourCategory::class, 'tour_category_tour')->withTimestamps();
     }
 }

@@ -7,10 +7,20 @@
             <img src="{{ $tour->images ? Storage::url($tour->images[0]) : 'https://placehold.co/600x400' }}" alt="{{ $tour->name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-[12px]">
         </a>
         <!-- Badge -->
+        <!-- Badge Top Right -->
         <div class="absolute top-4 right-4">
              <div class="h-10 w-10 bg-primary-900/80 backdrop-blur-sm rounded-lg flex items-center justify-center text-white">
                 <i class="fi fi-rr-bookmark"></i>
             </div>
+        </div>
+
+        <!-- Categories Top Left -->
+        <div class="absolute top-4 left-4 flex flex-wrap gap-2">
+            @foreach($tour->categories->take(2) as $category)
+                <span class="px-3 py-1 bg-accent-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider rounded-full">
+                    {{ $category->name }}
+                </span>
+            @endforeach
         </div>
     </div>
 

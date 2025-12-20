@@ -122,6 +122,17 @@
                             </div>
                         </div>
 
+                        <!-- Category Filter -->
+                        <div class="mb-6">
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tour Type</label>
+                            <select name="category" class="w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm">
+                                <option value="">All Types</option>
+                                @foreach($headerCategories as $cat)
+                                    <option value="{{ $cat->slug }}" {{ request('category') == $cat->slug ? 'selected' : '' }}>{{ $cat->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <!-- Price Range -->
                          <div class="mb-8" x-data="{ minPrice: {{ request('min_price', 0) }}, maxPrice: {{ request('max_price', 5000) }} }">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Price Range</label>

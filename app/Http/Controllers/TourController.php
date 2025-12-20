@@ -26,6 +26,16 @@ class TourController extends Controller
             $query->where('price', '<=', $request->max_price);
         }
 
+        if ($request->has('category') && $request->category) {
+            $query->whereHas('categories', function($q) use ($request) {
+                $q->where('slug', $request->category);
+            });
+        } elseif ($request->has('type') && $request->type) {
+            $query->whereHas('categories', function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->type . '%');
+            });
+        }
+
         // Note: 'date_from' and 'guests' are captured for UI pre-filling but 
         // strictly don't filter the tour list without specific availability models.
 

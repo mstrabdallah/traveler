@@ -21,6 +21,31 @@ class CustomTourRequestResource extends Resource
     protected static ?string $navigationLabel = 'Tailor-Made Requests';
     protected static ?int $navigationSort = 2;
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('is_read', false)->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
+
+    public static function canCreate(): bool
+    {
+        return false;
+    }
+
+    public static function canEdit(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
+    public static function canDelete(\Illuminate\Database\Eloquent\Model $record): bool
+    {
+        return false;
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -107,12 +132,14 @@ class CustomTourRequestResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->beforeFormFilled(function (CustomTourRequest $record) {
+                        $record->update(['is_read' => true]);
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    //
                 ]),
             ]);
     }
@@ -124,17 +151,10 @@ class CustomTourRequestResource extends Resource
         ];
     }
 
-    public static function canCreate(): bool
-    {
-        return false;
-    }
-
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListCustomTourRequests::route('/'),
-            // 'create' => Pages\CreateCustomTourRequest::route('/create'),
-            // 'edit' => Pages\EditCustomTourRequest::route('/{record}/edit'),
         ];
     }
 }

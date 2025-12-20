@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Explore Egypt with Expert Local Guides - Traveler egypt tours</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <meta name="description" content="Book unforgettable Egypt tours with Traveler Egypt Tours. Enjoy private guided tours, Nile cruises, and personalized travel packages led by expert local Egyptologists." />
     <link rel="canonical" href="https://traveleregypt.com/" />
     <meta property="og:locale" content="en_US" />
@@ -54,13 +55,47 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/css/intlTelInput.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <style>
-         .iti { width: 100%; }
-         .iti__flag { background-image: url("https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/img/flags.png"); }
-         @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-           .iti__flag { background-image: url("https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/img/flags@2x.png"); }
-         }
-    </style>
+     <style>
+          .iti { width: 100%; }
+          .iti__flag { background-image: url("https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/img/flags.png"); }
+          @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .iti__flag { background-image: url("https://cdn.jsdelivr.net/npm/intl-tel-input@18.2.1/build/img/flags@2x.png"); }
+          }
+          .float-button {
+              position: fixed;
+              bottom: 30px;
+              left: 30px;
+              background-color: #25d366;
+              color: #fff;
+              border-radius: 50px;
+              padding: 12px 24px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+              z-index: 9999;
+              text-decoration: none !important;
+              transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+              font-weight: 700;
+          }
+          .float-button:hover {
+              background-color: #128c7e;
+              transform: translateY(-5px) scale(1.05);
+              box-shadow: 0 15px 30px rgba(18, 140, 126, 0.4);
+              color: #fff;
+          }
+          .float-button svg {
+              filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+          }
+          @media (max-width: 768px) {
+              .float-button {
+                  bottom: 20px;
+                  left: 20px;
+                  padding: 10px 20px;
+                  font-size: 14px;
+              }
+          }
+     </style>
     <script>
         // Apply theme immediately to prevent FOUC
         try {
@@ -99,95 +134,263 @@
                     <img src="{{ asset('images/logo.png') }}" alt="Traveler Egypt" class="h-20 w-auto">
                 </a>
             </div>
-            <div class="flex lg:hidden">
+            <div class="flex lg:hidden items-center gap-3">
+                <!-- Mobile Language Dropdown -->
+                <div class="relative" 
+                     x-data="{ 
+                        open: false,
+                        currentLang: 'en',
+                        languages: {
+                            'en': { flag: '🇺🇸', label: 'EN' },
+                            'ar': { flag: '🇪🇬', label: 'AR' },
+                            'de': { flag: '🇩🇪', label: 'DE' },
+                            'fr': { flag: '🇫🇷', label: 'FR' },
+                            'es': { flag: '🇪🇸', label: 'ES' },
+                            'it': { flag: '🇮🇹', label: 'IT' },
+                            'ru': { flag: '🇷🇺', label: 'RU' },
+                            'zh-CN': { flag: '🇨🇳', label: 'ZH' },
+                            'ja': { flag: '🇯🇵', label: 'JA' },
+                            'pt': { flag: '🇵🇹', label: 'PT' }
+                        },
+                        init() {
+                            const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+                            if (match && this.languages[match[1]]) {
+                                this.currentLang = match[1];
+                            }
+                        }
+                     }" 
+                     @click.outside="open = false">
+                    <button @click="open = !open" 
+                            class="notranslate flex items-center gap-2 px-2.5 py-1.5 text-white bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all duration-300 focus:outline-none border border-white/10 shadow-sm active:scale-95 rounded-full">
+                         <span x-text="languages[currentLang].flag" class="text-lg leading-none"></span>
+                         <span x-text="languages[currentLang].label" class="text-[11px] font-bold tracking-tighter opacity-90"></span>
+                         <i class="fi fi-rr-angle-small-down transition-transform duration-300 text-[10px] opacity-70" :class="open ? 'rotate-180' : ''"></i>
+                    </button>
+                    
+                    <div x-show="open" 
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+                         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-100"
+                         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                         x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+                         class="notranslate absolute right-0 mt-3 w-52 bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-2xl shadow-2xl py-2 z-[110] ring-1 ring-black/5 dark:ring-white/10 overflow-hidden"
+                         style="display: none;">
+                        <div class="px-2 space-y-0.5">
+                            @foreach([
+                                'en' => ['🇺🇸','English'], 
+                                'ar' => ['🇪🇬','عربي'], 
+                                'de' => ['🇩🇪','German'], 
+                                'fr' => ['🇫🇷','French'], 
+                                'es' => ['🇪🇸','Spanish'], 
+                                'it' => ['🇮🇹','Italian'], 
+                                'ru' => ['🇷🇺','Russian'], 
+                                'zh-CN' => ['🇨🇳','Chinese'], 
+                                'ja' => ['🇯🇵','Japan'], 
+                                'pt' => ['🇵🇹','Portuguese']
+                            ] as $code => $data)
+                                <a href="javascript:void(0)" onclick="changeLanguage('{{ $code }}')" 
+                                   class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group"
+                                   :class="currentLang === '{{ $code }}' ? 'bg-accent-600/10 text-accent-600 dark:text-accent-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100/50 dark:hover:bg-gray-800/50'">
+                                     <div class="flex items-center">
+                                         <span class="mr-3 text-xl group-hover:scale-110 transition-transform duration-200">{{ $data[0] }}</span> 
+                                         <span class="font-semibold">{{ $data[1] }}</span>
+                                     </div>
+                                     <div x-show="currentLang === '{{ $code }}'" class="w-1.5 h-1.5 rounded-full bg-accent-600 shadow-[0_0_8px_rgba(var(--accent-600-rgb),0.5)]"></div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+
                 <button type="button" @click="mobileMenuOpen = true" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white hover:text-accent-400 transition max-lg:me-3">
                     <span class="sr-only">Open main menu</span>
-                    <i class="fi fi-rr-menu-burger text-2xl"></i>
+                    <i class="fi fi-rr-menu-burger text-2xl h-[24px]"></i>
                 </button>
             </div>
-            <div class="hidden lg:flex lg:gap-x-12">
+            <div class="hidden lg:flex gap-6 xl:gap-x-12 items-center">
                 <a href="/" class="text-sm font-semibold leading-6 transition {{ request()->is('/') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">Home</a>
                 <a href="{{ route('about') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('about') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">About</a>
-                <a href="{{ route('tours.index') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('tours.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">Tours</a>
-                <a href="{{ route('destinations.index') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('destinations.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">Destinations</a>
+                
+                <!-- Tours Dropdown -->
+                <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                    <a href="{{ route('tours.index') }}" class="flex items-center gap-1 text-sm font-semibold leading-6 transition {{ request()->routeIs('tours.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">
+                        Tours
+                        <i class="fi fi-rr-angle-small-down transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    </a>
+                    <div x-show="open" 
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 translate-y-2"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         class="absolute left-0 mt-0 w-56 bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 py-3 z-50 overflow-hidden"
+                         style="display: none;">
+                        @foreach($headerCategories as $category)
+                            <a href="{{ route('tours.index', ['category' => $category->slug]) }}" class="block px-5 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                                {{ $category->name }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Destinations Dropdown -->
+                <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
+                    <a href="{{ route('destinations.index') }}" class="flex items-center gap-1 text-sm font-semibold leading-6 transition {{ request()->routeIs('destinations.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">
+                        Destinations
+                        <i class="fi fi-rr-angle-small-down transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
+                    </a>
+                    <div x-show="open" 
+                         x-transition:enter="transition ease-out duration-200"
+                         x-transition:enter-start="opacity-0 translate-y-2"
+                         x-transition:enter-end="opacity-100 translate-y-0"
+                         x-transition:leave="transition ease-in duration-150"
+                         class="absolute left-0 mt-0 w-56 bg-white dark:bg-gray-900 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-800 py-3 z-50 overflow-hidden"
+                         style="display: none;">
+                        @foreach($headerDestinations as $dest)
+                            <a href="{{ route('destinations.show', $dest->slug) }}" class="block px-5 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                                {{ $dest->name }}
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+
                 <a href="{{ route('articles.index') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('articles.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">Blogs</a>
                 <a href="{{ route('contact') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('contact') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">Contact</a>
             </div>
             <div class="hidden lg:flex lg:justify-end items-center">
                 
          
+             
+
                 <a href="{{ route('custom-tour.create') }}" class="px-5 py-2.5 text-sm font-semibold text-white transition-all bg-accent-600 rounded-full hover:bg-accent-500 shadow-lg shadow-accent-600/20 ml-4">
                    Tailor-Made Your Tour <span aria-hidden="true">&rarr;</span>
                 </a>
 
-                       <!-- Settings Dropdown -->
-                <div class="relative ml-4" x-data="{ open: false }" @click.outside="open = false">
-                    <button @click="open = !open" class="flex items-center justify-center w-10 h-10 rounded-full text-white hover:bg-white/10 hover:text-accent-400 transition focus:outline-none" aria-label="Settings">
-                         <i class="fi fi-rr-settings text-xl h-[24px]"></i>
-                    </button>
-                    
-                    <div x-show="open" 
-                         x-transition:enter="transition ease-out duration-200"
-                         x-transition:enter-start="opacity-0 translate-y-2"
-                         x-transition:enter-end="opacity-100 translate-y-0"
-                         x-transition:leave="transition ease-in duration-150"
-                         x-transition:leave-start="opacity-100 translate-y-0"
-                         x-transition:leave-end="opacity-0 translate-y-2"
-                         class="absolute right-0 mt-3 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-3 z-50 ring-1 ring-black/5 dark:ring-white/10 focus:outline-none"
-                         style="display: none;">
+
+
+                <!-- Combined Language & Settings UI -->
+                <div class="relative ml-4 flex items-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-sm transition-all duration-300 hover:bg-white/10 group">
+                    <!-- Language Part -->
+                    <div class="relative" 
+                         x-data="{ 
+                            open: false,
+                            currentLang: 'en',
+                            languages: {
+                                'en': { flag: '🇺🇸', label: 'EN' },
+                                'ar': { flag: '🇪🇬', label: 'AR' },
+                                'de': { flag: '🇩🇪', label: 'DE' },
+                                'fr': { flag: '🇫🇷', label: 'FR' },
+                                'es': { flag: '🇪🇸', label: 'ES' },
+                                'it': { flag: '🇮🇹', label: 'IT' },
+                                'ru': { flag: '🇷🇺', label: 'RU' },
+                                'zh-CN': { flag: '🇨🇳', label: 'ZH' },
+                                'ja': { flag: '🇯🇵', label: 'JA' },
+                                'pt': { flag: '🇵🇹', label: 'PT' }
+                            },
+                            init() {
+                                const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+                                if (match && this.languages[match[1]]) {
+                                    this.currentLang = match[1];
+                                }
+                            }
+                         }" 
+                         @click.outside="open = false">
+                        <button @click="open = !open" 
+                                class="notranslate flex items-center gap-2 px-4 py-2 text-white hover:text-accent-400 transition-all duration-300 focus:outline-none rounded-l-full active:scale-95" 
+                                aria-label="Change Language">
+                             <span x-text="languages[currentLang].flag" class="text-xl leading-none transition-transform group-hover:scale-110"></span>
+                             <span x-text="languages[currentLang].label" class="text-xs font-bold tracking-widest opacity-90"></span>
+                             <i class="fi fi-rr-angle-small-down transition-transform duration-300 opacity-60" :class="open ? 'rotate-180' : ''"></i>
+                        </button>
                         
-                        <!-- Language Section -->
-                        <div class="px-4 pb-3 border-b border-gray-100 dark:border-gray-700">
-                            <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-                                Language
-                            </div>
-                            <div class="space-y-1">
-                                <a href="javascript:void(0)" onclick="changeLanguage('en')" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 transition-colors">
-                                     <span class="mr-3 text-lg">🇺🇸</span> English
-                                </a>
-                                <a href="javascript:void(0)" onclick="changeLanguage('zh-CN')" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 transition-colors">
-                                     <span class="mr-3 text-lg">🇨🇳</span> Chinese
-                                </a>
-                                <a href="javascript:void(0)" onclick="changeLanguage('it')" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 transition-colors">
-                                    <span class="mr-3 text-lg">🇮🇹</span> Italian
-                                </a>
-                                <a href="javascript:void(0)" onclick="changeLanguage('ja')" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 transition-colors">
-                                    <span class="mr-3 text-lg">🇯🇵</span> Japan
-                                </a>
-                                <a href="javascript:void(0)" onclick="changeLanguage('ru')" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 transition-colors">
-                                    <span class="mr-3 text-lg">🇷🇺</span> Russia
-                                </a>
-                                <a href="javascript:void(0)" onclick="changeLanguage('es')" class="flex items-center px-3 py-2 rounded-lg text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700/50 hover:text-blue-600 transition-colors">
-                                    <span class="mr-3 text-lg">🇪🇸</span> Spain
-                                </a>
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+                             x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                             x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+                             class="notranslate absolute right-0 mt-3 w-64 bg-white dark:bg-gray-900 backdrop-blur-2xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] py-3 z-50 ring-1 ring-black/5 dark:ring-white/10 overflow-hidden"
+                             style="display: none;">
+                            
+                            <div class="px-2.5 space-y-1">
+                                @foreach([
+                                    'en' => ['🇺🇸','English'], 
+                                    'ar' => ['🇪🇬','عربي'], 
+                                    'de' => ['🇩🇪','German'], 
+                                    'fr' => ['🇫🇷','French'], 
+                                    'es' => ['🇪🇸','Spanish'], 
+                                    'it' => ['🇮🇹','Italian'], 
+                                    'ru' => ['🇷🇺','Russian'], 
+                                    'zh-CN' => ['🇨🇳','Chinese'], 
+                                    'ja' => ['🇯🇵','Japan'], 
+                                    'pt' => ['🇵🇹','Portuguese']
+                                ] as $code => $data)
+                                    <a href="javascript:void(0)" onclick="changeLanguage('{{ $code }}')" 
+                                       class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 group"
+                                       :class="currentLang === '{{ $code }}' ? 'bg-accent-600/10 text-accent-600 dark:text-accent-400' : 'text-gray-700 dark:text-gray-300 hover:bg-accent-600/5 hover:text-accent-600 dark:hover:text-accent-400'">
+                                         <div class="flex items-center">
+                                             <span class="mr-4 text-2xl group-hover:scale-125 transition-transform duration-300">{{ $data[0] }}</span> 
+                                             <span class="tracking-tight">{{ $data[1] }}</span>
+                                         </div>
+                                         <div x-show="currentLang === '{{ $code }}'" 
+                                              class="w-2 h-2 rounded-full bg-accent-600 shadow-[0_0_10px_rgba(var(--accent-600-rgb),0.6)]"
+                                              x-transition:enter="transition duration-300"
+                                              x-transition:enter-start="scale-0"
+                                              x-transition:enter-end="scale-100"></div>
+                                    </a>
+                                @endforeach
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Dark Mode Toggle Section -->
-                        <div class="px-4 pt-3">
-                            <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-                                Mode
-                            </div>
-                            <div class="bg-gray-100 dark:bg-gray-700/50 p-1 rounded-lg flex items-center justify-between">
-                                <button @click="$store.darkMode.set('light')" 
-                                        :class="$store.darkMode.mode === 'light' ? 'bg-white dark:bg-gray-600 text-blue-600 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'"
-                                        class="flex-1 py-1.5 rounded-md transition-all flex items-center justify-center">
-                                    <i class="fi fi-rr-sun text-lg"></i>
-                                </button>
-                                <button @click="$store.darkMode.set('dark')" 
-                                        :class="$store.darkMode.mode === 'dark' ? 'bg-white dark:bg-gray-600 text-blue-600 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'"
-                                        class="flex-1 py-1.5 rounded-md transition-all flex items-center justify-center">
-                                    <i class="fi fi-rr-moon text-lg"></i>
-                                </button>
-                                <button @click="$store.darkMode.set('system')" 
-                                        :class="$store.darkMode.mode === 'system' ? 'bg-white dark:bg-gray-600 text-blue-600 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'"
-                                        class="flex-1 py-1.5 rounded-md transition-all flex items-center justify-center">
-                                    <i class="fi fi-rr-computer text-lg"></i>
-                                </button>
+                    <!-- Separator -->
+                    <div class="h-4 w-[1px] bg-white/20"></div>
+
+                    <!-- Settings Part -->
+                    <div class="relative" x-data="{ open: false }" @click.outside="open = false">
+                        <button @click="open = !open" class="flex items-center justify-center w-10 h-10 rounded-r-full text-white hover:text-accent-400 transition-all duration-300 focus:outline-none active:scale-95" aria-label="Settings">
+                             <i class="fi fi-rr-settings text-xl leading-none"></i>
+                        </button>
+                        
+                        <div x-show="open" 
+                             x-transition:enter="transition ease-out duration-200"
+                             x-transition:enter-start="opacity-0 translate-y-2"
+                             x-transition:enter-end="opacity-100 translate-y-0"
+                             x-transition:leave="transition ease-in duration-150"
+                             x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                             x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+                             class="absolute right-0 mt-3 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-3 z-50 ring-1 ring-black/5 dark:ring-white/10 focus:outline-none"
+                             style="display: none;">
+                            
+                            <!-- Appearance Section -->
+                            <div class="px-4">
+                                <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                                    Appearance
+                                </div>
+                                <div class="bg-gray-100 dark:bg-gray-700/50 p-1 rounded-lg flex items-center justify-between">
+                                    <button @click="$store.darkMode.set('light')" 
+                                            :class="$store.darkMode.mode === 'light' ? 'bg-white dark:bg-gray-600 text-blue-600 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'"
+                                            class="flex-1 py-1.5 rounded-md transition-all flex items-center justify-center">
+                                        <i class="fi fi-rr-sun text-lg"></i>
+                                    </button>
+                                    <button @click="$store.darkMode.set('dark')" 
+                                            :class="$store.darkMode.mode === 'dark' ? 'bg-white dark:bg-gray-600 text-blue-600 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'"
+                                            class="flex-1 py-1.5 rounded-md transition-all flex items-center justify-center">
+                                        <i class="fi fi-rr-moon text-lg"></i>
+                                    </button>
+                                    <button @click="$store.darkMode.set('system')" 
+                                            :class="$store.darkMode.mode === 'system' ? 'bg-white dark:bg-gray-600 text-blue-600 shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200'"
+                                            class="flex-1 py-1.5 rounded-md transition-all flex items-center justify-center">
+                                        <i class="fi fi-rr-computer text-lg"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+
 
             </div>
         </nav>
@@ -231,11 +434,41 @@
                                     </div>
                                     
                                     <div class="relative mt-6 flex-1 px-4 sm:px-6">
-                                        <div class="flex flex-col gap-2">
+                                        <div class="flex flex-col gap-1">
                                             <a href="/" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->is('/') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">Home</a>
                                             <a href="{{ route('about') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('about') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">About</a>
-                                            <a href="{{ route('tours.index') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('tours.*') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">Tours</a>
-                                            <a href="{{ route('destinations.index') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('destinations.*') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">Destinations</a>
+                                            
+                                            <!-- Mobile Tours Dropdown -->
+                                            <div x-data="{ open: false }">
+                                                <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-lg font-semibold rounded-xl text-gray-100 hover:bg-white/5 transition">
+                                                    <span>Tours</span>
+                                                    <i class="fi fi-rr-angle-small-down transform transition duration-300" :class="{ 'rotate-180 text-accent-400': open }"></i>
+                                                </button>
+                                                <div x-show="open" x-collapse class="pl-4 space-y-1">
+                                                    @foreach($headerCategories as $category)
+                                                        <a href="{{ route('tours.index', ['category' => $category->slug]) }}" class="block px-4 py-2 text-base text-gray-400 hover:text-white transition">
+                                                            {{ $category->name }}
+                                                        </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
+                                            <!-- Mobile Destinations Dropdown -->
+                                            <div x-data="{ open: false }">
+                                                <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-lg font-semibold rounded-xl text-gray-100 hover:bg-white/5 transition">
+                                                    <span>Destinations</span>
+                                                    <i class="fi fi-rr-angle-small-down transform transition duration-300" :class="{ 'rotate-180 text-accent-400': open }"></i>
+                                                </button>
+                                                <div x-show="open" x-collapse class="pl-4 space-y-1">
+                                                    <a href="{{ route('destinations.index') }}" class="block px-4 py-2 text-base text-gray-400 hover:text-white transition">All Destinations</a>
+                                                    @foreach($headerDestinations as $dest)
+                                                        <a href="{{ route('destinations.show', $dest->slug) }}" class="block px-4 py-2 text-base text-gray-400 hover:text-white transition">
+                                                            {{ $dest->name }}
+                                                        </a>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+
                                             <a href="{{ route('articles.index') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('articles.*') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">Blogs</a>
                                             <a href="{{ route('contact') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('contact') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">Contact</a>
                                         </div>
@@ -271,25 +504,23 @@
                                                     <span>Language</span>
                                                     <i class="fi fi-rr-angle-small-down transform transition duration-300" :class="{ 'rotate-180': langOpen }"></i>
                                                 </button>
-                                                <div x-show="langOpen" x-collapse class="mt-2 space-y-1 pl-2">
-                                                    <a href="javascript:void(0)" onclick="changeLanguage('en')" class="flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">
-                                                        <span class="text-xl">🇺🇸</span> English
-                                                    </a>
-                                                    <a href="javascript:void(0)" onclick="changeLanguage('zh-CN')" class="flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">
-                                                        <span class="text-xl">🇨🇳</span> Chinese
-                                                    </a>
-                                                    <a href="javascript:void(0)" onclick="changeLanguage('it')" class="flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">
-                                                        <span class="text-xl">🇮🇹</span> Italian
-                                                    </a>
-                                                    <a href="javascript:void(0)" onclick="changeLanguage('ja')" class="flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">
-                                                        <span class="text-xl">🇯🇵</span> Japanese
-                                                    </a>
-                                                    <a href="javascript:void(0)" onclick="changeLanguage('ru')" class="flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">
-                                                        <span class="text-xl">🇷🇺</span> Russian
-                                                    </a>
-                                                    <a href="javascript:void(0)" onclick="changeLanguage('es')" class="flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">
-                                                        <span class="text-xl">🇪🇸</span> Spanish
-                                                    </a>
+                                                <div x-show="langOpen" x-collapse class="notranslate mt-2 space-y-1 pl-2">
+                                                    @foreach([
+                                                        'en' => ['🇺🇸','English'], 
+                                                        'ar' => ['🇪🇬','عربي'], 
+                                                        'de' => ['🇩🇪','German'], 
+                                                        'fr' => ['🇫🇷','French'], 
+                                                        'es' => ['🇪🇸','Spanish'], 
+                                                        'it' => ['🇮🇹','Italian'], 
+                                                        'ru' => ['🇷🇺','Russian'], 
+                                                        'zh-CN' => ['🇨🇳','Chinese'], 
+                                                        'ja' => ['🇯🇵','Japanese'], 
+                                                        'pt' => ['🇵🇹','Portuguese']
+                                                    ] as $code => $data)
+                                                        <a href="javascript:void(0)" onclick="changeLanguage('{{ $code }}')" class="flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">
+                                                            <span class="text-xl">{{ $data[0] }}</span> {{ $data[1] }}
+                                                        </a>
+                                                    @endforeach
                                                 </div>
                                             </div>
 
@@ -325,7 +556,7 @@
                                 <img src="{{ asset('images/logo.png') }}" alt="Traveler Egypt" class="h-20 w-auto bg-white rounded-xl p-1 shadow-sm">
                            </a>
                            <p class="text-[#3a3a3a] dark:text-gray-400 text-sm font-light leading-6">
-                               Traveler Egypt Tours is the best travel agency specializing in providing a wide range of tour packages throughout Egypt.
+                                Traveler Egypt Tours is the best travel agency specializing in providing a wide range of tour packages throughout Egypt.
                            </p>
                            <!-- Social Icons -->
                            <div class="flex gap-4">
@@ -385,23 +616,29 @@
                            <div class="space-y-4">
                                 <h4 class="text-base font-bold text-[#272727] dark:text-white">Contact</h4>
                                 <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
-                                    <li class="flex items-center gap-3">
-                                        <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5]">
-                                            <i class="fi fi-rr-phone-call text-sm"></i>
-                                        </div>
-                                        <span>01141812709</span>
+                                    <li>
+                                        <a href="tel:01141812709" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
+                                            <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
+                                                <i class="fi fi-rr-phone-call text-sm"></i>
+                                            </div>
+                                            <span>01141812709</span>
+                                        </a>
                                     </li>
-                                    <li class="flex items-center gap-3">
-                                        <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5]">
-                                            <i class="fi fi-rr-envelope text-sm"></i>
-                                        </div>
-                                        <span>info@traveleregypt.com</span>
+                                    <li>
+                                        <a href="mailto:info@traveleregypt.com" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
+                                            <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
+                                                <i class="fi fi-rr-envelope text-sm"></i>
+                                            </div>
+                                            <span>info@traveleregypt.com</span>
+                                        </a>
                                     </li>
-                                    <li class="flex items-center gap-3">
-                                        <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5]">
-                                            <i class="fi fi-rr-marker text-sm"></i>
-                                        </div>
-                                        <span>72 King Faisal Street</span>
+                                    <li>
+                                        <a href="https://maps.app.goo.gl/9u3J3Y5P7mD6hEFA9" target="_blank" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
+                                            <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
+                                                <i class="fi fi-rr-marker text-sm"></i>
+                                            </div>
+                                            <span>72 King Faisal Street</span>
+                                        </a>
                                     </li>
                                 </ul>
                            </div>
@@ -431,7 +668,7 @@
         function googleTranslateElementInit() {
             new google.translate.TranslateElement({
                 pageLanguage: 'en', 
-                includedLanguages: 'en,zh-CN,it,ja,ru,es', 
+                includedLanguages: 'en,ar,de,fr,es,it,ru,zh-CN,ja,pt', 
                 layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
                 autoDisplay: false
             }, 'google_translate_element');
@@ -475,5 +712,13 @@
         s0.parentNode.insertBefore( s1, s0 );
     })();
     </script>
+    <!-- WhatsApp Floating Button -->
+    <a class="float-button" href="https://api.whatsapp.com/send/?phone=201141812709&amp;text=Inquiry%20for:%20{{ urlencode(url()->current()) }}&amp;type=phone_number&amp;app_absent=0" rel="nofollow" target="_blank">
+        <svg fill="#fff" height="20" width="20" id="Bold" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="m17.507 14.307-.009.075c-2.199-1.096-2.429-1.242-2.713-.816-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.293-.506.32-.578.878-1.634.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.576-.05-.997-.042-1.368.344-1.614 1.774-1.207 3.604.174 5.55 2.714 3.552 4.16 4.206 6.804 5.114.714.227 1.365.195 1.88.121.574-.091 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345z"></path>
+            <path d="m20.52 3.449c-7.689-7.433-20.414-2.042-20.419 8.444 0 2.096.549 4.14 1.595 5.945l-1.696 6.162 6.335-1.652c7.905 4.27 17.661-1.4 17.665-10.449 0-3.176-1.24-6.165-3.495-8.411zm1.482 8.417c-.006 7.633-8.385 12.4-15.012 8.504l-.36-.214-3.75.975 1.005-3.645-.239-.375c-4.124-6.565.614-15.145 8.426-15.145 2.654 0 5.145 1.035 7.021 2.91 1.875 1.859 2.909 4.35 2.909 6.99z"></path>
+        </svg>
+        <span class="ml-2 font-bold">Whatsapp Me</span>
+    </a>
 </body>
 </html>
