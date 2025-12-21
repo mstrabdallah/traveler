@@ -57,13 +57,12 @@
                     </div>
 
                     <div class="pt-6 flex gap-4 max-sm:flex-col">
-                        <a href="https://gaviaspreview.com/wp/tevily/about/" class="px-8 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg transition font-medium">
-                            / Get Right Solutions
+                        <a href="{{ route('tours.index') }}" class="px-8 py-3 bg-[#345BA8] hover:bg-blue-700 text-white rounded-lg transition font-medium text-center shadow-md">
+                            Explore Our Tours
                         </a>
-                        <a href="https://gaviaspreview.com/wp/tevily/about/" class="px-8 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg transition font-medium">
-                            / Expert Architecture
+                        <a href="{{ route('custom-tour.create') }}" class="px-8 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg transition font-medium text-center border border-gray-100 dark:border-gray-700">
+                            Tailor-Made Your Tour
                         </a>
-        
                     </div>
                 </div>
             </div>

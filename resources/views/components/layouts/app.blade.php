@@ -271,7 +271,7 @@
                 <!-- Combined Language & Settings UI -->
                 <div class="relative ml-4 flex items-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-sm transition-all duration-300 hover:bg-white/10 group">
                     <!-- Language Part -->
-                    <div class="relative" 
+                    <div class="relative w-[102px] flex-shrink-0" 
                          x-data="{ 
                             open: false,
                             currentLang: 'en',
@@ -296,9 +296,9 @@
                          }" 
                          @click.outside="open = false">
                         <button @click="open = !open" 
-                                class="notranslate flex items-center gap-2 px-4 py-2 text-white hover:text-accent-400 transition-all duration-300 focus:outline-none rounded-l-full active:scale-95" 
+                                class="notranslate flex items-center gap-2 px-4 py-2 text-white hover:text-accent-400 transition-all duration-300 focus:outline-none rounded-l-full active:scale-95 " 
                                 aria-label="Change Language">
-                             <span x-text="languages[currentLang].flag" class="text-xl leading-none transition-transform group-hover:scale-110"></span>
+                             <span x-text="languages[currentLang].flag" class="text-xl leading-none transition-transform group-hover:scale-110 w-[20px] h-[20px]"></span>
                              <span x-text="languages[currentLang].label" class="text-xs font-bold tracking-widest opacity-90"></span>
                              <i class="fi fi-rr-angle-small-down transition-transform duration-300 opacity-60" :class="open ? 'rotate-180' : ''"></i>
                         </button>
