@@ -1,7 +1,7 @@
 <x-layouts.app isTransparent="false">
     
     <!-- Hero Section -->
-    <x-hero-slider :destinations="$destinations" title="About Us" />
+    <x-hero-slider :destinations="$destinations" title="{{ __('About Us') }}" />
 
     <!-- Discover Section -->
     <div class="py-16 lg:py-24 bg-white dark:bg-gray-900 transition-colors duration-300">
@@ -12,7 +12,7 @@
                     <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl h-[500px] ">
                          <!-- Using a generic Egypt image or one from destinations if available, fallback to a placeholder -->
                     
-                            <img src="{{ asset('images/Untitled-design-2024-07-03T171632.944-1.webp') }}" alt="About Traveler Egypt" class="w-full h-full object-cover">
+                            <img src="{{ asset('images/Untitled-design-2024-07-03T171632.944-1.webp') }}" alt="About Mo travels" class="w-full h-full object-cover">
                     
                     </div>
                     <!-- Decorative element --> 
@@ -21,14 +21,14 @@
                 <!-- Content -->
                 <div class="space-y-8">
                     <div>
-                        <span class="font-handwriting text-3xl text-yellow-500">Learn about us</span>
+                        <span class="font-handwriting text-3xl text-yellow-500">{{ __('Learn about us') }}</span>
                         <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400 leading-tight">
-                            Discover with Traveler Egypt Tours
+                            {{ __('Discover with :name', ['name' => config('app.name', 'Mo travels')]) }}
                         </h2>
                     </div>
 
                     <p class="text-gray-600 dark:text-gray-300 text-lg leading-relaxed">
-                        We are trusted by our clients and have a reputation for the best services in the field. We provide custom-made tours designed to fit your unique needs and preferences, offering you an authentic experience of Egypt.
+                        {{ __('We are trusted by our clients and have a reputation for the best services in the field. We provide custom-made tours designed to fit your unique needs and preferences, offering you an authentic experience of Egypt.') }}
                     </p>
 
                     <!-- Progress Bars -->
@@ -36,7 +36,7 @@
                         <!-- Item 1 -->
                         <div>
                             <div class="flex justify-between mb-2">
-                                <span class="font-bold text-[#2A2C3E] dark:text-white">Best Services</span>
+                                <span class="font-bold text-[#2A2C3E] dark:text-white">{{ __('Best Services') }}</span>
                                 <span class="text-gray-500 dark:text-gray-400">88%</span>
                             </div>
                             <div class="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -47,7 +47,7 @@
                         <!-- Item 2 -->
                         <div>
                             <div class="flex justify-between mb-2">
-                                <span class="font-bold text-[#2A2C3E] dark:text-white">Tour Agents</span>
+                                <span class="font-bold text-[#2A2C3E] dark:text-white">{{ __('Tour Agents') }}</span>
                                 <span class="text-gray-500 dark:text-gray-400">75%</span>
                             </div>
                             <div class="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
@@ -58,10 +58,10 @@
 
                     <div class="pt-6 flex gap-4 max-sm:flex-col">
                         <a href="{{ route('tours.index') }}" class="px-8 py-3 bg-[#345BA8] hover:bg-blue-700 text-white rounded-lg transition font-medium text-center shadow-md">
-                            Explore Our Tours
+                            {{ __('Explore Our Tours') }}
                         </a>
                         <a href="{{ route('custom-tour.create') }}" class="px-8 py-3 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg transition font-medium text-center border border-gray-100 dark:border-gray-700">
-                            Tailor-Made Your Tour
+                            {{ __('Tailor-Made Your Tour') }}
                         </a>
                     </div>
                 </div>
@@ -76,58 +76,58 @@
         
         <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center lg:text-left flex flex-col lg:flex-row items-center justify-between gap-8">
             <div class="space-y-2">
-                <span class="font-handwriting text-3xl text-white block lg:inline">Plan your trip with us</span>
-                <h2 class="text-4xl lg:text-5xl font-bold text-white">Ready for an unforgettable tour?</h2>
+                <span class="font-handwriting text-3xl text-white block lg:inline">{{ __('Plan your trip with us') }}</span>
+                <h2 class="text-4xl lg:text-5xl font-bold text-white">{{ __('Ready for an unforgettable tour?') }}</h2>
             </div>
             
             <a href="{{ route('tours.index') }}" class="px-8 py-4 bg-yellow-400 hover:bg-[#de9d36] text-[#fff] font-bold rounded-lg shadow-lg hover:shadow-xl transition transform hover:-translate-y-1 uppercase tracking-wider">
-                Book Tour Now
+                {{ __('Book Tour Now') }}
             </a>
         </div>
     </div>
 
     <!-- Testimonials Section -->
    <!-- Testimonials Section -->
-    <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-800 relative transition-colors duration-300 overflow-hidden" 
-         x-data="{ 
+     <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-800 relative transition-colors duration-300 overflow-hidden" 
+          x-data='{ 
             active: 2,
             touchStartX: 0,
             touchEndX: 0,
             testimonials: [
                 { 
-                    name: 'Sarah Jenkins', 
-                    role: 'Solo Traveler', 
-                    image: '{{ asset('images/testimonials/testimonial-1.jpg') }}', 
-                    rate: '5.0', 
-                    description: 'Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend!' 
+                    name: "Sarah Jenkins", 
+                    role: @json(__('Solo Traveler')), 
+                    image: "{{ asset('images/testimonials/testimonial-1.jpg') }}", 
+                    rate: "5.0", 
+                    description: @json(__('Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend!')) 
                 },
                 { 
-                    name: 'Mark Thompson', 
-                    role: 'Adventure Seeker', 
-                    image: '{{ asset('images/testimonials/testimonial-2.jpg') }}', 
-                    rate: '5.0', 
-                    description: 'Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic.' 
+                    name: "Mark Thompson", 
+                    role: @json(__('Adventure Seeker')), 
+                    image: "{{ asset('images/testimonials/testimonial-2.jpg') }}", 
+                    rate: "5.0", 
+                    description: @json(__('Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic.')) 
                 },
                 { 
-                    name: 'Yusuf Mahtow', 
-                    role: 'Egypt Tour Guide', 
-                    image: '{{ asset('images/testimonials/testimonial-3.jpg') }}', 
-                    rate: '4.8', 
-                    description: 'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing.' 
+                    name: "Yusuf Mahtow", 
+                    role: @json(__('Egypt Tour Guide')), 
+                    image: "{{ asset('images/testimonials/testimonial-3.jpg') }}", 
+                    rate: "4.8", 
+                    description: @json(__('No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing.')) 
                 },
                 { 
-                    name: 'Emily Roberts', 
-                    role: 'History Buff', 
-                    image: '{{ asset('images/testimonials/testimonial-4.jpg') }}', 
-                    rate: '4.9', 
-                    description: 'The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized.' 
+                    name: "Emily Roberts", 
+                    role: @json(__('History Buff')), 
+                    image: "{{ asset('images/testimonials/testimonial-4.jpg') }}", 
+                    rate: "4.9", 
+                    description: @json(__('The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized.')) 
                 },
                 { 
-                    name: 'Michael Chen', 
-                    role: 'Food Blogger', 
-                    image: '{{ asset('images/testimonials/testimonial-2.jpg') }}', 
-                    rate: '4.7', 
-                    description: 'An absolute culinary delight! The local food tours were the highlight of our trip. Highly recommended.' 
+                    name: "Michael Chen", 
+                    role: @json(__('Food Blogger')), 
+                    image: "{{ asset('images/testimonials/testimonial-2.jpg') }}", 
+                    rate: "4.7", 
+                    description: @json(__('An absolute culinary delight! The local food tours were the highlight of our trip. Highly recommended.')) 
                 }
             ],
             next() {
@@ -153,10 +153,10 @@
                     this.testimonials[(this.active + 2) % len]
                 ];
             }
-         }">
+          }'>
         <div class="text-center mb-16">
-                <span class="font-handwriting text-3xl text-yellow-500">Testimonials &amp; reviews</span>
-                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400">What They're Saying</h2>
+                <span class="font-handwriting text-3xl text-yellow-500">{{ __('Testimonials & reviews') }}</span>
+                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400">{{ __('What They\'re Saying') }}</h2>
             </div>
         <div class="max-w-[1600px] mx-auto px-4 lg:px-8 relative">
             
@@ -254,13 +254,13 @@
                 <div class="flex items-center justify-between gap-4 md:gap-12">
                      <!-- Prev Button -->
                     <button @click="prev()" class="flex-shrink-0 w-14 h-14 rounded-full bg-[#F3F4F6] dark:bg-gray-700 hover:bg-[#FAD71B] dark:hover:bg-[#FAD71B] text-black dark:text-white transition-all flex items-center justify-center group shadow-sm z-10">
-                        <i class="fi fi-rr-arrow-small-left text-2xl group-hover:-translate-x-1 transition-transform"></i>
+                        <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-right group-hover:translate-x-1' : 'fi-rr-arrow-small-left group-hover:-translate-x-1' }} text-2xl transition-transform"></i>
                     </button>
 
                     <!-- Quote Text -->
                     <div class="relative min-h-[100px] flex items-center justify-center"> <!-- Min Height to prevent jumping -->
                         <p class="text-[#0B0B0B] dark:text-gray-300 text-lg md:text-xl font-normal leading-relaxed md:px-8 transition-all duration-300"
-                           x-key="active"
+                           :key="active"
                            x-transition:enter="transition ease-out duration-300"
                            x-transition:enter-start="opacity-0 transform translate-y-2"
                            x-transition:enter-end="opacity-100 transform translate-y-0"
@@ -270,7 +270,7 @@
 
                     <!-- Next Button -->
                     <button @click="next()" class="flex-shrink-0 w-14 h-14 rounded-full bg-[#F3F4F6] dark:bg-gray-700 hover:bg-[#FAD71B] dark:hover:bg-[#FAD71B] text-black dark:text-white transition-all flex items-center justify-center group shadow-sm z-10">
-                        <i class="fi fi-rr-arrow-small-right text-2xl group-hover:translate-x-1 transition-transform"></i>
+                        <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left group-hover:-translate-x-1' : 'fi-rr-arrow-small-right group-hover:translate-x-1' }} text-2xl transition-transform"></i>
                     </button>
                 </div>
 
@@ -327,9 +327,9 @@
                     <i class="fi fi-ss-play text-2xl lg:text-3xl ml-1"></i>
                 </button>
 
-                <span class="font-handwriting text-3xl lg:text-4xl text-yellow-400 mb-2 block">Are you ready to travel?</span>
+                <span class="font-handwriting text-3xl lg:text-4xl text-yellow-400 mb-2 block">{{ __('Are you ready to travel?') }}</span>
                 <h2 class="text-4xl lg:text-6xl font-display font-bold text-white max-w-4xl mx-auto leading-tight">
-                    Traveler Egypt Tours is an online tour booking platform
+                    {{ __(':name is an online tour booking platform', ['name' => config('app.name', 'Mo travels')]) }}
                 </h2>
             </div>
         </div>
@@ -359,19 +359,19 @@
             <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 lg:p-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-x divide-gray-100 dark:divide-gray-700 transition-colors duration-300">
                 <div class="space-y-2">
                     <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">{{ $toursCount }}</span>
-                    <span class="text-gray-600 dark:text-gray-300 font-medium">Tours</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">{{ __('Tours') }}</span>
                 </div>
                 <div class="space-y-2">
                     <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">{{ $destinationsCount }}</span>
-                    <span class="text-gray-600 dark:text-gray-300 font-medium">Destinations</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">{{ __('Destinations') }}</span>
                 </div>
                 <div class="space-y-2">
                     <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">500</span>
-                    <span class="text-gray-600 dark:text-gray-300 font-medium">Happy Customers</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">{{ __('Happy Customers') }}</span>
                 </div>
                  <div class="space-y-2 border-l-0 lg:border-l"> <!-- Fix for grid layout border on mobile -->
                     <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">100</span>
-                    <span class="text-gray-600 dark:text-gray-300 font-medium">Reviews</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">{{ __('Reviews') }}</span>
                 </div>
             </div>
         </div>

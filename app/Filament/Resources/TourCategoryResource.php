@@ -29,11 +29,18 @@ class TourCategoryResource extends Resource
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', \Illuminate\Support\Str::slug($state)))
                     ->maxLength(255),
+                Forms\Components\TextInput::make('name_ar')
+                    ->label('Name (Arabic)')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('description_ar')
+                    ->label('Description (Arabic)')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
                     ->image(),

@@ -30,10 +30,19 @@ class DestinationResource extends Resource
                 Forms\Components\TextInput::make('slug')
                     ->required()
                     ->unique(ignoreRecord: true),
+                Forms\Components\TextInput::make('name_ar')
+                    ->label('Name (Arabic)')
+                    ->required(),
                 Forms\Components\FileUpload::make('image')
                     ->image()
-                    ->directory('destinations'),
+                    ->disk('public')
+                    ->directory('destinations')
+                    ->imageEditor()
+                    ->required(),
                 Forms\Components\RichEditor::make('description')
+                    ->columnSpanFull(),
+                Forms\Components\RichEditor::make('description_ar')
+                    ->label('Description (Arabic)')
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('is_active')
                     ->default(true)

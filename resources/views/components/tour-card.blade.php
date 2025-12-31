@@ -4,7 +4,7 @@
     <!-- Image Area -->
     <div class="relative h-64 overflow-hidden  mx-4 mt-4">
         <a href="{{ route('tours.show', $tour) }}">
-            <img src="{{ $tour->images ? Storage::url($tour->images[0]) : 'https://placehold.co/600x400' }}" alt="{{ $tour->name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-[12px]">
+            <img src="{{ $tour->images ? Storage::url($tour->images[0]) : 'https://placehold.co/600x400' }}" alt="{{ $tour->display_name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-[12px]">
         </a>
         <!-- Badge -->
         <!-- Badge Top Right -->
@@ -18,7 +18,7 @@
         <div class="absolute top-4 left-4 flex flex-wrap gap-2">
             @foreach($tour->categories->take(2) as $category)
                 <span class="px-3 py-1 bg-accent-600/90 backdrop-blur-sm text-white text-[10px] font-bold uppercase tracking-wider rounded-full">
-                    {{ $category->name }}
+                    {{ $category->display_name }}
                 </span>
             @endforeach
         </div>
@@ -35,14 +35,14 @@
         </div>
 
         <h3 class="text-xl font-bold text-accent-500 dark:text-blue-400 line-clamp-2 leading-tight mb-6">
-            <a href="{{ route('tours.show', $tour) }}">{{ $tour->name }}</a>
+            <a href="{{ route('tours.show', $tour) }}">{{ $tour->display_name }}</a>
         </h3>
         
         <div class="mt-auto bg-gray-50 dark:bg-gray-700 rounded-xl p-4 flex items-center justify-between">
             <div class="flex items-center gap-6 text-sm text-primary-900 dark:text-white font-medium">
                  <div class="flex items-center gap-2">
                     <i class="fi fi-rr-clock text-primary-400 dark:text-gray-300"></i>
-                    <span>{{ $tour->duration_days }} days</span>
+                    <span>{{ $tour->duration_days }} {{ __('days') }}</span>
                 </div>
                  <div class="flex items-center gap-2">
                     <i class="fi fi-rr-users text-primary-400 dark:text-gray-300"></i>
@@ -51,7 +51,7 @@
             </div>
 
             <a href="{{ route('tours.show', $tour) }}" class="flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 transition">
-                Explore
+                {{ __('Explore') }}
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </a>
         </div>

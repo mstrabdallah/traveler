@@ -19,7 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        view()->share('headerDestinations', \App\Models\Destination::where('is_active', true)->get());
-        view()->share('headerCategories', \App\Models\TourCategory::where('is_active', true)->orderBy('sort_order')->get());
+        view()->composer('components.layouts.app', function ($view) {
+            $view->with([
+                'headerDestinations' => \App\Models\Destination::where('is_active', true)->get(),
+                'headerCategories' => \App\Models\TourCategory::where('is_active', true)->orderBy('sort_order')->get(),
+            ]);
+        });
     }
 }

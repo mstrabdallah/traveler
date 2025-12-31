@@ -24,6 +24,38 @@ class Tour extends Model
         'extras' => 'array',
     ];
 
+    public function getDisplayNameAttribute()
+    {
+        if (app()->getLocale() === 'ar' && $this->name_ar) {
+            return $this->name_ar;
+        }
+        return $this->name;
+    }
+
+    public function getDisplayDescriptionAttribute()
+    {
+        if (app()->getLocale() === 'ar' && $this->description_ar) {
+            return $this->description_ar;
+        }
+        return $this->description;
+    }
+
+    public function getDisplayAvailabilityAttribute()
+    {
+        if (app()->getLocale() === 'ar' && $this->availability_ar) {
+            return $this->availability_ar;
+        }
+        return $this->availability;
+    }
+
+    public function getDisplayPickupLocationAttribute()
+    {
+        if (app()->getLocale() === 'ar' && $this->pickup_location_ar) {
+            return $this->pickup_location_ar;
+        }
+        return $this->pickup_location;
+    }
+
     public function destination(): BelongsTo
     {
         return $this->belongsTo(Destination::class);

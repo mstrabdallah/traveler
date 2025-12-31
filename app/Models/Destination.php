@@ -13,6 +13,16 @@ class Destination extends Model
         'is_active' => 'boolean',
     ];
 
+    public function getDisplayNameAttribute()
+    {
+        return (app()->getLocale() === 'ar' && $this->name_ar) ? $this->name_ar : $this->name;
+    }
+
+    public function getDisplayDescriptionAttribute()
+    {
+        return (app()->getLocale() === 'ar' && $this->description_ar) ? $this->description_ar : $this->description;
+    }
+
     public function tours(): HasMany
     {
         return $this->hasMany(Tour::class);

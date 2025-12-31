@@ -14,8 +14,8 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Inter', ...defaultTheme.fontFamily.sans],
-                display: ['Outfit', 'serif'],
+                sans: ['Inter', 'Cairo', ...defaultTheme.fontFamily.sans],
+                display: ['Outfit', 'Almarai', 'serif'],
                 handwriting: ['Reey', 'sans-serif'],
             },
             colors: {

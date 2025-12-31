@@ -1,7 +1,7 @@
 <x-layouts.app isTransparent="false">
     
     <!-- Hero Section with Rotating Background -->
-    <x-hero-slider :destinations="$destinations" title="Contact Us" />
+    <x-hero-slider :destinations="$destinations" title="{{ __('Contact Us') }}" />
     
     <div class="bg-white dark:bg-gray-900 py-12 lg:py-24 transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
@@ -10,8 +10,8 @@
                 <!-- Left Column: Form -->
                 <div class="lg:col-span-2 space-y-8">
                     <div>
-                        <p class="font-handwriting text-3xl text-yellow-500 mb-2">Get in touch with us</p>
-                        <h1 class="text-5xl font-bold text-[#345BA8] dark:text-white">Leave a message</h1>
+                        <p class="font-handwriting text-3xl text-yellow-500 mb-2">{{ __('Get in touch with us') }}</p>
+                        <h1 class="text-5xl font-bold text-[#345BA8] dark:text-white">{{ __('Leave a message') }}</h1>
                     </div>
 
                     @if(session('success'))
@@ -23,23 +23,23 @@
                     <form action="{{ route('contact.store') }}" method="POST" class="space-y-6">
                         @csrf
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <input type="text" name="name" required placeholder="Your Name" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
+                            <input type="text" name="name" required placeholder="{{ __('Your Name') }}" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
                             
-                            <input type="email" name="email" required placeholder="Email Address" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
+                            <input type="email" name="email" required placeholder="{{ __('Email Address') }}" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
                             
                             <div class="relative w-full">
-                                <input type="tel" id="phone" name="phone_input" placeholder="Phone Number" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
+                                <input type="tel" id="phone" name="phone_input" placeholder="{{ __('Phone Number') }}" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
                                 <input type="hidden" name="phone" id="full_phone">
                             </div>
                             
-                            <input type="text" name="subject" placeholder="Subject" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
+                            <input type="text" name="subject" placeholder="{{ __('Subject') }}" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition">
                         </div>
 
-                        <textarea name="message" required rows="8" placeholder="Write message" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition"></textarea>
+                        <textarea name="message" required rows="8" placeholder="{{ __('Write message') }}" class="w-full rounded-xl border-none bg-[#f2f2f2] dark:bg-gray-800 px-6 py-4 text-gray-700 dark:text-gray-200 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-yellow-400 transition"></textarea>
 
                         <div>
                             <button type="submit" class="px-10 py-4 bg-[#345BA8] text-white font-semibold rounded-lg shadow-lg hover:bg-[#2A4A8A] transition transform hover:-translate-y-1">
-                                Send a Message
+                                {{ __('Send a Message') }}
                             </button>
                         </div>
                     </form>
@@ -48,7 +48,7 @@
                 <!-- Right Column: Contact Info Card -->
                 <div class="lg:col-span-1">
                     <div class="bg-white dark:bg-gray-800 rounded-3xl p-8 border border-gray-100 dark:border-gray-700 shadow-sm  flex flex-col justify-center">
-                        <h2 class="text-4xl font-bold text-yellow-500 mb-10">Contact us</h2>
+                        <h2 class="text-4xl font-bold text-yellow-500 mb-10">{{ __('Contact us') }}</h2>
                         
                         <div class="space-y-8 mb-12">
                             <a href="tel:01141812709" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
@@ -69,7 +69,7 @@
                                 <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-yellow-100 dark:group-hover:bg-yellow-900/30 transition-colors">
                                     <i class="fi fi-rr-marker text-xl"></i>
                                 </div>
-                                <span class="text-lg font-medium">72 King Faisal Street</span>
+                                <span class="text-lg font-medium">{{ __('72 King Faisal Street') }}</span>
                             </a>
                         </div>
 

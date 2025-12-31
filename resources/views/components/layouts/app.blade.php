@@ -1,22 +1,21 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() == 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Explore Egypt with Expert Local Guides - Traveler egypt tours</title>
+    <title>Explore Egypt with Expert Local Guides - Mo travels</title>
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
-    <meta name="description" content="Book unforgettable Egypt tours with Traveler Egypt Tours. Enjoy private guided tours, Nile cruises, and personalized travel packages led by expert local Egyptologists." />
+    <meta name="description" content="Book unforgettable Egypt tours with Mo travels. Enjoy private guided tours, Nile cruises, and personalized travel packages led by expert local Egyptologists." />
     <link rel="canonical" href="https://traveleregypt.com/" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Explore Egypt with Expert Local Guides - Traveler egypt tours" />
-    <meta property="og:description" content="Book unforgettable Egypt tours with Traveler Egypt Tours. Enjoy private guided tours, Nile cruises, and personalized travel packages led by expert local Egyptologists." />
+    <meta property="og:title" content="Explore Egypt with Expert Local Guides - Mo travels" />
+    <meta property="og:description" content="Book unforgettable Egypt tours with Mo travels. Enjoy private guided tours, Nile cruises, and personalized travel packages led by expert local Egyptologists." />
     <meta property="og:url" content="https://traveleregypt.com/" />
-    <meta property="og:site_name" content="Traveler egypt tours" />
+    <meta property="og:site_name" content="Mo travels" />
     <meta property="article:modified_time" content="2025-11-16T10:48:51+00:00" />
     <meta property="og:image" content="https://traveleregypt.com/wp-content/uploads/2024/07/Untitled-design-2024-07-07T171017.425_11zon.webp" />
     <meta name="twitter:card" content="summary_large_image" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
@@ -45,6 +44,28 @@
                         document.documentElement.classList.add('dark');
                     } else {
                         document.documentElement.classList.remove('dark');
+                    }
+                }
+            });
+
+            Alpine.store('language', {
+                current: '{{ app()->getLocale() }}',
+                languages: {
+                    'en': { flag: '🇺🇸', label: 'EN' },
+                    'ar': { flag: '🇪🇬', label: 'AR' },
+                    'de': { flag: '🇩🇪', label: 'DE' },
+                    'fr': { flag: '🇫🇷', label: 'FR' },
+                    'es': { flag: '🇪🇸', label: 'ES' },
+                    'it': { flag: '🇮🇹', label: 'IT' },
+                    'ru': { flag: '🇷🇺', label: 'RU' },
+                    'zh-CN': { flag: '🇨🇳', label: 'ZH' },
+                    'ja': { flag: '🇯🇵', label: 'JA' },
+                    'pt': { flag: '🇵🇹', label: 'PT' }
+                },
+                init() {
+                    const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
+                    if (match && this.languages[match[1]]) {
+                        this.current = match[1];
                     }
                 }
             });
@@ -110,60 +131,31 @@
     @stack('styles')
 </head>
 <body class="font-sans antialiased text-gray-900 bg-white dark:bg-gray-900 dark:text-white selection:bg-accent selection:text-white">
-    @props(['isTransparent' => true])
+@props([])
     
     <!-- Navbar -->
     <header x-data="{ 
             mobileMenuOpen: false, 
-            scrolled: false,
             init() {
                 this.$watch('mobileMenuOpen', value => {
                     document.body.classList.toggle('overflow-hidden', value);
                 })
             }
         }" 
-            @scroll.window="scrolled = (window.pageYOffset > 20)"
-            :class="{ 
-                'bg-primary-900/90 backdrop-blur-md shadow-md': {{ $isTransparent ? 'scrolled' : 'true' }}, 
-                'bg-transparent': {{ $isTransparent ? '!scrolled' : 'false' }} 
-            }"
-            class="fixed top-0 z-50 w-full transition-all duration-300">
+            class="sticky top-0 z-50 w-full bg-primary-900 shadow-md transition-all duration-300">
         <nav class="flex items-center justify-between p-1 mx-auto max-w-7xl lg:px-8" aria-label="Global">
             <div class="flex ">
                 <a href="/" class="-m-1.5 p-1.5 flex items-center gap-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Traveler Egypt" class="h-20 w-auto">
+                    <img src="{{ asset('images/logo.png') }}" alt="Mo travels" class="h-20 w-auto">
                 </a>
             </div>
             <div class="flex lg:hidden items-center gap-3">
                 <!-- Mobile Language Dropdown -->
-                <div class="relative" 
-                     x-data="{ 
-                        open: false,
-                        currentLang: 'en',
-                        languages: {
-                            'en': { flag: '🇺🇸', label: 'EN' },
-                            'ar': { flag: '🇪🇬', label: 'AR' },
-                            'de': { flag: '🇩🇪', label: 'DE' },
-                            'fr': { flag: '🇫🇷', label: 'FR' },
-                            'es': { flag: '🇪🇸', label: 'ES' },
-                            'it': { flag: '🇮🇹', label: 'IT' },
-                            'ru': { flag: '🇷🇺', label: 'RU' },
-                            'zh-CN': { flag: '🇨🇳', label: 'ZH' },
-                            'ja': { flag: '🇯🇵', label: 'JA' },
-                            'pt': { flag: '🇵🇹', label: 'PT' }
-                        },
-                        init() {
-                            const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-                            if (match && this.languages[match[1]]) {
-                                this.currentLang = match[1];
-                            }
-                        }
-                     }" 
-                     @click.outside="open = false">
+                <div class="relative" x-data="{ open: false }" @click.outside="open = false">
                     <button @click="open = !open" 
                             class="notranslate flex items-center gap-2 px-2.5 py-1.5 text-white bg-white/5 hover:bg-white/10 backdrop-blur-md transition-all duration-300 focus:outline-none border border-white/10 shadow-sm active:scale-95 rounded-full">
-                         <span x-text="languages[currentLang].flag" class="text-lg leading-none"></span>
-                         <span x-text="languages[currentLang].label" class="text-[11px] font-bold tracking-tighter opacity-90"></span>
+                         <span x-text="$store.language.languages[$store.language.current].flag" class="text-lg leading-none"></span>
+                         <span x-text="$store.language.languages[$store.language.current].label" class="text-[11px] font-bold tracking-tighter opacity-90"></span>
                          <i class="fi fi-rr-angle-small-down transition-transform duration-300 text-[10px] opacity-70" :class="open ? 'rotate-180' : ''"></i>
                     </button>
                     
@@ -191,12 +183,12 @@
                             ] as $code => $data)
                                 <a href="javascript:void(0)" onclick="changeLanguage('{{ $code }}')" 
                                    class="flex items-center justify-between px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group"
-                                   :class="currentLang === '{{ $code }}' ? 'bg-accent-600/10 text-accent-600 dark:text-accent-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100/50 dark:hover:bg-gray-800/50'">
+                                   :class="$store.language.current === '{{ $code }}' ? 'bg-accent-600/10 text-accent-600 dark:text-accent-400' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100/50 dark:hover:bg-gray-800/50'">
                                      <div class="flex items-center">
                                          <span class="mr-3 text-xl group-hover:scale-110 transition-transform duration-200">{{ $data[0] }}</span> 
                                          <span class="font-semibold">{{ $data[1] }}</span>
                                      </div>
-                                     <div x-show="currentLang === '{{ $code }}'" class="w-1.5 h-1.5 rounded-full bg-accent-600 shadow-[0_0_8px_rgba(var(--accent-600-rgb),0.5)]"></div>
+                                     <div x-show="$store.language.current === '{{ $code }}'" class="w-1.5 h-1.5 rounded-full bg-accent-600 shadow-[0_0_8px_rgba(var(--accent-600-rgb),0.5)]"></div>
                                 </a>
                             @endforeach
                         </div>
@@ -209,13 +201,13 @@
                 </button>
             </div>
             <div class="hidden lg:flex gap-6 xl:gap-x-12 items-center">
-                <a href="/" class="text-sm font-semibold leading-6 transition {{ request()->is('/') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">Home</a>
-                <a href="{{ route('about') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('about') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">About</a>
+                <a href="/" class="text-sm font-semibold leading-6 transition {{ request()->is('/') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">{{ __('Home') }}</a>
+                <a href="{{ route('about') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('about') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">{{ __('About') }}</a>
                 
                 <!-- Tours Dropdown -->
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                     <a href="{{ route('tours.index') }}" class="flex items-center gap-1 text-sm font-semibold leading-6 transition {{ request()->routeIs('tours.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">
-                        Tours
+                        {{ __('Tours') }}
                         <i class="fi fi-rr-angle-small-down transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
                     </a>
                     <div x-show="open" 
@@ -227,7 +219,7 @@
                          style="display: none;">
                         @foreach($headerCategories as $category)
                             <a href="{{ route('tours.index', ['category' => $category->slug]) }}" class="block px-5 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
-                                {{ $category->name }}
+                                {{ $category->display_name }}
                             </a>
                         @endforeach
                     </div>
@@ -236,7 +228,7 @@
                 <!-- Destinations Dropdown -->
                 <div class="relative" x-data="{ open: false }" @mouseenter="open = true" @mouseleave="open = false">
                     <a href="{{ route('destinations.index') }}" class="flex items-center gap-1 text-sm font-semibold leading-6 transition {{ request()->routeIs('destinations.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">
-                        Destinations
+                        {{ __('Destinations') }}
                         <i class="fi fi-rr-angle-small-down transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
                     </a>
                     <div x-show="open" 
@@ -248,14 +240,14 @@
                          style="display: none;">
                         @foreach($headerDestinations as $dest)
                             <a href="{{ route('destinations.show', $dest->slug) }}" class="block px-5 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-800 transition">
-                                {{ $dest->name }}
+                                {{ $dest->display_name }}
                             </a>
                         @endforeach
                     </div>
                 </div>
 
-                <a href="{{ route('articles.index') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('articles.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">Blogs</a>
-                <a href="{{ route('contact') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('contact') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">Contact</a>
+                <a href="{{ route('articles.index') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('articles.*') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">{{ __('Blogs') }}</a>
+                <a href="{{ route('contact') }}" class="text-sm font-semibold leading-6 transition {{ request()->routeIs('contact') ? 'text-accent-400' : 'text-white hover:text-accent-400' }}">{{ __('Contact') }}</a>
             </div>
             <div class="hidden lg:flex lg:justify-end items-center">
                 
@@ -263,7 +255,7 @@
              
 
                 <a href="{{ route('custom-tour.create') }}" class="px-5 py-2.5 text-sm font-semibold text-white transition-all bg-accent-600 rounded-full hover:bg-accent-500 shadow-lg shadow-accent-600/20 ml-4">
-                   Tailor-Made Your Tour <span aria-hidden="true">&rarr;</span>
+                   {{ __('Tailor-Made Your Tour') }} <span aria-hidden="true">{!! app()->getLocale() == 'ar' ? '&larr;' : '&rarr;' !!}</span>
                 </a>
 
 
@@ -271,35 +263,12 @@
                 <!-- Combined Language & Settings UI -->
                 <div class="relative ml-4 flex items-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-sm transition-all duration-300 hover:bg-white/10 group">
                     <!-- Language Part -->
-                    <div class="relative w-[102px] flex-shrink-0" 
-                         x-data="{ 
-                            open: false,
-                            currentLang: 'en',
-                            languages: {
-                                'en': { flag: '🇺🇸', label: 'EN' },
-                                'ar': { flag: '🇪🇬', label: 'AR' },
-                                'de': { flag: '🇩🇪', label: 'DE' },
-                                'fr': { flag: '🇫🇷', label: 'FR' },
-                                'es': { flag: '🇪🇸', label: 'ES' },
-                                'it': { flag: '🇮🇹', label: 'IT' },
-                                'ru': { flag: '🇷🇺', label: 'RU' },
-                                'zh-CN': { flag: '🇨🇳', label: 'ZH' },
-                                'ja': { flag: '🇯🇵', label: 'JA' },
-                                'pt': { flag: '🇵🇹', label: 'PT' }
-                            },
-                            init() {
-                                const match = document.cookie.match(/googtrans=\/en\/([^;]+)/);
-                                if (match && this.languages[match[1]]) {
-                                    this.currentLang = match[1];
-                                }
-                            }
-                         }" 
-                         @click.outside="open = false">
+                    <div class="relative w-[102px] flex-shrink-0" x-data="{ open: false }" @click.outside="open = false">
                         <button @click="open = !open" 
                                 class="notranslate flex items-center gap-2 px-4 py-2 text-white hover:text-accent-400 transition-all duration-300 focus:outline-none rounded-l-full active:scale-95 " 
                                 aria-label="Change Language">
-                             <span x-text="languages[currentLang].flag" class="text-xl leading-none transition-transform group-hover:scale-110 w-[20px] h-[20px]"></span>
-                             <span x-text="languages[currentLang].label" class="text-xs font-bold tracking-widest opacity-90"></span>
+                             <span x-text="$store.language.languages[$store.language.current].flag" class="text-xl leading-none transition-transform group-hover:scale-110 w-[20px] h-[20px]"></span>
+                             <span x-text="$store.language.languages[$store.language.current].label" class="text-xs font-bold tracking-widest opacity-90"></span>
                              <i class="fi fi-rr-angle-small-down transition-transform duration-300 opacity-60" :class="open ? 'rotate-180' : ''"></i>
                         </button>
                         
@@ -328,12 +297,12 @@
                                 ] as $code => $data)
                                     <a href="javascript:void(0)" onclick="changeLanguage('{{ $code }}')" 
                                        class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 group"
-                                       :class="currentLang === '{{ $code }}' ? 'bg-accent-600/10 text-accent-600 dark:text-accent-400' : 'text-gray-700 dark:text-gray-300 hover:bg-accent-600/5 hover:text-accent-600 dark:hover:text-accent-400'">
+                                       :class="$store.language.current === '{{ $code }}' ? 'bg-accent-600/10 text-accent-600 dark:text-accent-400' : 'text-gray-700 dark:text-gray-300 hover:bg-accent-600/5 hover:text-accent-600 dark:hover:text-accent-400'">
                                          <div class="flex items-center">
                                              <span class="mr-4 text-2xl group-hover:scale-125 transition-transform duration-300">{{ $data[0] }}</span> 
                                              <span class="tracking-tight">{{ $data[1] }}</span>
                                          </div>
-                                         <div x-show="currentLang === '{{ $code }}'" 
+                                         <div x-show="$store.language.current === '{{ $code }}'" 
                                               class="w-2 h-2 rounded-full bg-accent-600 shadow-[0_0_10px_rgba(var(--accent-600-rgb),0.6)]"
                                               x-transition:enter="transition duration-300"
                                               x-transition:enter-start="scale-0"
@@ -425,7 +394,7 @@
                                 <div class="flex h-full flex-col overflow-y-scroll bg-primary-950 shadow-2xl" @click.outside="mobileMenuOpen = false">
                                     <div class="flex items-center justify-between px-6 py-6 border-b border-gray-800">
                                         <div class="flex items-center gap-2">
-                                            <img src="{{ asset('images/logo.png') }}" alt="Traveler Egypt" class="h-10 w-auto">
+                                            <img src="{{ asset('images/logo.png') }}" alt="Mo travels" class="h-10 w-auto">
                                         </div>
                                         <button type="button" @click="mobileMenuOpen = false" class="rounded-md text-gray-400 hover:text-white focus:outline-none">
                                             <span class="sr-only">Close panel</span>
@@ -435,19 +404,19 @@
                                     
                                     <div class="relative mt-6 flex-1 px-4 sm:px-6">
                                         <div class="flex flex-col gap-1">
-                                            <a href="/" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->is('/') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">Home</a>
-                                            <a href="{{ route('about') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('about') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">About</a>
+                                            <a href="/" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->is('/') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">{{ __('Home') }}</a>
+                                            <a href="{{ route('about') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('about') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">{{ __('About') }}</a>
                                             
                                             <!-- Mobile Tours Dropdown -->
                                             <div x-data="{ open: false }">
                                                 <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-lg font-semibold rounded-xl text-gray-100 hover:bg-white/5 transition">
-                                                    <span>Tours</span>
+                                                    <span>{{ __('Tours') }}</span>
                                                     <i class="fi fi-rr-angle-small-down transform transition duration-300" :class="{ 'rotate-180 text-accent-400': open }"></i>
                                                 </button>
                                                 <div x-show="open" x-collapse class="pl-4 space-y-1">
                                                     @foreach($headerCategories as $category)
                                                         <a href="{{ route('tours.index', ['category' => $category->slug]) }}" class="block px-4 py-2 text-base text-gray-400 hover:text-white transition">
-                                                            {{ $category->name }}
+                                                            {{ $category->display_name }}
                                                         </a>
                                                     @endforeach
                                                 </div>
@@ -456,28 +425,28 @@
                                             <!-- Mobile Destinations Dropdown -->
                                             <div x-data="{ open: false }">
                                                 <button @click="open = !open" class="w-full flex items-center justify-between px-4 py-3 text-lg font-semibold rounded-xl text-gray-100 hover:bg-white/5 transition">
-                                                    <span>Destinations</span>
+                                                    <span>{{ __('Destinations') }}</span>
                                                     <i class="fi fi-rr-angle-small-down transform transition duration-300" :class="{ 'rotate-180 text-accent-400': open }"></i>
                                                 </button>
                                                 <div x-show="open" x-collapse class="pl-4 space-y-1">
-                                                    <a href="{{ route('destinations.index') }}" class="block px-4 py-2 text-base text-gray-400 hover:text-white transition">All Destinations</a>
+                                                    <a href="{{ route('destinations.index') }}" class="block px-4 py-2 text-base text-gray-400 hover:text-white transition">{{ __('All Destinations') }}</a>
                                                     @foreach($headerDestinations as $dest)
                                                         <a href="{{ route('destinations.show', $dest->slug) }}" class="block px-4 py-2 text-base text-gray-400 hover:text-white transition">
-                                                            {{ $dest->name }}
+                                                            {{ $dest->display_name }}
                                                         </a>
                                                     @endforeach
                                                 </div>
                                             </div>
 
-                                            <a href="{{ route('articles.index') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('articles.*') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">Blogs</a>
-                                            <a href="{{ route('contact') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('contact') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">Contact</a>
+                                            <a href="{{ route('articles.index') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('articles.*') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">{{ __('Blogs') }}</a>
+                                            <a href="{{ route('contact') }}" class="block px-4 py-3 text-lg font-semibold rounded-xl hover:bg-white/5 transition {{ request()->routeIs('contact') ? 'text-accent-400 bg-white/5' : 'text-gray-100' }}">{{ __('Contact') }}</a>
                                         </div>
 
                                         <div class="mt-8 border-t border-gray-800 pt-8 space-y-6">
                                             <!-- Dark Mode -->
                                             <div>
                                                 <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3 px-1">
-                                                    Appearance
+                                                    {{ __('Appearance') }}
                                                 </div>
                                                 <div class="bg-gray-800 p-1 rounded-xl flex items-center justify-between">
                                                     <button @click="$store.darkMode.set('light')" 
@@ -501,7 +470,7 @@
                                             <!-- Language Accordion -->
                                             <div x-data="{ langOpen: false }">
                                                 <button @click="langOpen = !langOpen" class="w-full flex items-center justify-between text-lg font-semibold text-gray-100 hover:text-white transition px-1">
-                                                    <span>Language</span>
+                                                    <span>{{ __('Language') }}</span>
                                                     <i class="fi fi-rr-angle-small-down transform transition duration-300" :class="{ 'rotate-180': langOpen }"></i>
                                                 </button>
                                                 <div x-show="langOpen" x-collapse class="notranslate mt-2 space-y-1 pl-2">
@@ -517,8 +486,13 @@
                                                         'ja' => ['🇯🇵','Japanese'], 
                                                         'pt' => ['🇵🇹','Portuguese']
                                                     ] as $code => $data)
-                                                        <a href="javascript:void(0)" onclick="changeLanguage('{{ $code }}')" class="flex items-center gap-3 px-3 py-2 text-gray-300 hover:text-white hover:bg-white/5 rounded-lg transition">
-                                                            <span class="text-xl">{{ $data[0] }}</span> {{ $data[1] }}
+                                                        <a href="javascript:void(0)" onclick="changeLanguage('{{ $code }}')" 
+                                                           class="flex items-center justify-between px-3 py-2 rounded-lg transition"
+                                                           :class="$store.language.current === '{{ $code }}' ? 'bg-accent-600/10 text-accent-400' : 'text-gray-300 hover:text-white hover:bg-white/5'">
+                                                            <div class="flex items-center gap-3">
+                                                                <span class="text-xl">{{ $data[0] }}</span> {{ $data[1] }}
+                                                            </div>
+                                                            <div x-show="$store.language.current === '{{ $code }}'" class="w-1.5 h-1.5 rounded-full bg-accent-600"></div>
                                                         </a>
                                                     @endforeach
                                                 </div>
@@ -526,7 +500,7 @@
 
                                             <a href="{{ route('custom-tour.create') }}" class="w-full flex items-center justify-center gap-2 px-6 py-4 bg-accent-600 hover:bg-accent-500 text-white font-bold rounded-xl transition shadow-lg shadow-accent-600/20">
                                                 <span>Tailor-Made Your Tour</span>
-                                                <i class="fi fi-rr-arrow-small-right text-xl"></i>
+                                                <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left' : 'fi-rr-arrow-small-right' }} text-xl"></i>
                                             </a>
                                         </div>
                                     </div>
@@ -553,11 +527,9 @@
                       <!-- Brand -->
                       <div class="lg:col-span-4 space-y-6">
                            <a href="/" class="flex items-center gap-3">
-                                <img src="{{ asset('images/logo.png') }}" alt="Traveler Egypt" class="h-20 w-auto bg-white rounded-xl p-1 shadow-sm">
+                                <img src="{{ asset('images/logo.png') }}" alt="Mo travels" class="h-20 w-auto bg-white rounded-xl p-1 shadow-sm">
                            </a>
-                           <p class="text-[#3a3a3a] dark:text-gray-400 text-sm font-light leading-6">
-                                Traveler Egypt Tours is the best travel agency specializing in providing a wide range of tour packages throughout Egypt.
-                           </p>
+                                {{ __("Mo travels is the best travel agency specializing in providing a wide range of tour packages throughout Egypt.") }}
                            <!-- Social Icons -->
                            <div class="flex gap-4">
                                 <a href="https://www.facebook.com/mohamed.ibrahim.459408" class="w-10 h-10 rounded-full bg-[#29385f] flex items-center justify-center text-white hover:bg-[#1e2a4a] transition">
@@ -570,16 +542,16 @@
 
                            <!-- Subscription Form -->
                            <div class="pt-4">
-                               <h5 class="text-sm font-bold text-[#272727] dark:text-white mb-3">Subscribe to our newsletter</h5>
+                               <h5 class="text-sm font-bold text-[#272727] dark:text-white mb-3">{{ __('Subscribe to our newsletter') }}</h5>
                                <form class="flex flex-col sm:flex-row gap-2">
                                    <div class="relative flex-grow">
                                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                            <i class="fi fi-rr-envelope text-gray-400"></i>
                                        </div>
-                                       <input type="email" placeholder="Email address" class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
+                                       <input type="email" placeholder="{{ __("Email address") }}" class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
                                    </div>
                                    <button type="submit" class="px-5 py-2.5 bg-[#355fbf] text-white text-sm font-semibold rounded-lg hover:bg-[#2a4a9a] transition shadow-md flex items-center justify-center gap-2">
-                                       <span>Join</span>
+                                       <span>{{ __('Join') }}</span>
                                        <i class="fi fi-rr-paper-plane"></i>
                                    </button>
                                </form>
@@ -590,23 +562,23 @@
                       <div class="lg:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
                            <!-- Quick Links -->
                            <div class="space-y-4">
-                                <h4 class="text-base font-bold text-[#272727] dark:text-white">Quick Links</h4>
+                                <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __("Quick Links") }}</h4>
                                 <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
-                                    <li><a href="/" class="hover:text-blue-500 transition">Home</a></li>
-                                    <li><a href="{{ route('about') }}" class="hover:text-blue-500 transition">About Us</a></li>
-                                    <li><a href="{{ route('tours.index') }}" class="hover:text-blue-500 transition">Tours</a></li>
-                                    <li><a href="{{ route('destinations.index') }}" class="hover:text-blue-500 transition">Destinations</a></li>
-                                    <li><a href="{{ route('articles.index') }}" class="hover:text-blue-500 transition">Blogs</a></li>
+                                    <li><a href="/" class="hover:text-blue-500 transition">{{ __('Home') }}</a></li>
+                                    <li><a href="{{ route('about') }}" class="hover:text-blue-500 transition">{{ __('About Us') }}</a></li>
+                                    <li><a href="{{ route('tours.index') }}" class="hover:text-blue-500 transition">{{ __('Tours') }}</a></li>
+                                    <li><a href="{{ route('destinations.index') }}" class="hover:text-blue-500 transition">{{ __('Destinations') }}</a></li>
+                                    <li><a href="{{ route('articles.index') }}" class="hover:text-blue-500 transition">{{ __('Blogs') }}</a></li>
                                 </ul>
                            </div>
 
                            <!-- More Links -->
                            <div class="space-y-4">
-                                <h4 class="text-base font-bold text-[#272727] dark:text-white">Resources</h4>
+                                <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __("Resources") }}</h4>
                                 <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
-                                    <li><a href="{{ route('contact') }}" class="hover:text-blue-500 transition">Contact Us</a></li>
-                                    <li><a href="#" class="hover:text-blue-500 transition">Privacy Policy</a></li>
-                                    <li><a href="#" class="hover:text-blue-500 transition">Terms of Use</a></li>
+                                    <li><a href="{{ route('contact') }}" class="hover:text-blue-500 transition">{{ __('Contact Us') }}</a></li>
+                                    <li><a href="#" class="hover:text-blue-500 transition">{{ __('Privacy Policy') }}</a></li>
+                                    <li><a href="#" class="hover:text-blue-500 transition">{{ __('Terms of Use') }}</a></li>
                                 </ul>
                            </div>
 
@@ -614,7 +586,7 @@
                    
                            <!-- Contact Info -->
                            <div class="space-y-4">
-                                <h4 class="text-base font-bold text-[#272727] dark:text-white">Contact</h4>
+                                <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __('Contact') }}</h4>
                                 <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
                                     <li>
                                         <a href="tel:01141812709" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
@@ -637,7 +609,7 @@
                                             <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
                                                 <i class="fi fi-rr-marker text-sm"></i>
                                             </div>
-                                            <span>72 King Faisal Street</span>
+                                            <span>{{ __('72 King Faisal Street') }}</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -647,7 +619,7 @@
 
                  <!-- Footer Bottom -->
                  <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm font-light text-[#3a3a3a] dark:text-gray-400">
-                      <p>&copy; {{ date('Y') }} Traveler Egypt. All rights reserved.</p>
+                      <p>&copy; {{ date('Y') }} {{ config('app.name', 'Mo travels') }}. {{ __('All rights reserved.') }}</p>
                       <div class="flex gap-4 font-medium">
                           <a href="#" class="w-10 h-10 rounded-full bg-[#f3f4f6] dark:bg-gray-700 flex items-center justify-center text-[#3a3a3a] dark:text-white hover:bg-[#4976e7] hover:text-white transition">
                               <i class="fi fi-rr-arrow-small-up text-xl"></i>
@@ -675,17 +647,37 @@
         }
 
         function changeLanguage(lang) {
-            var select = document.querySelector('.goog-te-combo');
-            if (select) {
-                select.value = lang;
-                select.dispatchEvent(new Event('change'));
-            } else {
-                 // Fallback if the widget isn't fully loaded or is hidden/custom style
-                 // Set the google cookie manually
-                 document.cookie = "googtrans=/en/" + lang + "; domain=" + window.location.hostname + "; path=/";
-                 document.cookie = "googtrans=/en/" + lang + "; domain=" + window.location.hostname + "; path=/";
-                 location.reload();
+            if (lang === 'en' || lang === 'ar') {
+                // Clear Google Translate cookie
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; domain=" + window.location.hostname + "; path=/;";
+                
+                // Switch native locale
+                window.location.href = '/language/' + lang;
+                return;
             }
+
+            const cookieValue = "/en/" + lang;
+            const domain = window.location.hostname;
+            
+            // Set cookie for both domain and without domain to ensure it sticks
+            document.cookie = "googtrans=" + cookieValue + "; path=/";
+            document.cookie = "googtrans=" + cookieValue + "; domain=" + domain + "; path=/";
+            
+            // Try setting for root domain too (e.g. .example.com)
+            const parts = domain.split('.');
+            if (parts.length >= 2) {
+                const baseDomain = parts.slice(-2).join('.');
+                document.cookie = "googtrans=" + cookieValue + "; domain=." + baseDomain + "; path=/";
+            }
+
+            // If we're on Arabic native, we must switch to English native for Google Translate
+            if ('{{ app()->getLocale() }}' === 'ar') {
+                window.location.href = '/language/en';
+                return;
+            }
+            
+            location.reload();
         }
     </script>
     <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

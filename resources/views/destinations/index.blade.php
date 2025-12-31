@@ -5,8 +5,8 @@
             <div class="absolute inset-0 bg-gradient-to-t from-primary-900 to-transparent"></div>
         </div>
         <div class="relative mx-auto max-w-7xl px-6 lg:px-8 text-center pt-16">
-            <h1 class="text-4xl font-bold tracking-tight text-white font-display sm:text-6xl">Explore Destinations</h1>
-            <p class="mt-4 text-xl text-gray-300">From the bustling streets of Cairo to the serene beaches of Sharm El Sheikh.</p>
+            <h1 class="text-4xl font-bold tracking-tight text-white font-display sm:text-6xl">{{ __('Explore Destinations') }}</h1>
+            <p class="mt-4 text-xl text-gray-300">{{ __('From the bustling streets of Cairo to the serene beaches of Sharm El Sheikh.') }}</p>
         </div>
     </div>
 
@@ -34,12 +34,12 @@
                         $colSpan = $pattern[$index] ?? 'lg:col-span-1'; 
                     @endphp
                     <a href="{{ route('destinations.show', $destination) }}" class="group relative flex flex-col justify-end overflow-hidden rounded-3xl {{ $colSpan }} hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
-                        <img src="{{ Storage::url($destination->image) }}" alt="{{ $destination->name }}" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110">
+                        <img src="{{ Storage::url($destination->image) }}" alt="{{ $destination->display_name }}" class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
                         
                         <div class="relative p-6">
                             <h3 class="text-2xl font-display font-bold text-white tracking-wide">
-                                {{ $destination->name }}
+                                {{ $destination->display_name }}
                             </h3>
                         </div>
                     </a>
@@ -57,7 +57,7 @@
                         
                         <div class="pt-6">
                             <a href="{{ route('contact') }}" class="inline-block px-6 py-3 bg-white dark:bg-gray-700 text-[#2e406e] dark:text-white text-xs font-bold uppercase tracking-wider rounded transition-transform hover:scale-105">
-                                Contact Us
+                                {{ __('Contact Us') }}
                             </a>
                         </div>
                     </div>

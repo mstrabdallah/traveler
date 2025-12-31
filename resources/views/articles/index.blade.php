@@ -5,8 +5,8 @@
             <div class="absolute inset-0 bg-gradient-to-t from-primary-900 to-transparent"></div>
         </div>
         <div class="relative mx-auto max-w-7xl px-6 lg:px-8 text-center pt-16">
-            <h1 class="text-4xl font-bold tracking-tight text-white font-display sm:text-6xl">Traveler's Journal</h1>
-            <p class="mt-4 text-xl text-gray-300">Stories, tips, and guides for your Egyptian adventure.</p>
+            <h1 class="text-4xl font-bold tracking-tight text-white font-display sm:text-6xl">{{ __('Traveler\'s Journal') }}</h1>
+            <p class="mt-4 text-xl text-gray-300">{{ __('Stories, tips, and guides for your Egyptian adventure.') }}</p>
         </div>
     </div>
 
@@ -28,13 +28,13 @@
                                 <h3 class="mt-3 text-lg font-semibold leading-6 text-primary-900 dark:text-white group-hover:text-accent-600 dark:group-hover:text-accent-400 transition-colors">
                                     <a href="{{ route('articles.show', $article) }}">
                                         <span class="absolute inset-0"></span>
-                                        {{ $article->title }}
+                                        {{ $article->display_title }}
                                     </a>
                                 </h3>
-                                <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-300">{{ $article->excerpt }}</p>
+                                <p class="mt-5 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-300">{{ $article->display_excerpt }}</p>
                             </div>
                             <div class="mt-6 flex items-center gap-x-4 border-t border-gray-100 dark:border-gray-700 pt-4 w-full">
-                                <a href="{{ route('articles.show', $article) }}" class="text-sm font-semibold text-accent-600 dark:text-accent-400 hover:text-accent-500">Read more <span aria-hidden="true">&rarr;</span></a>
+                                <a href="{{ route('articles.show', $article) }}" class="text-sm font-semibold text-accent-600 dark:text-accent-400 hover:text-accent-500">{{ __('Read more') }} <span aria-hidden="true">{!! app()->getLocale() == 'ar' ? '&larr;' : '&rarr;' !!}</span></a>
                             </div>
                         </div>
                     </article>

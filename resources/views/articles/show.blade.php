@@ -17,8 +17,8 @@
             <div class="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                 <div class="lg:pr-4">
                     <div class="lg:max-w-lg">
-                        <p class="text-base font-semibold leading-7 text-accent-600 dark:text-accent-400">Blog</p>
-                        <h1 class="mt-2 text-3xl font-bold tracking-tight text-primary-900 dark:text-white font-display sm:text-4xl">{{ $article->title }}</h1>
+                        <p class="text-base font-semibold leading-7 text-accent-600 dark:text-accent-400">{{ __('Blog') }}</p>
+                        <h1 class="mt-2 text-3xl font-bold tracking-tight text-primary-900 dark:text-white font-display sm:text-4xl">{{ $article->display_title }}</h1>
                         <div class="flex items-center gap-x-4 text-xs mt-4">
                             <time datetime="{{ $article->published_at->format('Y-m-d') }}" class="text-gray-500 dark:text-gray-400">{{ $article->published_at->format('M d, Y') }}</time>
                         </div>
@@ -31,7 +31,7 @@
             <div class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
                 <div class="lg:pr-4">
                     <div class="max-w-xl text-base leading-7 text-gray-700 dark:text-gray-300 lg:max-w-lg prose prose-indigo dark:prose-invert">
-                        {!! $article->content !!}
+                        {!! $article->display_content !!}
                     </div>
                 </div>
             </div>

@@ -7,17 +7,17 @@
                 @foreach($destinations as $destination)
                     <div class="swiper-slide relative">
                         <div class="absolute inset-0">
-                            <img src="{{ Storage::url($destination->image) }}" alt="{{ $destination->name }}" class="h-full w-full object-cover">
+                            <img src="{{ Storage::url($destination->image) }}" alt="{{ $destination->display_name }}" class="h-full w-full object-cover">
                             <div class="absolute inset-0 bg-primary-950/40"></div>
                             <div class="absolute inset-0 bg-gradient-to-t from-primary-950/90 via-transparent to-primary-950/30"></div>
                         </div>
                         <div class="relative h-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col justify-center items-center text-center pb-25">
-                            <span class="font-handwriting text-5xl md:text-7xl text-yellow-400 mb-4 animate-fade-in-up">Traveling</span>
+                            <span class="font-handwriting text-5xl md:text-7xl text-yellow-400 mb-4 animate-fade-in-up">{{ __('Traveling') }}</span>
                             <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white font-display mb-6 animate-fade-in-up delay-100">
-                                Your Journey <span class="border-b-4 border-white pb-2">Begins Here</span>
+                                {{ __('Your Journey') }} <span class="border-b-4 border-white pb-2">{{ __('Begins Here') }}</span>
                             </h1>
                             <p class="max-w-2xl text-lg md:text-xl text-gray-200 animate-fade-in-up delay-200">
-                                Explore the timeless wonders of {{ $destination->name }} with our exclusive tour packages.
+                                {{ __('Explore the timeless wonders of :name with our exclusive tour packages.', ['name' => $destination->display_name]) }}
                             </p>
                         </div>
                     </div>
@@ -42,9 +42,9 @@
                     <div class="col-span-1 md:col-span-4 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 dark:border-gray-700 pb-4 md:pb-0 md:pr-6 relative group">
                         <label for="date_from" class="flex items-center gap-2 text-[#345BA8] dark:text-blue-400 font-bold mb-2 group-focus-within:text-[#2A4A8A] dark:group-focus-within:text-blue-300 transition-colors">
                              <i class="fi fi-rr-calendar-clock text-xl"></i>
-                             <span class="text-sm uppercase tracking-wider">When</span>
+                             <span class="text-sm uppercase tracking-wider">{{ __('When') }}</span>
                         </label>
-                        <input type="text" id="date_from" name="date_from" placeholder="Select Date" class="w-full border-0 p-0 text-gray-900 dark:text-white font-bold focus:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-transparent text-lg cursor-pointer">
+                        <input type="text" id="date_from" name="date_from" placeholder="{{ __('Select Date') }}" class="w-full border-0 p-0 text-gray-900 dark:text-white font-bold focus:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-transparent text-lg cursor-pointer">
                     </div>
 
                     <!-- Guests Dropdown -->
@@ -58,14 +58,14 @@
                          
                          <label @click="open = !open" class="flex items-center gap-2 text-[#345BA8] dark:text-blue-400 font-bold mb-2 cursor-pointer hover:text-[#2A4A8A] dark:hover:text-blue-300 transition-colors">
                               <i class="fi fi-rr-users-alt text-xl"></i>
-                              <span class="text-sm uppercase tracking-wider">Guests</span>
+                              <span class="text-sm uppercase tracking-wider">{{ __('Guests') }}</span>
                          </label>
                         
                         <!-- Main Display Input -->
                         <div @click="open = !open" class="cursor-pointer">
                             <input type="text" readonly 
-                                   :value="total ? total + ' Guests' : ''"
-                                   placeholder="Add Guests" 
+                                   :value="total ? total + ' ' + '{{ __('Guests') }}' : ''"
+                                   placeholder="{{ __('Add Guests') }}" 
                                    class="w-full border-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-0 text-gray-900 dark:text-white font-bold focus:ring-0 cursor-pointer text-lg bg-transparent"
                             >
                         </div>
@@ -85,7 +85,7 @@
                             
                             <!-- Person Row -->
                             <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-50 dark:border-gray-700">
-                                <span class="text-gray-700 dark:text-gray-200 font-medium"><span x-text="counts.person"></span> person</span>
+                                <span class="text-gray-700 dark:text-gray-200 font-medium"><span x-text="counts.person"></span> {{ __('person') }}</span>
                                 <div class="flex items-center gap-3">
                                     <button type="button" @click="if(counts.person > 0) counts.person--" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.person <= 0">
                                         <i class="fi fi-rr-minus text-xs"></i>
@@ -98,7 +98,7 @@
 
                             <!-- Adult Row -->
                             <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-50">
-                                <span class="text-gray-700 font-medium"><span x-text="counts.adult"></span> Adult</span>
+                                <span class="text-gray-700 font-medium"><span x-text="counts.adult"></span> {{ __('Adult') }}</span>
                                 <div class="flex items-center gap-3">
                                     <button type="button" @click="if(counts.adult > 0) counts.adult--" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.adult <= 0">
                                         <i class="fi fi-rr-minus text-xs"></i>
@@ -111,7 +111,7 @@
 
                             <!-- Child Row -->
                             <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-50">
-                                <span class="text-gray-700 font-medium"><span x-text="counts.child"></span> child</span>
+                                <span class="text-gray-700 font-medium"><span x-text="counts.child"></span> {{ __('child') }}</span>
                                 <div class="flex items-center gap-3">
                                     <button type="button" @click="if(counts.child > 0) counts.child--" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.child <= 0">
                                         <i class="fi fi-rr-minus text-xs"></i>
@@ -124,7 +124,7 @@
 
                             <!-- Apply Button -->
                             <button type="button" @click="open = false" class="w-full py-3 bg-[#345BA8] text-white font-bold rounded-lg hover:bg-[#2A4A8A] transition text-sm tracking-wider uppercase shadow-lg shadow-blue-900/10">
-                                Apply Selection
+                                 {{ __('Apply Selection') }}
                             </button>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
                     <div class="col-span-1 md:col-span-4 w-full">
                         <button type="submit" class="w-full md:w-auto px-10 py-5 bg-[#345BA8] text-white font-bold rounded-2xl hover:bg-[#2A4A8A] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-3 uppercase tracking-wide text-sm group">
                             <i class="fi fi-rr-search text-lg group-hover:scale-110 transition-transform"></i>
-                            Search
+                            {{ __('Search') }}
                         </button>
                     </div>
                 </form>
@@ -178,32 +178,54 @@
                 <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">Discover With Us</h2>
             </div>
 
-            <!-- Bento Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 auto-rows-[300px]">
+            <!-- Dynamic Grid -->
+            @php
+                $count = count($destinations);
+                // Base grid classes
+                $gridClasses = "grid grid-cols-1 gap-6 auto-rows-[300px]";
+                
+                // Adjust grid columns based on count for smaller sets
+                if ($count === 1) {
+                    $gridClasses .= " max-w-2xl mx-auto";
+                } elseif ($count === 2) {
+                    $gridClasses .= " md:grid-cols-2 max-w-5xl mx-auto";
+                } elseif ($count === 3) {
+                    $gridClasses .= " md:grid-cols-3";
+                } else {
+                    $gridClasses .= " md:grid-cols-4";
+                }
+            @endphp
+
+            <div class="{{ $gridClasses }}">
                 @foreach($destinations as $index => $destination)
                     @php
-                        // Grid logic matching the screenshot (Row 1: 1-2-1, Row 2: 2-2)
-                        // Repeats every 5 items
-                        $i = $index % 5;
-                        $colSpan = 'md:col-span-1';
-                        if ($i === 1 || $i === 3 || $i === 4) {
-                            $colSpan = 'md:col-span-2';
+                        $colSpan = '';
+                        // Only use complex Bento spans if we have enough items
+                        if ($count > 3) {
+                            $i = $index % 5;
+                            $colSpan = 'md:col-span-1';
+                            if ($i === 1 || $i === 3 || $i === 4) {
+                                $colSpan = 'md:col-span-2';
+                            }
                         }
                     @endphp
 
                     <a href="{{ route('destinations.show', $destination) }}" 
-                       class="relative group overflow-hidden rounded-2xl shadow-lg {{ $colSpan }}">
+                       class="relative group overflow-hidden rounded-3xl shadow-lg {{ $colSpan }} transition-all duration-500 hover:shadow-2xl">
                         <img src="{{ Storage::url($destination->image) }}" 
-                             alt="{{ $destination->name }}" 
+                             alt="{{ $destination->display_name }}" 
                              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         
-                        <!-- Gradient Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 transition-opacity group-hover:opacity-90"></div>
+                        <!-- Premium Gradient Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 transition-opacity group-hover:opacity-90"></div>
                         
-                        <div class="absolute bottom-0 left-0 p-6">
-                            <h3 class="text-2xl font-bold text-white font-display tracking-wide group-hover:text-yellow-400 transition-colors">
-                                {{ $destination->name }}
+                        <!-- Content -->
+                        <div class="absolute bottom-0 left-0 p-8 w-full transform translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
+                            <span class="inline-block px-3 py-1 bg-yellow-400 text-black text-[10px] font-bold uppercase tracking-widest rounded-full mb-3 opacity-0 group-hover:opacity-100 transition-opacity duration-500">{{ __('Explore') }}</span>
+                            <h3 class="text-2xl md:text-3xl font-bold text-white font-display tracking-wide group-hover:text-yellow-400 transition-colors">
+                                {{ $destination->display_name }}
                             </h3>
+                            <div class="mt-2 w-12 h-1 bg-yellow-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                         </div>
                     </a>
                 @endforeach
@@ -212,9 +234,9 @@
             <!-- Footer Button -->
             <div class="mt-12 text-center">
                 <a href="{{ route('destinations.index') }}" class="inline-flex items-center gap-3 bg-[#355fbf] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#2a4a9a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
-                    All Destinations
+                    {{ __('All Destinations') }}
                     <div class="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition">
-                        <i class="fi fi-rr-arrow-small-right text-lg"></i>
+                        <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left' : 'fi-rr-arrow-small-right' }} text-lg"></i>
                     </div>
                 </a>
             </div>
@@ -228,10 +250,10 @@
                      <!-- Headings -->
                     <div class="mb-9 relative text-center">
                         <div class="relative inline-block mb-1">
-                            <span class="  font-handwriting  text-yellow-500 text-5xl   dark:text-white relative z-10">Get to know us</span>
+                            <span class="  font-handwriting  text-yellow-500 text-5xl   dark:text-white relative z-10">{{ __('Get to know us') }}</span>
                         </div>
                         <h2 class="text-5xl lg:text-[4rem] font-display font-extrabold text-[#040404] dark:text-white leading-[1.1] uppercase tracking-tight">
-                            Plan Your Trip With <br> Traveler Egypt Tours
+                            {{ __('Plan Your Trip With') }} <br> {{ __('Traveler Egypt Tours') }}
                         </h2>
                     </div>
             <div class="flex flex-col lg:flex-row gap-12 lg:gap-24 relative">
@@ -264,7 +286,7 @@
                                 <i class="fi fi-ss-shield-check text-white dark:text-black text-2xl"></i>
                              </div>
                              <div>
-                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">Safety and Security</h3>
+                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">{{ __('Safety and Security') }}</h3>
                                 <p class="text-lg font-display text-gray-600 dark:text-gray-400 leading-snug">
                                     The company emphasizes safety and security for all travelers.
                                 </p>
@@ -277,9 +299,9 @@
                                 <i class="fi fi-ss-star text-white dark:text-black text-2xl"></i>
                              </div>
                              <div>
-                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">Specialized Tours</h3>
+                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">{{ __('Specialized Tours') }}</h3>
                                 <p class="text-lg font-display text-gray-600 dark:text-gray-400 leading-snug">
-                                    History, cultural sightseeing, safari, and holiday packages.
+                                    {{ __('History, cultural sightseeing, safari, and holiday packages.') }}
                                 </p>
                              </div>
                         </div>
@@ -290,9 +312,9 @@
                                 <i class="fi fi-ss-world text-white dark:text-black text-2xl"></i>
                              </div>
                              <div>
-                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">Tour Packages</h3>
+                                <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">{{ __('Tour Packages') }}</h3>
                                 <p class="text-lg font-display text-gray-600 dark:text-gray-400 leading-snug">
-                                    Variety of packages including day tours and multi-day adventures.
+                                    {{ __('Variety of packages including day tours and multi-day adventures.') }}
                                 </p>
                              </div>
                         </div>
@@ -300,9 +322,9 @@
 
                     <!-- CTA Button -->
                     <a href="{{ route('tours.index') }}" class="inline-flex items-center gap-3 bg-[#355fbf] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#2a4a9a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group relative z-20">
-                        Book Now
+                        {{ __('Book Now') }}
                         <div class="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition">
-                            <i class="fi fi-rr-arrow-small-right text-lg"></i>
+                            <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left' : 'fi-rr-arrow-small-right' }} text-lg"></i>
                         </div>
                     </a>
 
@@ -345,7 +367,7 @@
                                 <div class="p-6 flex flex-col flex-grow justify-between">
                                     <div>
                                         <h3 class="text-lg font-bold text-yellow-500 leading-tight mb-4 line-clamp-2">
-                                            {{ $tour->title }}
+                                            {{ $tour->display_name }}
                                         </h3>
                                     </div>
                                     
@@ -353,7 +375,7 @@
                                         <div class="flex items-center gap-4">
                                             <div class="flex items-center gap-1">
                                                 <i class="fi fi-rr-clock-five"></i>
-                                                <span>{{ $tour->duration_days }} Days</span>
+                                                <span>{{ $tour->duration_days }} {{ __('Days') }}</span>
                                             </div>
                                             <div class="flex items-center gap-1">
                                                 <i class="fi fi-rr-user"></i>
@@ -362,8 +384,8 @@
                                         </div>
                                         
                                         <div class="text-[#345BA8] dark:text-blue-400 font-bold flex items-center gap-1 group-hover:text-[#2A4A8A] dark:group-hover:text-blue-300 transition">
-                                            Explore 
-                                            <i class="fi fi-rr-arrow-small-right text-lg translate-y-[1px]"></i>
+                                            {{ __('Explore') }} 
+                                            <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left group-hover:-translate-x-1' : 'fi-rr-arrow-small-right group-hover:translate-x-1' }} text-lg translate-y-[1px]"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -373,10 +395,10 @@
                 </div>
                 <!-- Navigation Buttons -->
                 <div class="swiper-button-next !w-12 !h-12 !bg-white !rounded-full !text-[#2A2C3E] !shadow-lg after:!content-none flex items-center justify-center hover:!bg-[#345BA8] hover:!text-white transition-all opacity-0 group-hover:opacity-100 absolute top-1/2 -right-4 z-10 translate-x-1/2">
-                    <i class="fi fi-rr-arrow-small-right text-2xl mt-1"></i>
+                    <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left' : 'fi-rr-arrow-small-right' }} text-2xl mt-1"></i>
                 </div>
                 <div class="swiper-button-prev !w-12 !h-12 !bg-white !rounded-full !text-[#2A2C3E] !shadow-lg after:!content-none flex items-center justify-center hover:!bg-[#345BA8] hover:!text-white transition-all opacity-0 group-hover:opacity-100 absolute top-1/2 -left-4 z-10 -translate-x-1/2">
-                    <i class="fi fi-rr-arrow-small-left text-2xl mt-1"></i>
+                    <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-right' : 'fi-rr-arrow-small-left' }} text-2xl mt-1"></i>
                 </div>
 
                 <!-- Pagination -->
@@ -386,53 +408,53 @@
             <!-- Footer Button -->
              <div class="mt-12 text-center">
                  <a href="{{ route('tours.index') }}" class="inline-block px-10 py-4 bg-[#2A4A8A] text-white font-bold rounded-lg shadow-lg hover:bg-opacity-90 transition transform hover:-translate-y-1">
-                    All Tours
+                    {{ __('All Tours') }}
                 </a>
             </div>
         </div>
     </div>
     
     <!-- Testimonials Section -->
-    <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-800 relative transition-colors duration-300 overflow-hidden" 
-         x-data="{ 
+     <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-800 relative transition-colors duration-300 overflow-hidden" 
+          x-data='{ 
             active: 2,
             touchStartX: 0,
             touchEndX: 0,
             testimonials: [
                 { 
-                    name: 'Sarah Jenkins', 
-                    role: 'Solo Traveler', 
-                    image: '{{ asset('images/testimonials/testimonial-1.jpg') }}', 
-                    rate: '5.0', 
-                    description: 'Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend!' 
+                    name: "Sarah Jenkins", 
+                    role: @json(__('Solo Traveler')), 
+                    image: "{{ asset('images/testimonials/testimonial-1.jpg') }}", 
+                    rate: "5.0", 
+                     description: @json(__('Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend!')) 
                 },
                 { 
-                    name: 'Mark Thompson', 
-                    role: 'Adventure Seeker', 
-                    image: '{{ asset('images/testimonials/testimonial-2.jpg') }}', 
-                    rate: '5.0', 
-                    description: 'Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic.' 
+                    name: "Mark Thompson", 
+                    role: @json(__('Adventure Seeker')), 
+                    image: "{{ asset('images/testimonials/testimonial-2.jpg') }}", 
+                    rate: "5.0", 
+                    description: @json(__('Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic.')) 
                 },
                 { 
-                    name: 'Yusuf Mahtow', 
-                    role: 'Egypt Tour Guide', 
-                    image: '{{ asset('images/testimonials/testimonial-3.jpg') }}', 
-                    rate: '4.8', 
-                    description: 'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing.' 
+                    name: "Yusuf Mahtow", 
+                    role: @json(__('Egypt Tour Guide')), 
+                    image: "{{ asset('images/testimonials/testimonial-3.jpg') }}", 
+                    rate: "4.8", 
+                    description: @json(__('Excellent service and very knowledgeable guides. We had an amazing time exploring the historical sites.')) 
                 },
                 { 
-                    name: 'Emily Roberts', 
-                    role: 'History Buff', 
-                    image: '{{ asset('images/testimonials/testimonial-4.jpg') }}', 
-                    rate: '4.9', 
-                    description: 'The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized.' 
+                    name: "Emily Roberts", 
+                    role: @json(__('History Buff')), 
+                    image: "{{ asset('images/testimonials/testimonial-4.jpg') }}", 
+                    rate: "4.9", 
+                    description: @json(__('The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized.')) 
                 },
                 { 
-                    name: 'Michael Chen', 
-                    role: 'Food Blogger', 
-                    image: '{{ asset('images/testimonials/testimonial-2.jpg') }}', 
-                    rate: '4.7', 
-                    description: 'An absolute culinary delight! The local food tours were the highlight of our trip. Highly recommended.' 
+                    name: "Michael Chen", 
+                    role: @json(__('Food Blogger')), 
+                    image: "{{ asset('images/testimonials/testimonial-2.jpg') }}", 
+                    rate: "4.7", 
+                    description: @json(__('An absolute culinary delight! The local food tours were the highlight of our trip. Highly recommended.')) 
                 }
             ],
             next() {
@@ -458,10 +480,10 @@
                     this.testimonials[(this.active + 2) % len]
                 ];
             }
-         }">
+          }'>
         <div class="text-center mb-16">
-                <span class="font-handwriting text-3xl text-yellow-500">Testimonials &amp; reviews</span>
-                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400">What They're Saying</h2>
+                <span class="font-handwriting text-3xl text-yellow-500">{{ __('Testimonials & reviews') }}</span>
+                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400">{{ __('What They\'re Saying') }}</h2>
             </div>
         <div class="max-w-[1600px] mx-auto px-4 lg:px-8 relative">
             
@@ -559,13 +581,13 @@
                 <div class="flex items-center justify-between gap-4 md:gap-12">
                      <!-- Prev Button -->
                     <button @click="prev()" class="flex-shrink-0 w-14 h-14 rounded-full bg-[#F3F4F6] dark:bg-gray-700 hover:bg-[#FAD71B] dark:hover:bg-[#FAD71B] text-black dark:text-white transition-all flex items-center justify-center group shadow-sm z-10">
-                        <i class="fi fi-rr-arrow-small-left text-2xl group-hover:-translate-x-1 transition-transform"></i>
+                        <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-right group-hover:translate-x-1' : 'fi-rr-arrow-small-left group-hover:-translate-x-1' }} text-2xl transition-transform"></i>
                     </button>
 
                     <!-- Quote Text -->
                     <div class="relative min-h-[100px] flex items-center justify-center"> <!-- Min Height to prevent jumping -->
                         <p class="text-[#0B0B0B] dark:text-gray-300 text-lg md:text-xl font-normal leading-relaxed md:px-8 transition-all duration-300"
-                           x-key="active"
+                           :key="active"
                            x-transition:enter="transition ease-out duration-300"
                            x-transition:enter-start="opacity-0 transform translate-y-2"
                            x-transition:enter-end="opacity-100 transform translate-y-0"
@@ -575,7 +597,7 @@
 
                     <!-- Next Button -->
                     <button @click="next()" class="flex-shrink-0 w-14 h-14 rounded-full bg-[#F3F4F6] dark:bg-gray-700 hover:bg-[#FAD71B] dark:hover:bg-[#FAD71B] text-black dark:text-white transition-all flex items-center justify-center group shadow-sm z-10">
-                        <i class="fi fi-rr-arrow-small-right text-2xl group-hover:translate-x-1 transition-transform"></i>
+                        <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left group-hover:-translate-x-1' : 'fi-rr-arrow-small-right group-hover:translate-x-1' }} text-2xl transition-transform"></i>
                     </button>
                 </div>
 
@@ -598,9 +620,9 @@
                     <i class="fi fi-ss-play text-2xl lg:text-3xl ml-1"></i>
                 </button>
 
-                <span class="font-handwriting text-3xl lg:text-4xl text-yellow-400 mb-2 block">Are you ready to travel?</span>
+                <span class="font-handwriting text-3xl lg:text-4xl text-yellow-400 mb-2 block">{{ __('Are you ready to travel?') }}</span>
                 <h2 class="text-4xl lg:text-6xl font-display font-bold text-white max-w-4xl mx-auto leading-tight">
-                    Traveler Egypt Tours is an online tour booking platform
+                    {{ __('Traveler Egypt Tours is an online tour booking platform') }}
                 </h2>
             </div>
         </div>
@@ -630,19 +652,19 @@
             <div class="bg-white dark:bg-gray-800 rounded-3xl shadow-xl p-8 lg:p-12 grid grid-cols-2 lg:grid-cols-4 gap-8 text-center divide-x divide-gray-100 dark:divide-gray-700 transition-colors duration-300">
                 <div class="space-y-2">
                     <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">{{ $toursCount }}</span>
-                    <span class="text-gray-600 dark:text-gray-300 font-medium">Tours</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">{{ __('Tours') }}</span>
                 </div>
                 <div class="space-y-2">
                     <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">{{ $destinationsCount }}</span>
-                    <span class="text-gray-600 dark:text-gray-300 font-medium">Destinations</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">{{ __('Destinations') }}</span>
                 </div>
                 <div class="space-y-2">
                     <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">500</span>
-                    <span class="text-gray-600 dark:text-gray-300 font-medium">Happy Customers</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">{{ __('Happy Customers') }}</span>
                 </div>
                  <div class="space-y-2 border-l-0 lg:border-l"> <!-- Fix for grid layout border on mobile -->
                     <span class="font-handwriting text-5xl text-[#345BA8] dark:text-blue-400 block">100</span>
-                    <span class="text-gray-600 dark:text-gray-300 font-medium">Reviews</span>
+                    <span class="text-gray-600 dark:text-gray-300 font-medium">{{ __('Reviews') }}</span>
                 </div>
             </div>
         </div>
@@ -678,12 +700,12 @@
                 <div class="space-y-10">
                     <!-- Heading -->
                     <div>
-                        <span class="font-handwriting text-3xl text-yellow-400 block mb-3">Our benefit lists</span>
+                        <span class="font-handwriting text-3xl text-yellow-400 block mb-3">{{ __('Our benefit lists') }}</span>
                         <h2 class="text-4xl lg:text-5xl font-display font-bold text-neutral-950 dark:text-white leading-tight">
-                            Why Choose Traveler Egypt Tours
+                            {{ __('Why Choose Traveler Egypt Tours') }}
                         </h2>
                         <p class="mt-6 text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                            Discover breathtaking destinations handpicked for unforgettable experiences. From tropical beaches to cultural landmarks, we make your dream vacation a reality.
+                            {{ __('Discover breathtaking destinations handpicked for unforgettable experiences. From tropical beaches to cultural landmarks, we make your dream vacation a reality.') }}
                         </p>
                     </div>
 
@@ -695,8 +717,8 @@
                                 <i class="fi fi-rr-badge-check text-2xl text-yellow-400"></i>
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Professional and Certified</h4>
-                                <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Our team consists of certified experts dedicated to providing the best travel experiences.</p>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{{ __('Professional and Certified') }}</h4>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{{ __('Our team consists of certified experts dedicated to providing the best travel experiences.') }}</p>
                             </div>
                         </div>
 
@@ -706,8 +728,8 @@
                                 <i class="fi fi-rr-chart-histogram text-2xl text-yellow-400 h-[26px]"></i>
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">Positive Reviews and Testimonials</h4>
-                                <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">Trusted by thousands of travelers worldwide with 5-star reviews and feedback.</p>
+                                <h4 class="text-xl font-bold text-gray-900 dark:text-white mb-1">{{ __('Positive Reviews and Testimonials') }}</h4>
+                                <p class="text-gray-500 dark:text-gray-400 text-sm leading-relaxed">{{ __('Trusted by thousands of travelers worldwide with 5-star reviews and feedback.') }}</p>
                             </div>
                         </div>
                     </div>
@@ -715,9 +737,9 @@
                     <!-- Button -->
                     <div class="pt-2">
                          <a href="{{ route('about') }}" class="inline-flex items-center gap-3 bg-[#355fbf] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#355fbf] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
-                            Know About Us
+                            {{ __('Know About Us') }}
                             <div class="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition">
-                                <i class="fi fi-rr-arrow-small-right text-lg h-[24px]"></i>
+                                <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left' : 'fi-rr-arrow-small-right' }} text-lg h-[24px]"></i>
                             </div>
                         </a>
                     </div>
@@ -731,14 +753,14 @@
             <!-- Header -->
             <div class="flex flex-col md:flex-row justify-between items-end max-lg:items-center mb-12 gap-6">
                 <div class="text-center md:text-left">
-                    <span class="font-handwriting text-3xl text-yellow-500 block mb-2">From the blog post</span>
-                    <h2 class="text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">News & Articles</h2>
+                    <span class="font-handwriting text-3xl text-yellow-500 block mb-2">{{ __('From the blog post') }}</span>
+                    <h2 class="text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">{{ __('News & Articles') }}</h2>
                 </div>
                 <div class="hidden md:block">
                      <a href="{{ route('articles.index') }}" class="inline-flex items-center gap-3 bg-[#355fbf] text-white px-8 py-4 rounded-full font-bold text-base hover:bg-[#2a4a9a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 group">
-                        All Blogs
+                        {{ __('All Blogs') }}
                         <div class="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center group-hover:bg-black/20 transition">
-                            <i class="fi fi-rr-arrow-small-right text-lg"></i>
+                            <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left' : 'fi-rr-arrow-small-right' }} text-lg"></i>
                         </div>
                     </a>
                 </div>
@@ -754,15 +776,15 @@
                              </div>
                             <h3 class="text-xl font-bold text-[#2A2C3E] dark:text-white mb-6 leading-snug group-hover:text-[#345BA8] dark:group-hover:text-blue-400 transition-colors">
                                 <a href="{{ route('articles.show', $article) }}">
-                                    {{ $article->title }}
+                                    {{ $article->display_title }}
                                 </a>
                             </h3>
                         </div>
                         
                         <div class="mt-4">
                             <a href="{{ route('articles.show', $article) }}" class="text-[#345BA8] dark:text-blue-400 text-xs font-bold uppercase tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
-                                Read More 
-                                <i class="fi fi-rr-arrow-small-right text-lg translate-y-[1px]"></i>
+                                {{ __('Read More') }} 
+                                <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left group-hover:-translate-x-1' : 'fi-rr-arrow-small-right group-hover:translate-x-1' }} text-lg translate-y-[1px]"></i>
                             </a>
                         </div>
                     </article>

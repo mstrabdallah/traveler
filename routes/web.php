@@ -15,7 +15,7 @@ Route::get('/', function () {
     $toursCount = Tour::where('is_active', true)->count();
     $destinationsCount = Destination::where('is_active', true)->count();
     
-    return view('welcome', compact('featuredTours', 'destinations', 'latestArticles', 'toursCount', 'destinationsCount'));
+    return view('pages.welcome', compact('featuredTours', 'destinations', 'latestArticles', 'toursCount', 'destinationsCount'));
 });
 
 Route::get('/destinations', [DestinationController::class, 'index'])->name('destinations.index');
@@ -35,3 +35,10 @@ Route::post('/contact', [\App\Http\Controllers\ContactController::class, 'store'
 use App\Http\Controllers\CustomTourRequestController;
 Route::get('/tailor-made', [CustomTourRequestController::class, 'create'])->name('custom-tour.create');
 Route::post('/tailor-made', [CustomTourRequestController::class, 'store'])->name('custom-tour.store');
+
+Route::get('/language/{locale}', function ($locale) {
+    if (in_array($locale, ['en', 'ar'])) {
+        cookie()->queue(cookie()->forever('locale', $locale));
+    }
+    return redirect()->back();
+})->name('language.switch');

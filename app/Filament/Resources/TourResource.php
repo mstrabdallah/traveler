@@ -34,6 +34,10 @@ class TourResource extends Resource
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
                                     ->columnSpan(2),
+                                Forms\Components\TextInput::make('name_ar')
+                                    ->label('Name (Arabic)')
+                                    ->required()
+                                    ->columnSpan(2),
                                 Forms\Components\TextInput::make('slug')
                                     ->required()
                                     ->unique(ignoreRecord: true)
@@ -57,6 +61,9 @@ class TourResource extends Resource
                                     ->prefix('$'),
                                 Forms\Components\RichEditor::make('description')
                                     ->columnSpanFull(),
+                                Forms\Components\RichEditor::make('description_ar')
+                                    ->label('Description (Arabic)')
+                                    ->columnSpanFull(),
                             ])->columns(2),
 
                         // Section 2: Logistics & Duration
@@ -71,11 +78,15 @@ class TourResource extends Resource
                                     ->numeric()
                                     ->suffix('Nights'),
                                 Forms\Components\TextInput::make('availability')
-                                    ->placeholder('e.g. Daily, Every Monday')
-                                    ->columnSpanFull(),
+                                    ->placeholder('e.g. Daily, Every Monday'),
+                                Forms\Components\TextInput::make('availability_ar')
+                                    ->label('Availability (Arabic)')
+                                    ->placeholder('مثلاً: يومياً، كل اثنين'),
                                 Forms\Components\TextInput::make('pickup_location')
-                                    ->placeholder('e.g. Cairo Airport, Hotel Pickup')
-                                    ->columnSpanFull(),
+                                    ->placeholder('e.g. Cairo Airport, Hotel Pickup'),
+                                Forms\Components\TextInput::make('pickup_location_ar')
+                                    ->label('Pickup Location (Arabic)')
+                                    ->placeholder('مثلاً: مطار القاهرة، الاستلام من الفندق'),
                             ])->columns(2),
 
                         // Section 3: Media
@@ -111,6 +122,7 @@ class TourResource extends Resource
                             ->schema([
                                 Forms\Components\FileUpload::make('images')
                                     ->image()
+                                    ->disk('public')
                                     ->directory('tours')
                                     ->multiple()
                                     ->reorderable()
@@ -124,11 +136,19 @@ class TourResource extends Resource
                                     ->schema([
                                         Forms\Components\Repeater::make('included')
                                             ->label('Included Items')
-                                            ->simple(Forms\Components\TextInput::make('item')->required())
+                                            ->schema([
+                                                Forms\Components\TextInput::make('item')->required(),
+                                                Forms\Components\TextInput::make('item_ar')->label('Item (Arabic)'),
+                                            ])
+                                            ->columns(2)
                                             ->collapsible(),
                                         Forms\Components\Repeater::make('excluded')
                                             ->label('Excluded Items')
-                                            ->simple(Forms\Components\TextInput::make('item')->required())
+                                            ->schema([
+                                                Forms\Components\TextInput::make('item')->required(),
+                                                Forms\Components\TextInput::make('item_ar')->label('Item (Arabic)'),
+                                            ])
+                                            ->columns(2)
                                             ->collapsible(),
                                     ]),
                             ]),
@@ -174,7 +194,13 @@ class TourResource extends Resource
                                         Forms\Components\TextInput::make('day_title')
                                             ->placeholder('e.g. Day 1: Arrival and Cairo Tour')
                                             ->required(),
+                                        Forms\Components\TextInput::make('day_title_ar')
+                                            ->label('Day Title (Arabic)')
+                                            ->placeholder('مثلاً: اليوم الأول: الوصول وجولة في القاهرة')
+                                            ->required(),
                                         Forms\Components\RichEditor::make('description'),
+                                        Forms\Components\RichEditor::make('description_ar')
+                                            ->label('Description (Arabic)'),
                                     ])
                                     ->collapsible()
                                     ->collapsed()
@@ -291,6 +317,9 @@ class TourResource extends Resource
                                         Forms\Components\TextInput::make('name')
                                             ->required()
                                             ->placeholder('e.g. Airport Transfer'),
+                                        Forms\Components\TextInput::make('name_ar')
+                                            ->label('Name (Arabic)')
+                                            ->placeholder('مثلاً: توصيل للمطار'),
                                         Forms\Components\TextInput::make('price')
                                             ->numeric()
                                             ->prefix('$')

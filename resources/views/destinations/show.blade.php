@@ -1,11 +1,11 @@
 <x-layouts.app>
    <!-- Hero -->
     <div class="relative h-[50vh] bg-gray-900">
-         <img src="{{ $destination->image ? Storage::url($destination->image) : 'https://placehold.co/1200x600' }}" alt="{{ $destination->name }}" class="h-full w-full object-cover">
+         <img src="{{ $destination->image ? Storage::url($destination->image) : 'https://placehold.co/1200x600' }}" alt="{{ $destination->display_name }}" class="h-full w-full object-cover">
          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40"></div>
          <div class="absolute bottom-0 left-0 right-0 p-8 pb-12 lg:p-24">
              <div class="max-w-7xl mx-auto text-center">
-                 <h1 class="text-4xl lg:text-7xl font-bold text-white font-display">{{ $destination->name }}</h1>
+                 <h1 class="text-4xl lg:text-7xl font-bold text-white font-display">{{ $destination->display_name }}</h1>
              </div>
          </div>
     </div>
@@ -13,12 +13,12 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 lg:py-24 transition-colors duration-300">
         <!-- Description -->
         <div class="prose prose-lg prose-indigo text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-center mb-24">
-            <p>{{ $destination->description }}</p>
+            {!! $destination->display_description !!}
         </div>
 
         <!-- Available Tours -->
         <div class="border-t border-gray-200 dark:border-gray-700 pt-16">
-            <h2 class="text-3xl font-bold tracking-tight text-primary-900 dark:text-white font-display sm:text-4xl text-center mb-16">Available Tours in {{ $destination->name }}</h2>
+            <h2 class="text-3xl font-bold tracking-tight text-primary-900 dark:text-white font-display sm:text-4xl text-center mb-16">{{ __('Available Tours in') }} {{ $destination->display_name }}</h2>
              <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                  @forelse($destination->tours as $tour)
                     <article class="flex flex-col items-start justify-between bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 dark:border-gray-700">
@@ -40,7 +40,7 @@
                             </div>
                              <div class="relative mt-8 flex items-center gap-x-4 w-full justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
                                 <div class="flex flex-col">
-                                    <span class="text-xs text-gray-500 dark:text-gray-400">Starting from</span>
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">{!! __('Starting from') !!}</span>
                                     <span class="text-lg font-bold text-accent-600">
                                         @if($tour->price_tiers)
                                             ${{ number_format(collect($tour->price_tiers)->min('price_per_person')) }}
@@ -50,13 +50,13 @@
                                     </span>
                                 </div>
                                  <div class="text-sm font-semibold text-primary-900 dark:text-white flex items-center gap-1 group-hover:text-accent-500 dark:group-hover:text-blue-400 transition">
-                                    View Details <span aria-hidden="true">&rarr;</span>
+                                    {{ __('View Details') }} <span aria-hidden="true">{!! app()->getLocale() == 'ar' ? '&larr;' : '&rarr;' !!}</span>
                                  </div>
                             </div>
                         </div>
                     </article>
                  @empty
-                    <p class="text-gray-500 text-center col-span-3">No tours available for this destination yet.</p>
+                    <p class="text-gray-500 text-center col-span-3">{{ __('No tours available for this destination yet.') }}</p>
                  @endforelse
             </div>
         </div>

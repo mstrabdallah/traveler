@@ -5,14 +5,14 @@
             <div class="absolute inset-0 bg-gradient-to-t from-primary-900 to-transparent"></div>
         </div>
         <div class="relative mx-auto max-w-7xl px-6 lg:px-8 text-center pt-16">
-            <h1 class="text-4xl font-bold tracking-tight text-white font-display sm:text-6xl">About Traveler Egypt</h1>
+            <h1 class="text-4xl font-bold tracking-tight text-white font-display sm:text-6xl">About Mo travels</h1>
             <p class="mt-4 text-xl text-gray-300">Your trusted partner for exploring the wonders of the Pharaohs.</p>
         </div>
     </div>
 
     <div class="py-24 sm:py-32 bg-white">
         <div class="mx-auto max-w-7xl px-6 lg:px-8 prose prose-lg prose-indigo text-gray-600">
-            <p>Welcome to <strong>Traveler Egypt</strong>, where we specialize in crafting unforgettable journeys through the timeless history and vibrant culture of Egypt. Whether you dreamt of standing before the Great Pyramids, cruising specifically along the Nile, or diving into the Red Sea, we are here to make it reality.</p>
+            <p>Welcome to <strong>Mo travels</strong>, where we specialize in crafting unforgettable journeys through the timeless history and vibrant culture of Egypt. Whether you dreamt of standing before the Great Pyramids, cruising specifically along the Nile, or diving into the Red Sea, we are here to make it reality.</p>
             
             <h3>Why Choose Us?</h3>
             <ul>

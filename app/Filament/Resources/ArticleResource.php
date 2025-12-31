@@ -34,6 +34,10 @@ class ArticleResource extends Resource
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null),
 
+                                Forms\Components\TextInput::make('title_ar')
+                                    ->label('Title (Arabic)')
+                                    ->required(),
+
                                 Forms\Components\TextInput::make('slug')
                                     ->disabled()
                                     ->dehydrated()
@@ -44,13 +48,25 @@ class ArticleResource extends Resource
                                     ->required()
                                     ->columnSpan('full'),
 
+                                Forms\Components\RichEditor::make('content_ar')
+                                    ->label('Content (Arabic)')
+                                    ->required()
+                                    ->columnSpan('full'),
+
                                 Forms\Components\Textarea::make('excerpt')
+                                    ->rows(2)
+                                    ->columnSpan('full'),
+                                
+                                Forms\Components\Textarea::make('excerpt_ar')
+                                    ->label('Excerpt (Arabic)')
                                     ->rows(2)
                                     ->columnSpan('full'),
                                 
                                 Forms\Components\FileUpload::make('image')
                                     ->image()
+                                    ->disk('public')
                                     ->directory('articles')
+                                    ->imageEditor()
                                     ->columnSpan('full'),
                             ])
                             ->columns(2),

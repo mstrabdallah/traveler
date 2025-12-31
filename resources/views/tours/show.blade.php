@@ -41,9 +41,9 @@
         <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
              <div class="flex items-center gap-2 bg-black/30 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-full text-white text-xs font-black uppercase tracking-widest shadow-2xl">
                 <i class="fi fi-rr-camera text-blue-400"></i>
-                <span class="opacity-80">Explore Gallery</span>
+                <span class="opacity-80">{{ __('Explore Gallery') }}</span>
                 <span class="w-px h-3 bg-white/20 mx-1"></span>
-                <span>{{ count($tour->images ?? []) }} Photos</span>
+                <span>{{ count($tour->images ?? []) }} {{ __('Photos') }}</span>
              </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
                 <!-- Title Section -->
                 <div class="flex-1 text-center lg:text-left">
                     <h1 class="text-3xl lg:text-5xl font-black text-gray-900 dark:text-white font-display leading-[1.1] tracking-tight">
-                        {{ $tour->name }}
+                        {{ $tour->display_name }}
                     </h1>
                 </div>
                 
@@ -67,7 +67,7 @@
                             <i class="fi fi-rr-usd-circle text-2xl"></i>
                         </div>
                         <div class="text-left">
-                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">Price From</p>
+                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">{{ __('Price From') }}</p>
                             @if($tour->sale_price)
                                 <div class="flex items-center gap-2">
                                     <p class="text-3xl font-black text-gray-900 dark:text-white">${{ number_format($tour->sale_price) }}</p>
@@ -88,8 +88,8 @@
                             <i class="fi fi-rr-clock text-2xl"></i>
                         </div>
                         <div class="text-left">
-                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">Duration</p>
-                            <p class="text-2xl font-black text-gray-900 dark:text-white">{{ $tour->duration_days }} <span class="text-sm font-bold opacity-60">Days</span></p>
+                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">{{ __('Duration') }}</p>
+                            <p class="text-2xl font-black text-gray-900 dark:text-white">{{ $tour->duration_days }} <span class="text-sm font-bold opacity-60">{{ __('Days') }}</span></p>
                         </div>
                     </div>
 
@@ -99,10 +99,10 @@
                             <i class="fi fi-rr-map-marker text-2xl"></i>
                         </div>
                         <div class="text-left">
-                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">Tour Type</p>
+                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">{{ __('Tour Type') }}</p>
                             <a href="/tailor-made" class="text-xl font-black text-gray-900 dark:text-white hover:text-blue-600 transition-colors flex items-center gap-1 group/link">
-                                Private
-                                <i class="fi fi-rr-arrow-small-right text-gray-400 group-hover/link:translate-x-1 group-hover/link:text-blue-600 transition-all"></i>
+                                {{ __('Private') }}
+                                <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left group-hover/link:-translate-x-1' : 'fi-rr-arrow-small-right group-hover/link:translate-x-1' }} text-gray-400 group-hover/link:text-blue-600 transition-all"></i>
                             </a>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                             <span class="p-2 bg-blue-500 rounded-lg shadow-lg shadow-blue-500/20 h-[39px]">
                                 <i class="fi fi-rr-paper-plane text-white text-lg"></i>
                             </span>
-                            <h2 class="font-display text-xl font-bold text-[#1a1039] dark:text-white m-0">Tour Details</h2>
+                            <h2 class="font-display text-xl font-bold text-[#1a1039] dark:text-white m-0">{{ __('Tour Details') }}</h2>
                         </div>
                         
                         <!-- Card Body -->
@@ -170,10 +170,10 @@
                                     <div class="w-10 h-10 rounded-full bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center">
                                         <i class="fi fi-rr-hourglass-end text-orange-500"></i>
                                     </div>
-                                    <span class="text-[#313131] dark:text-gray-200 font-medium">Duration</span>
+                                    <span class="text-[#313131] dark:text-gray-200 font-medium">{{ __('Duration') }}</span>
                                 </div>
                                 <span class="text-[#575757] dark:text-gray-400 font-bold">
-                                    {{ $tour->duration_days }} Days / {{ $tour->duration_nights ?? ($tour->duration_days - 1) }} Nights
+                                    {{ $tour->duration_days }} {{ __('Days') }} / {{ $tour->duration_nights ?? ($tour->duration_days - 1) }} {{ __('Nights') }}
                                 </span>
                             </div>
 
@@ -183,9 +183,9 @@
                                      <div class="w-10 h-10 rounded-full bg-green-50 dark:bg-green-900/20 flex items-center justify-center">
                                         <i class="fi fi-rr-map-marker text-green-500"></i>
                                     </div>
-                                    <span class="text-[#313131] dark:text-gray-200 font-medium">Tour Location</span>
+                                    <span class="text-[#313131] dark:text-gray-200 font-medium">{{ __('Tour Location') }}</span>
                                 </div>
-                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->destination->name }}</span>
+                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->destination->display_name }}</span>
                             </div>
 
                             <!-- Tour Availability -->
@@ -194,9 +194,9 @@
                                      <div class="w-10 h-10 rounded-full bg-red-50 dark:bg-red-900/20 flex items-center justify-center">
                                         <i class="fi fi-rr-calendar text-red-500"></i>
                                     </div>
-                                    <span class="text-[#313131] dark:text-gray-200 font-medium">Tour Availability</span>
+                                    <span class="text-[#313131] dark:text-gray-200 font-medium">{{ __('Tour Availability') }}</span>
                                 </div>
-                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->availability ?? 'Everyday' }}</span>
+                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->display_availability ?: __('Everyday') }}</span>
                             </div>
 
                             <!-- Pickup & Drop Off -->
@@ -205,9 +205,9 @@
                                      <div class="w-10 h-10 rounded-full bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center">
                                         <i class="fi fi-rr-marker text-blue-500"></i>
                                     </div>
-                                    <span class="text-[#313131] dark:text-gray-200 font-medium">Pickup & Drop Off</span>
+                                    <span class="text-[#313131] dark:text-gray-200 font-medium">{{ __('Pickup & Drop Off') }}</span>
                                 </div>
-                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->pickup_location ?? 'Cairo Airport' }}</span>
+                                <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->display_pickup_location ?: __('Cairo Airport') }}</span>
                             </div>
 
                              <!-- Tour Type -->
@@ -216,12 +216,12 @@
                                       <div class="w-10 h-10 rounded-full bg-sky-50 dark:bg-sky-900/20 flex items-center justify-center">
                                          <i class="fi fi-rr-plane-alt text-sky-500"></i>
                                      </div>
-                                     <span class="text-[#313131] dark:text-gray-200 font-medium">Tour Categories</span>
+                                     <span class="text-[#313131] dark:text-gray-200 font-medium">{{ __('Tour Categories') }}</span>
                                  </div>
                                  <div class="flex flex-wrap justify-end gap-2">
                                      @forelse($tour->categories as $category)
                                          <span class="px-3 py-1 bg-sky-100 dark:bg-sky-900/40 text-sky-700 dark:text-sky-300 text-xs font-bold rounded-full">
-                                             {{ $category->name }}
+                                             {{ $category->display_name }}
                                          </span>
                                      @empty
                                          <span class="text-[#575757] dark:text-gray-400 font-bold">{{ $tour->tour_type ?? 'General Tour' }}</span>
@@ -234,10 +234,10 @@
                         @if($tour->description)
                             <div class="px-6 py-8 border-t border-gray-100 dark:border-gray-700 bg-gray-50/30 dark:bg-gray-800/50">
                                 <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                                    <i class="fi fi-rr-info text-blue-500 text-sm"></i> Tour Overview
+                                    <i class="fi fi-rr-info text-blue-500 text-sm"></i> {{ __('Tour Overview') }}
                                 </h3>
                                 <div class="text-gray-600 dark:text-gray-300 leading-relaxed text-[15px] prose prose-sm dark:prose-invert max-w-none">
-                                    {!! $tour->description !!}
+                                    {!! $tour->display_description !!}
                                 </div>
                             </div>
                         @endif
@@ -250,22 +250,25 @@
                         <section>
                             <h2 class="font-display text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                                 <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
-                                What's Included
+                                {{ __('What\'s Included') }}
                             </h2>
                             <div class="grid md:grid-cols-2 gap-6">
                                 @if($tour->included)
                                     <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden flex flex-col">
                                         <div class="px-6 py-4 border-b border-gray-50 dark:border-gray-700">
                                             <h3 class="text-sm font-bold text-gray-800 dark:text-white m-0 flex items-center gap-2">
-                                                <i class="fi fi-rr-check-circle text-green-500"></i> Included
+                                                <i class="fi fi-rr-check-circle text-green-500"></i> {{ __('Included') }}
                                             </h3>
                                         </div>
                                         <div class="p-6 flex-1">
                                             <ul class="space-y-3">
                                                 @foreach($tour->included as $item)
+                                                    @php
+                                                        $includedItem = (app()->getLocale() === 'ar' && isset($item['item_ar']) && $item['item_ar']) ? $item['item_ar'] : (is_array($item) ? $item['item'] : $item);
+                                                    @endphp
                                                     <li class="flex items-start gap-3 group">
                                                         <i class="fi fi-rr-check text-green-500/70 mt-1 text-[10px]"></i>
-                                                        <span class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">{{ is_array($item) ? $item['item'] : $item }}</span>
+                                                        <span class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">{{ $includedItem }}</span>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -277,15 +280,18 @@
                                     <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden flex flex-col">
                                         <div class="px-6 py-4 border-b border-gray-50 dark:border-gray-700">
                                             <h3 class="text-sm font-bold text-gray-800 dark:text-white m-0 flex items-center gap-2">
-                                                <i class="fi fi-rr-cross-circle text-red-500"></i> Excluded
+                                                <i class="fi fi-rr-cross-circle text-red-500"></i> {{ __('Excluded') }}
                                             </h3>
                                         </div>
                                         <div class="p-6 flex-1">
                                             <ul class="space-y-3">
                                                 @foreach($tour->excluded as $item)
+                                                    @php
+                                                        $excludedItem = (app()->getLocale() === 'ar' && isset($item['item_ar']) && $item['item_ar']) ? $item['item_ar'] : (is_array($item) ? $item['item'] : $item);
+                                                    @endphp
                                                     <li class="flex items-start gap-3 group">
                                                         <i class="fi fi-rr-cross text-red-500/70 mt-1 text-[10px]"></i>
-                                                        <span class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">{{ is_array($item) ? $item['item'] : $item }}</span>
+                                                        <span class="text-gray-600 dark:text-gray-400 text-[14px] leading-relaxed">{{ $excludedItem }}</span>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -303,7 +309,7 @@
                         <section class="mt-12">
                             <h2 class="font-display text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                                 <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
-                                {{ $tour->has_price_tiers ? 'Group Discount Rates' : 'Seasonal Price Variations' }}
+                                {{ $tour->has_price_tiers ? __('Group Discount Rates') : __('Seasonal Price Variations') }}
                             </h2>
                             
                             <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700 shadow-sm overflow-hidden">
@@ -313,9 +319,9 @@
                                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                                             <thead>
                                                 <tr class="bg-[#F0FAFF] dark:bg-blue-900/10">
-                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider border-r border-gray-100 dark:border-gray-700 last:border-0">Number of Guests</th>
-                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider border-r border-gray-100 dark:border-gray-700 last:border-0">Adult Price</th>
-                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">Child Price</th>
+                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider border-r border-gray-100 dark:border-gray-700 last:border-0">{{ __('Number of Guests') }}</th>
+                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider border-r border-gray-100 dark:border-gray-700 last:border-0">{{ __('Adult Price') }}</th>
+                                                    <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">{{ __('Child Price') }}</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
@@ -325,7 +331,7 @@
                                                         <td class="px-6 py-4 whitespace-nowrap border-r border-gray-50 dark:border-gray-700 last:border-0">
                                                             <div class="flex items-center gap-3 text-gray-900 dark:text-white font-bold">
                                                                 <i class="fi fi-rr-user text-blue-500/50"></i>
-                                                                <span>Solo Traveler</span>
+                                                                <span>{{ __('Solo Traveler') }}</span>
                                                             </div>
                                                         </td>
                                                         <td class="px-6 py-4 whitespace-nowrap border-r border-gray-50 dark:border-gray-700 last:border-0">
@@ -343,7 +349,7 @@
                                                         <td class="px-6 py-4 whitespace-nowrap border-r border-gray-50 dark:border-gray-700 last:border-0">
                                                             <div class="flex items-center gap-3 text-gray-600 dark:text-gray-300 font-medium">
                                                                 <i class="fi fi-rr-users text-gray-400"></i>
-                                                                <span>{{ $tier['min_people'] }}{{ (isset($tier['max_people']) && $tier['max_people'] > $tier['min_people']) ? '-' . $tier['max_people'] : '+' }} Persons</span>
+                                                                <span>{{ $tier['min_people'] }}{{ (isset($tier['max_people']) && $tier['max_people'] > $tier['min_people']) ? '-' . $tier['max_people'] : '+' }} {{ __('Persons') }}</span>
                                                             </div>
                                                         </td>
                                                         <td class="px-6 py-4 whitespace-nowrap border-r border-gray-50 dark:border-gray-700 last:border-0">
@@ -374,17 +380,17 @@
                                                             </div>
                                                             <span class="text-sm font-bold text-gray-900 dark:text-white tracking-tight">{{ $season['name'] }}</span>
                                                         </div>
-                                                        <span class="text-[10px] font-black text-orange-600/60 uppercase tracking-widest">Season</span>
+                                                        <span class="text-[10px] font-black text-orange-600/60 uppercase tracking-widest">{{ __('Season') }}</span>
                                                     </div>
                                                     
                                                     <div class="space-y-4">
                                                         <div class="flex justify-between items-end bg-white dark:bg-gray-800 p-3 rounded-xl border border-gray-50 dark:border-gray-700 shadow-sm">
                                                             <div class="text-left">
-                                                                <p class="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase flex items-center gap-1"><i class="fi fi-rr-user"></i> Solo Adult</p>
+                                                                <p class="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase flex items-center gap-1"><i class="fi fi-rr-user"></i> {{ __('Solo Adult') }}</p>
                                                                 <h4 class="text-xl font-black text-gray-900 dark:text-white">${{ number_format($season['solo_price'] ?? $tour->solo_price) }}</h4>
                                                             </div>
                                                             <div class="text-right">
-                                                                <p class="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase flex items-center justify-end gap-1"><i class="fi fi-rr-child-head"></i> Solo Child</p>
+                                                                <p class="text-[9px] font-bold text-gray-400 dark:text-gray-500 uppercase flex items-center justify-end gap-1"><i class="fi fi-rr-child-head"></i> {{ __('Solo Child') }}</p>
                                                                 <h4 class="text-lg font-black text-orange-600 dark:text-orange-400">${{ number_format($season['child_solo_price'] ?? $tour->child_solo_price) }}</h4>
                                                             </div>
                                                         </div>
@@ -411,7 +417,7 @@
                         <section>
                             <h2 class="font-display text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                                 <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
-                                Daily Itinerary
+                                {{ __('Daily Itinerary') }}
                             </h2>
                             <div class="space-y-4" x-data="{ activeItems: [0] }">
                                 @foreach($tour->itinerary as $index => $day)
@@ -426,7 +432,7 @@
                                                     {{ $index + 1 }}
                                                 </div>
                                                 <h3 class="text-base font-bold text-gray-800 dark:text-gray-100 leading-tight">
-                                                    {{ $day['day_title'] }}
+                                                    {{ (app()->getLocale() === 'ar' && isset($day['day_title_ar']) && $day['day_title_ar']) ? $day['day_title_ar'] : $day['day_title'] }}
                                                 </h3>
                                             </div>
                                             <i class="fi fi-rr-angle-small-down transform transition-transform duration-300 text-lg text-gray-400"
@@ -439,7 +445,7 @@
                                         >
                                             <div class="px-5 pb-6 pt-0 ml-[52px] text-gray-600 dark:text-gray-400 text-sm leading-relaxed border-l border-gray-100 dark:border-gray-700">
                                                 <div class="prose prose-sm dark:prose-invert max-w-none">
-                                                    {!! str_replace('<p><br></p>', '', $day['description']) !!}
+                                                    {!! str_replace('<p><br></p>', '', (app()->getLocale() === 'ar' && isset($day['description_ar']) && $day['description_ar']) ? $day['description_ar'] : $day['description']) !!}
                                                 </div>
                                             </div>
                                         </div>
@@ -454,7 +460,7 @@
                         <section>
                             <h2 class="font-display text-xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
                                 <span class="w-1.5 h-6 bg-blue-600 rounded-full"></span>
-                                Location Map
+                                {{ __('Location Map') }}
                             </h2>
                             <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden p-3 group">
                                 @if(str_contains($tour->map_url, 'google.com/maps') || str_contains($tour->map_url, 'maps.google.com'))
@@ -473,7 +479,7 @@
                                 @else
                                     <div class="h-[300px] flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 rounded-xl space-y-3">
                                         <i class="fi fi-rr-map-marker text-2xl text-gray-300"></i>
-                                        <p class="text-gray-400 text-xs font-medium">Map location not available</p>
+                                        <p class="text-gray-400 text-xs font-medium">{{ __('Map location not available') }}</p>
                                     </div>
                                 @endif
                             </div>
@@ -485,28 +491,29 @@
             <!-- Right Column: Sidebar -->
             <div class="lg:col-span-1 mt-12 lg:mt-0 space-y-8">
 
-                       <div x-data="{
-                    date: '',
-                    time: '11:45 am',
+                       <div x-data='{
+                    date: "",
+                    currentLocale: "{{ app()->getLocale() }}",
+                    time: "11:45 am",
                     adults: 1,
                     children: 0,
                     servicePerBooking: false,
                     servicePerPerson: false,
                     extras: {{ json_encode($tour->extras ?? []) }},
                     selectedExtras: [], // Stores indexes of selected extras
-                    name: '',
-                    email: '',
-                    phone: '',
+                    name: "",
+                    email: "",
+                    phone: "",
                     isLoading: false,
                     showSuccess: false,
-                    hasTiers: {{ $tour->has_price_tiers ? 'true' : 'false' }},
+                    hasTiers: {{ $tour->has_price_tiers ? "true" : "false" }},
                     tiers: {{ json_encode($tour->price_tiers ?? []) }},
-                    hasSeasonalPrices: {{ $tour->has_seasonal_prices ? 'true' : 'false' }},
+                    hasSeasonalPrices: {{ $tour->has_seasonal_prices ? "true" : "false" }},
                     seasonalPrices: {{ json_encode($tour->seasonal_prices ?? []) }},
                     defaultPrice: {{ $tour->price }},
-                    defaultChildPrice: {{ $tour->child_price ?? 'null' }},
-                    defaultSoloPrice: {{ $tour->solo_price ?? 'null' }},
-                    defaultChildSoloPrice: {{ $tour->child_solo_price ?? 'null' }},
+                    defaultChildPrice: {{ $tour->child_price ?? "null" }},
+                    defaultSoloPrice: {{ $tour->solo_price ?? "null" }},
+                    defaultChildSoloPrice: {{ $tour->child_solo_price ?? "null" }},
                     
                     get activeSeason() {
                         if (!this.date || !this.hasSeasonalPrices || this.seasonalPrices.length === 0) {
@@ -569,7 +576,7 @@
                         // Calculate dynamic extras
                         this.selectedExtras.forEach(idx => {
                             const extra = this.extras[idx];
-                            if (extra.type === 'per_booking') {
+                            if (extra.type === "per_booking") {
                                 t += parseFloat(extra.price);
                             } else {
                                 t += parseFloat(extra.price) * (parseInt(this.adults) + parseInt(this.children));
@@ -579,12 +586,12 @@
                     },
                     submitBooking() {
                         this.isLoading = true;
-                        fetch('{{ route('tours.book', $tour) }}', {
-                            method: 'POST',
+                        fetch("{{ route('tours.book', $tour) }}", {
+                            method: "POST",
                             headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                "Content-Type": "application/json",
+                                "Accept": "application/json",
+                                "X-CSRF-TOKEN": "{{ csrf_token() }}"
                             },
                             body: JSON.stringify({
                                 date: this.date,
@@ -604,20 +611,20 @@
                                 this.showSuccess = true;
                                 this.isLoading = false;
                                 this.$nextTick(() => {
-                                    this.$el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                    this.$el.scrollIntoView({ behavior: "smooth", block: "center" });
                                 });
                             } else {
-                                alert('Something went wrong. Please try again.');
+                                alert("Something went wrong. Please try again.");
                                 this.isLoading = false;
                             }
                         })
                         .catch(error => {
-                            console.error('Error:', error);
-                            alert('Something went wrong. Please try again.');
+                            console.error("Error:", error);
+                            alert("Something went wrong. Please try again.");
                             this.isLoading = false;
                         });
                     }
-                }" class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden lg:sticky lg:top-[160px] overflow-y-auto">
+                }' class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden lg:sticky lg:top-[160px] overflow-y-auto">
                     
                     <!-- Success Message Overlay -->
                     <div x-show="showSuccess" 
@@ -629,10 +636,10 @@
                             <i class="fi fi-rr-check text-2xl text-green-600"></i>
                         </div>
 
-                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">Booking Received!</h3>
-                        <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-xs mx-auto">Thank you for booking with us. We will contact you shortly to confirm your details.</p>
+                        <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">{{ __('Booking Received!') }}</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-6 max-w-xs mx-auto">{{ __('Thank you for booking with us. We will contact you shortly to confirm your details.') }}</p>
                         <button @click="showSuccess = false; name=''; email=''; phone=''; date=''" class="bg-white border-2 border-green-600 text-green-700 font-bold py-2 px-6 rounded-full hover:bg-green-50 transition transform hover:-translate-y-0.5">
-                            Book Another Tour
+                            {{ __('Book Another Tour') }}
                         </button>
                     </div>
 
@@ -641,16 +648,16 @@
                         <!-- Header -->
                         <div class="flex items-center gap-3 mb-6 sm:mb-8">
                              <div class="w-1.5 h-8 bg-blue-600 rounded-full"></div>
-                             <h3 class="text-2xl font-bold text-blue-600 font-display">Booking Tour</h3>
+                             <h3 class="text-2xl font-bold text-blue-600 font-display">{{ __('Booking Tour') }}</h3>
                         </div>
                         
                         <!-- Form Content -->
                         <form @submit.prevent="submitBooking">
                             <!-- Date -->
                             <div class="mb-6">
-                                <label class="block text-base font-bold text-gray-900 dark:text-white mb-2">From:</label>
+                                <label class="block text-base font-bold text-gray-900 dark:text-white mb-2">{{ __('From:') }}</label>
                                 <div class="relative">
-                                     <input type="text" x-model="date" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 pl-10 focus:border-blue-500 focus:ring-blue-500 py-3 font-medium text-gray-700 dark:text-white dark:bg-gray-900 dark:placeholder-gray-400" placeholder="Select Date" id="booking-date">
+                                     <input type="text" x-model="date" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 pl-10 focus:border-blue-500 focus:ring-blue-500 py-3 font-medium text-gray-700 dark:text-white dark:bg-gray-900 dark:placeholder-gray-400" placeholder="{{ __('Select Date') }}" id="booking-date">
                                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                          <i class="fi fi-rr-calendar text-blue-600 text-lg"></i>
                                      </div>
@@ -660,10 +667,10 @@
                             <div x-show="date" x-transition.opacity.duration.500ms>
                                 <!-- Tickets -->
                                 <div class="mb-6">
-                                    <label class="block text-base font-bold text-gray-900 dark:text-white mb-4">Tickets:</label>
+                                    <label class="block text-base font-bold text-gray-900 dark:text-white mb-4">{{ __('Tickets:') }}</label>
                                     
                                     <div class="flex items-center justify-between mb-4">
-                                         <span class="text-gray-500 dark:text-gray-400 font-medium">Adult 
+                                         <span class="text-gray-500 dark:text-gray-400 font-medium">{{ __('Adult') }} 
                                              <span class="text-blue-600 font-bold ml-1" x-text="'$' + currentPrices.adult.toFixed(2)"></span>
                                          </span>
                                          <div class="relative">
@@ -674,7 +681,7 @@
                                     </div>
                                     
                                      <div class="flex items-center justify-between">
-                                         <span class="text-gray-500 dark:text-gray-400 font-medium">Child 
+                                         <span class="text-gray-500 dark:text-gray-400 font-medium">{{ __('Child') }} 
                                              <span class="text-blue-600 font-bold ml-1" x-text="'$' + currentPrices.child.toFixed(2)"></span>
                                          </span>
                                          <div class="relative">
@@ -692,7 +699,7 @@
                                     <div class="mb-6">
                                         <label class="block text-base font-bold text-gray-900 dark:text-white mb-4 uppercase tracking-tighter flex items-center gap-2">
                                             <i class="fi fi-rr-plus-small text-blue-600"></i>
-                                            Enhance Your Trip
+                                            {{ __('Enhance Your Trip') }}
                                         </label>
                                         
                                         <div class="space-y-3">
@@ -706,8 +713,8 @@
                                                             </div>
                                                         </div>
                                                         <div>
-                                                            <span class="text-blue-600 font-bold group-hover:text-blue-700 transition block text-sm" x-text="extra.name"></span>
-                                                            <span class="text-[10px] text-gray-400 dark:text-gray-500 uppercase font-bold" x-text="extra.type === 'per_person' ? 'Per Person' : 'Per Booking'"></span>
+                                                            <span class="text-blue-600 font-bold group-hover:text-blue-700 transition block text-sm" x-text="currentLocale === 'ar' && extra.name_ar ? extra.name_ar : extra.name"></span>
+                                                            <span class="text-[10px] text-gray-400 dark:text-gray-500 uppercase font-bold" x-text="extra.type === 'per_person' ? '{{ __('Per Person') }}' : '{{ __('Per Booking') }}'"></span>
                                                         </div>
                                                      </div>
                                                      <span class="font-black text-gray-900 dark:text-white" x-text="'$' + parseFloat(extra.price).toFixed(2)"></span>
@@ -721,17 +728,17 @@
 
                                 <!-- Client Details -->
                                 <div class="mb-6 space-y-4">
-                                     <label class="block text-base font-bold text-gray-900 dark:text-white">Your Details</label>
-                                     <input type="text" x-model="name" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="Full Name">
-                                     <input type="email" x-model="email" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="Email Address">
-                                     <input type="tel" x-model="phone" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="Phone Number">
+                                     <label class="block text-base font-bold text-gray-900 dark:text-white">{{ __('Your Details') }}</label>
+                                     <input type="text" x-model="name" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="{{ __('Full Name') }}">
+                                     <input type="email" x-model="email" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="{{ __('Email Address') }}">
+                                     <input type="tel" x-model="phone" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="{{ __('Phone Number') }}">
                                 </div>
                                 
                                 <div class="h-px bg-gray-100 my-6"></div>
                                 
                                 <!-- Total -->
                                 <div class="flex items-center justify-between mb-6">
-                                    <span class="text-2xl font-bold text-gray-900 dark:text-white">Total:</span>
+                                    <span class="text-2xl font-bold text-gray-900 dark:text-white">{{ __('Total:') }}</span>
                                     <span class="text-3xl font-bold text-blue-600" x-text="'$' + total.toFixed(2)"></span>
                                 </div>
                             </div>
@@ -740,14 +747,14 @@
                             <button type="submit" :disabled="isLoading || !date" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-lg shadow-xl shadow-blue-600/20 transition flex items-center justify-center gap-2 text-lg transform active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
                                  <span x-show="!isLoading" class="flex items-center gap-2">
                                     <i class="fi fi-rr-shopping-cart"></i>
-                                    BOOK NOW
+                                    {{ __('BOOK NOW') }}
                                  </span>
                                  <span x-show="isLoading" class="flex items-center gap-2">
                                     <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                         <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                                     </svg>
-                                    Processing...
+                                    {{ __('Processing...') }}
                                  </span>
                             </button>
                         </form>
