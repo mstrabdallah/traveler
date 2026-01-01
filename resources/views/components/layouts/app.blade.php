@@ -691,19 +691,7 @@
         /* Hide text "Powered by Google" if visible */
         .goog-te-gadget-simple { background-color: transparent !important; border: none !important; }
     </style>
-    <!-- Tawk.to Script -->
-    <script id="tawk-script" type="text/javascript">
-    var Tawk_API = Tawk_API || {};
-    var Tawk_LoadStart=new Date();
-    (function(){
-        var s1 = document.createElement( 'script' ),s0=document.getElementsByTagName( 'script' )[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/6831ee37fa3c1f19045d9eec/1is1gl2st';
-        s1.charset = 'UTF-8';
-        s1.setAttribute( 'crossorigin','*' );
-        s0.parentNode.insertBefore( s1, s0 );
-    })();
-    </script>
+
     <!-- WhatsApp Floating Button -->
     <a class="float-button" href="https://api.whatsapp.com/send/?phone=201141812709&amp;text=Inquiry%20for:%20{{ urlencode(url()->current()) }}&amp;type=phone_number&amp;app_absent=0" rel="nofollow" target="_blank">
         <svg fill="#fff" height="20" width="20" id="Bold" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

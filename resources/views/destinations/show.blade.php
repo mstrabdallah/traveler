@@ -22,9 +22,34 @@
              <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                  @forelse($destination->tours as $tour)
                     <article class="flex flex-col items-start justify-between bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 dark:border-gray-700">
-                        <div class="relative w-full">
-                            <img src="{{ $tour->images ? Storage::url($tour->images[0]) : 'https://placehold.co/600x400' }}" alt="" class="aspect-[16/9] w-full bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] transition duration-500 group-hover:scale-105">
-                             <div class="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary-900 dark:text-white shadow-sm">
+                        <div class="relative w-full overflow-hidden">
+                            @php
+                                $firstMedia = $tour->images ? $tour->images[0] : null;
+                                $isVideo = false;
+                                if ($firstMedia) {
+                                    $ext = strtolower(pathinfo($firstMedia, PATHINFO_EXTENSION));
+                                    $isVideo = in_array($ext, ['mp4', 'webm', 'ogg', 'mov']);
+                                }
+                            @endphp
+
+                            @if($firstMedia)
+                                @if($isVideo)
+                                    <video src="{{ Storage::url($firstMedia) }}" 
+                                           muted autoplay loop playsinline
+                                           class="aspect-[16/9] w-full bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] transition duration-500 group-hover:scale-105">
+                                    </video>
+                                @else
+                                    <img src="{{ Storage::url($firstMedia) }}" 
+                                         alt="{{ $tour->display_name }}" 
+                                         class="aspect-[16/9] w-full bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] transition duration-500 group-hover:scale-105">
+                                @endif
+                            @else
+                                <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=800&q=80" 
+                                     alt="{{ $tour->display_name }}" 
+                                     class="aspect-[16/9] w-full bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2] transition duration-500 group-hover:scale-105">
+                            @endif
+
+                             <div class="absolute top-4 right-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-primary-900 dark:text-white shadow-sm z-10">
                                 {{ $tour->duration_days }} Days
                             </div>
                         </div>

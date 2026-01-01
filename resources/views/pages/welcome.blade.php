@@ -352,16 +352,38 @@
                             <a href="{{ route('tours.show', $tour) }}" class="flex flex-col h-full bg-white dark:bg-gray-700 rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden group border border-gray-100 dark:border-gray-600 block text-left w-full max-w-sm mx-auto">
                                 <!-- Image Section -->
                                 <div class="relative w-full aspect-[4/3] overflow-hidden">
-                                    <img src="{{ Storage::url(is_array($tour->images) ? ($tour->images[0] ?? '') : '') }}" 
-                                         alt="{{ $tour->title }}" 
-                                         class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
-                                    
-                                    <!-- Photos Count Badge -->
-                                    <div class="absolute bottom-3 right-3 bg-[#345BA8] text-white text-xs px-2 py-1 rounded-md flex items-center gap-1 shadow-sm">
-                                        <i class="fi fi-rr-camera"></i>
-                                        <span>{{ is_array($tour->images) ? count($tour->images) : 0 }}</span>
-                                    </div>
-                                </div>
+                                     @php
+                                         $firstMedia = (is_array($tour->images) && count($tour->images) > 0) ? $tour->images[0] : null;
+                                         $isVideo = false;
+                                         if ($firstMedia) {
+                                             $ext = strtolower(pathinfo($firstMedia, PATHINFO_EXTENSION));
+                                             $isVideo = in_array($ext, ['mp4', 'webm', 'ogg', 'mov']);
+                                         }
+                                     @endphp
+
+                                     @if($firstMedia)
+                                         @if($isVideo)
+                                             <video src="{{ Storage::url($firstMedia) }}" 
+                                                    muted autoplay loop playsinline
+                                                    class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                                             </video>
+                                         @else
+                                             <img src="{{ Storage::url($firstMedia) }}" 
+                                                  alt="{{ $tour->display_name }}" 
+                                                  class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                                         @endif
+                                     @else
+                                         <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=800&q=80" 
+                                              alt="{{ $tour->display_name }}" 
+                                              class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                                     @endif
+                                     
+                                     <!-- Photos Count Badge -->
+                                     <div class="absolute bottom-3 right-3 bg-[#345BA8] text-white text-xs px-2 py-1 rounded-md flex items-center gap-1 shadow-sm z-10">
+                                         <i class="fi fi-rr-camera"></i>
+                                         <span>{{ is_array($tour->images) ? count($tour->images) : 0 }}</span>
+                                     </div>
+                                 </div>
 
                                 <!-- Content Section -->
                                 <div class="p-6 flex flex-col flex-grow justify-between">

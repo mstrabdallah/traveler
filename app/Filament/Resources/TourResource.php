@@ -121,12 +121,25 @@ class TourResource extends Resource
                             ])
                             ->schema([
                                 Forms\Components\FileUpload::make('images')
-                                    ->image()
+                                    ->label('Gallery (Images & Videos)')
+                                    ->acceptedFileTypes(['image/*', 'video/*'])
                                     ->disk('public')
                                     ->directory('tours')
                                     ->multiple()
                                     ->reorderable()
-                                    ->columnSpanFull(),
+                                    ->appendFiles()
+                                    ->imagePreviewHeight('150')
+                                    ->panelLayout('grid')
+                                    ->columnSpanFull()
+                                    ->required(),
+
+                                Forms\Components\Placeholder::make('gallery_note')
+                                    ->label('')
+                                    ->content(new \Illuminate\Support\HtmlString('
+                                        <div class="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg text-sm text-blue-700 dark:text-blue-300">
+                                            <strong>ملاحظة:</strong> الصورة الأولى في الترتيب ستكون هي الصورة الرئيسية للرحلة.
+                                        </div>
+                                    ')),
                             ]),
 
                         // Section 4: Content

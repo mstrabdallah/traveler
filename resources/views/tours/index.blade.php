@@ -162,8 +162,32 @@
                         <div class="space-y-4">
                             @foreach($tours->take(3) as $lmTour)
                                 <div class="flex gap-3 items-center group cursor-pointer" onclick="window.location='{{ route('tours.show', $lmTour) }}'">
-                                    <img src="{{ $lmTour->images ? Storage::url($lmTour->images[0]) : 'https://placehold.co/100x100' }}" class="w-16 h-16 rounded-lg object-cover group-hover:opacity-80 transition">
-                                    <div>
+                                     @php
+                                         $firstMedia = $lmTour->images ? $lmTour->images[0] : null;
+                                         $isVideo = false;
+                                         if ($firstMedia) {
+                                             $ext = strtolower(pathinfo($firstMedia, PATHINFO_EXTENSION));
+                                             $isVideo = in_array($ext, ['mp4', 'webm', 'ogg', 'mov']);
+                                         }
+                                     @endphp
+
+                                     @if($firstMedia)
+                                         @if($isVideo)
+                                             <video src="{{ Storage::url($firstMedia) }}" 
+                                                    muted autoplay loop playsinline
+                                                    class="w-16 h-16 rounded-lg object-cover group-hover:opacity-80 transition">
+                                             </video>
+                                         @else
+                                             <img src="{{ Storage::url($firstMedia) }}" 
+                                                  class="w-16 h-16 rounded-lg object-cover group-hover:opacity-80 transition"
+                                                  alt="{{ $lmTour->display_name }}">
+                                         @endif
+                                     @else
+                                         <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=100&q=80" 
+                                              class="w-16 h-16 rounded-lg object-cover group-hover:opacity-80 transition"
+                                              alt="{{ $lmTour->display_name }}">
+                                     @endif
+                                     <div>
                                         <h4 class="text-sm font-semibold text-gray-900 dark:text-white group-hover:text-accent-600 line-clamp-2 transition">{{ $lmTour->display_name }}</h4>
                                         <p class="text-xs text-accent-600 font-bold mt-1">{{ __('From') }} ${{ number_format($lmTour->price) }}</p>
                                     </div>

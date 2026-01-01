@@ -4,7 +4,31 @@
     <!-- Image Area -->
     <div class="relative h-64 overflow-hidden  mx-4 mt-4">
         <a href="{{ route('tours.show', $tour) }}">
-            <img src="{{ $tour->images ? Storage::url($tour->images[0]) : 'https://placehold.co/600x400' }}" alt="{{ $tour->display_name }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-[12px]">
+            @php
+                $firstMedia = $tour->images ? $tour->images[0] : null;
+                $isVideo = false;
+                if ($firstMedia) {
+                    $ext = strtolower(pathinfo($firstMedia, PATHINFO_EXTENSION));
+                    $isVideo = in_array($ext, ['mp4', 'webm', 'ogg', 'mov']);
+                }
+            @endphp
+
+            @if($firstMedia)
+                @if($isVideo)
+                    <video src="{{ Storage::url($firstMedia) }}" 
+                           muted autoplay loop playsinline
+                           class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-[12px]">
+                    </video>
+                @else
+                    <img src="{{ Storage::url($firstMedia) }}" 
+                         alt="{{ $tour->display_name }}" 
+                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-[12px]">
+                @endif
+            @else
+                <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=800&q=80" 
+                     alt="{{ $tour->display_name }}" 
+                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 rounded-[12px]">
+            @endif
         </a>
         <!-- Badge -->
         <!-- Badge Top Right -->

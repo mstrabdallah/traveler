@@ -3,113 +3,318 @@
 
     @php
         $heroImages = $tour->images ?? [];
+        
         if (empty($heroImages)) {
-             for($i=0; $i<8; $i++) $heroImages[] = 'placeholder';
-        } else {
-             while(count($heroImages) < 8) {
-                 $heroImages = array_merge($heroImages, $heroImages);
-             }
+             for($i=0; $i<5; $i++) $heroImages[] = 'placeholder';
         }
+        $heroImages = array_slice($heroImages, 0, 5);
+        
+        $galleryData = array_map(function($img) {
+            $url = $img === 'placeholder' 
+                ? 'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=2000&q=80' 
+                : Storage::url($img);
+            
+            $isVideo = false;
+            if ($img !== 'placeholder') {
+                $ext = strtolower(pathinfo($img, PATHINFO_EXTENSION));
+                $isVideo = in_array($ext, ['mp4', 'webm', 'ogg', 'mov']);
+            }
+            
+            return [
+                'url' => $url,
+                'isVideo' => $isVideo
+            ];
+        }, $heroImages);
     @endphp
 
-    <!-- Hero Slider Section -->
-    <div class="relative h-[500px] lg:h-[600px] w-full overflow-hidden group">
-        <!-- Swiper -->
-        <div class="swiper mySwiper h-full w-full">
-            <div class="swiper-wrapper">
-                 @foreach($heroImages as $image)
-                    <div class="swiper-slide h-full w-full">
-                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 z-10"></div>
-                         @if($image === 'placeholder')
-                            <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=2000&q=80" class="h-full w-full object-cover transform transition-transform duration-[10s] group-hover:scale-110">
-                         @else
-                            <img src="{{ Storage::url($image) }}" class="h-full w-full object-cover transform transition-transform duration-[10s] group-hover:scale-110">
-                         @endif
-                    </div>
-                @endforeach
-            </div>
-            
-            <!-- Navigation Buttons -->
-            <div class="swiper-button-next !w-14 !h-14 !bg-white/10 !backdrop-blur-md !border !border-white/20 !rounded-2xl !text-white after:!text-xl hover:!bg-blue-600 transition-all duration-300 !right-8"></div>
-            <div class="swiper-button-prev !w-14 !h-14 !bg-white/10 !backdrop-blur-md !border !border-white/20 !rounded-2xl !text-white after:!text-xl hover:!bg-blue-600 transition-all duration-300 !left-8"></div>
-            
-            <!-- Pagination -->
-            <div class="swiper-pagination !bottom-8"></div>
-        </div>
+    <div x-data="{ 
+        lightboxOpen: false, 
+        activeImageIndex: 0, 
+        galleryData: {{ json_encode($galleryData) }},
+        openLightbox(index) {
+            this.activeImageIndex = index;
+            this.lightboxOpen = true;
+            document.body.style.overflow = 'hidden';
+            if (this.galleryData[index].isVideo) {
+                this.$nextTick(() => {
+                    const video = this.$refs.lightboxVideo;
+                    if (video) video.play();
+                });
+            }
+        },
+        closeLightbox() {
+            if (this.galleryData[this.activeImageIndex].isVideo) {
+                const video = this.$refs.lightboxVideo;
+                if (video) video.pause();
+            }
+            this.lightboxOpen = false;
+            document.body.style.overflow = 'auto';
+        },
+        nextImage() {
+            if (this.galleryData[this.activeImageIndex].isVideo) {
+                const video = this.$refs.lightboxVideo;
+                if (video) video.pause();
+            }
+            this.activeImageIndex = (this.activeImageIndex + 1) % this.galleryData.length;
+            if (this.galleryData[this.activeImageIndex].isVideo) {
+                this.$nextTick(() => {
+                    const video = this.$refs.lightboxVideo;
+                    if (video) video.play();
+                });
+            }
+        },
+        prevImage() {
+            if (this.galleryData[this.activeImageIndex].isVideo) {
+                const video = this.$refs.lightboxVideo;
+                if (video) video.pause();
+            }
+            this.activeImageIndex = (this.activeImageIndex - 1 + this.galleryData.length) % this.galleryData.length;
+            if (this.galleryData[this.activeImageIndex].isVideo) {
+                this.$nextTick(() => {
+                    const video = this.$refs.lightboxVideo;
+                    if (video) video.play();
+                });
+            }
+        }
+    }" @keydown.escape.window="closeLightbox()" @keydown.left.window="prevImage()" @keydown.right.window="nextImage()">
 
-        <!-- Floating Badge: Image Count -->
-        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 z-20">
-             <div class="flex items-center gap-2 bg-black/30 backdrop-blur-xl border border-white/20 px-4 py-2 rounded-full text-white text-xs font-black uppercase tracking-widest shadow-2xl">
-                <i class="fi fi-rr-camera text-blue-400"></i>
-                <span class="opacity-80">{{ __('Explore Gallery') }}</span>
-                <span class="w-px h-3 bg-white/20 mx-1"></span>
-                <span>{{ count($tour->images ?? []) }} {{ __('Photos') }}</span>
-             </div>
+    <!-- Hero Grid Gallery Section -->
+    <div class="relative w-full bg-gray-50 dark:bg-gray-900 pt-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-3 h-[250px] lg:h-[400px]">
+                <!-- Main Large Image (Left) -->
+                <div @click="openLightbox(0)" class="lg:col-span-2 relative rounded-2xl overflow-hidden group cursor-pointer h-full">
+                    @if($galleryData[0]['url'] === 'placeholder' || !$galleryData[0]['isVideo'])
+                        <img src="{{ $galleryData[0]['url'] }}" 
+                             class="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110" 
+                             alt="Tour main image">
+                    @else
+                        <video src="{{ $galleryData[0]['url'] }}" 
+                               muted autoplay loop playsinline
+                               class="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                        </video>
+                    @endif
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        @if($galleryData[0]['isVideo'])
+                            <div class="w-16 h-16 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/50">
+                                <i class="fi fi-ss-play text-2xl ml-1"></i>
+                            </div>
+                        @endif
+                    </div>
+                    
+                    <!-- Gallery & Video Buttons (Bottom Left) -->
+                    <div class="absolute bottom-4 left-4 flex gap-2 z-10">
+                        <button @click.stop="openLightbox(0)" class="flex items-center gap-2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm px-4 py-2.5 rounded-xl text-sm font-bold text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-800 transition-all shadow-lg border border-gray-200/50 dark:border-gray-700/50">
+                            <i class="fi fi-rr-picture text-blue-600"></i>
+                            <span>{{ __('Gallery') }}</span>
+                        </button>
+                        @php
+                            $firstVideoIndex = array_search(true, array_column($galleryData, 'isVideo'));
+                        @endphp
+                        @if($firstVideoIndex !== false)
+                            <button @click.stop="openLightbox({{ $firstVideoIndex }})" class="flex items-center gap-2 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm px-4 py-2.5 rounded-xl text-sm font-bold text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-800 transition-all shadow-lg border border-gray-200/50 dark:border-gray-700/50">
+                                <i class="fi fi-rr-video-camera text-red-600"></i>
+                                <span>{{ __('Video') }}</span>
+                            </button>
+                        @endif
+                    </div>
+                </div>
+
+                <!-- Right Grid (4 smaller images in 2x2) - Hidden on Mobile -->
+                <div class="hidden lg:grid grid-cols-2 grid-rows-2 gap-3">
+                    @for($i = 1; $i <= 4; $i++)
+                        <div @click="openLightbox({{ $i }})" class="relative rounded-2xl overflow-hidden group cursor-pointer">
+                            @if(isset($galleryData[$i]))
+                                @if($galleryData[$i]['isVideo'])
+                                    <video src="{{ $galleryData[$i]['url'] }}" 
+                                           muted autoplay loop playsinline
+                                           class="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110">
+                                    </video>
+                                @else
+                                    <img src="{{ $galleryData[$i]['url'] }}" 
+                                         class="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110" 
+                                         alt="Tour image {{ $i }}">
+                                @endif
+                            @else
+                                <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=800&q=80" 
+                                     class="h-full w-full object-cover transform transition-transform duration-700 group-hover:scale-110" 
+                                     alt="Tour image {{ $i }}">
+                            @endif
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                @if(isset($galleryData[$i]) && $galleryData[$i]['isVideo'])
+                                    <div class="w-10 h-10 bg-white/30 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/50">
+                                        <i class="fi fi-ss-play text-sm ml-0.5"></i>
+                                    </div>
+                                @endif
+                            </div>
+                            
+                            @if($i === 4 && count($tour->images ?? []) > 5)
+                                <!-- Show More Overlay on last image -->
+                                <div class="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center">
+                                    <div class="text-center text-white">
+                                        <p class="text-3xl font-black mb-1">+{{ count($tour->images ?? []) - 5 }}</p>
+                                        <p class="text-sm font-bold uppercase tracking-wider">{{ __('Photos') }}</p>
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    @endfor
+                </div>
+            </div>
+
+            <!-- Mobile Slider - Visible only on Mobile -->
+            <div class="mt-3 lg:hidden">
+                <div class="swiper mobileGallerySwiper h-[100px]">
+                    <div class="swiper-wrapper">
+                        @foreach($galleryData as $index => $item)
+                            @if($index > 0)
+                                <div class="swiper-slide !w-[100px] h-full" @click="openLightbox({{ $index }})">
+                                    <div class="relative w-full h-full rounded-xl overflow-hidden">
+                                        @if($item['isVideo'])
+                                            <video src="{{ $item['url'] }}" muted class="w-full h-full object-cover"></video>
+                                            <div class="absolute inset-0 flex items-center justify-center bg-black/20">
+                                                <i class="fi fi-ss-play text-white text-xs"></i>
+                                            </div>
+                                        @else
+                                            <img src="{{ $item['url'] }}" class="w-full h-full object-cover" alt="Gallery thumbnail">
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- Lightbox Overlay -->
+    <div x-show="lightboxOpen" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm"
+         style="display: none;">
+        
+        <!-- Close Button -->
+        <button @click="closeLightbox()" class="absolute top-6 right-6 text-white text-4xl hover:text-gray-300 z-[110] p-2">
+            <i class="fi fi-rr-cross-small"></i>
+        </button>
+
+        <!-- Navigation Arrows -->
+        <button @click="prevImage()" class="absolute left-6 text-white text-5xl hover:text-blue-400 transition-colors z-[110] p-4 hidden sm:block">
+            <i class="fi fi-rr-angle-left"></i>
+        </button>
+        <button @click="nextImage()" class="absolute right-6 text-white text-5xl hover:text-blue-400 transition-colors z-[110] p-4 hidden sm:block">
+            <i class="fi fi-rr-angle-right"></i>
+        </button>
+
+        <!-- Main Image/Video Container -->
+        <div class="relative w-full h-full p-4 flex flex-col items-center justify-center" @click.self="closeLightbox()">
+            <template x-if="!galleryData[activeImageIndex].isVideo">
+                <img :src="galleryData[activeImageIndex].url" 
+                     class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl transition-all duration-300"
+                     x-transition:enter="transition ease-out duration-300 transform scale-95"
+                     x-transition:enter-start="scale-95 opacity-0"
+                     x-transition:enter-end="scale-100 opacity-100">
+            </template>
+            <template x-if="galleryData[activeImageIndex].isVideo">
+                <video x-ref="lightboxVideo" 
+                       :src="galleryData[activeImageIndex].url" 
+                       controls 
+                       class="max-w-full max-h-[85vh] rounded-lg shadow-2xl"
+                       x-transition:enter="transition ease-out duration-300 transform scale-95"
+                       x-transition:enter-start="scale-95 opacity-0"
+                       x-transition:enter-end="scale-100 opacity-100"></video>
+            </template>
+            
+            <!-- Index Counter -->
+            <div class="mt-6 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-bold">
+                <span x-text="activeImageIndex + 1"></span> / <span x-text="galleryData.length"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <!-- Redesigned Summary Bar -->
-    <div class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 shadow-sm relative z-30">
-        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-8 lg:py-10">
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
+    <section class="bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800 relative z-30 overflow-hidden">
+        <!-- Decorative background subtle gradients -->
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-50 dark:bg-blue-900/10 rounded-full blur-3xl opacity-50"></div>
+        <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-accent-50 dark:bg-accent-900/10 rounded-full blur-3xl opacity-50"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 py-10 lg:py-14 relative">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16">
+                
                 <!-- Title Section -->
-                <div class="flex-1 text-center lg:text-left">
-                    <h1 class="text-3xl lg:text-5xl font-black text-gray-900 dark:text-white font-display leading-[1.1] tracking-tight">
+                <div class="flex-1 max-lg:text-center lg:text-start space-y-4">
+           
+                    <h1 class="text-4xl lg:text-4xl font-black text-gray-900 dark:text-white font-display leading-[1.05] tracking-tight">
                         {{ $tour->display_name }}
                     </h1>
                 </div>
                 
-                <!-- Metrics Section -->
-                <div class="flex flex-wrap items-center justify-center lg:justify-end gap-6 lg:gap-12">
-                    <!-- Price Card -->
-                    <div class="flex items-center gap-5">
-                        <div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-blue-600 flex-shrink-0 border border-blue-100 dark:border-blue-800">
-                            <i class="fi fi-rr-usd-circle text-2xl"></i>
+                <!-- Premium Metrics Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 lg:gap-6 w-full lg:w-auto">
+                    
+                    <!-- Price Stats -->
+                    <div class="group bg-gray-50/50 dark:bg-gray-800/40 hover:bg-white dark:hover:bg-gray-800 p-6 rounded-[2.5rem] border border-gray-100 dark:border-gray-700 transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-1 border-b-4 border-b-transparent hover:border-b-blue-600">
+                        <div class="flex items-center gap-5">
+                             <div class="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform duration-500">
+                                <i class="fi fi-rr-usd-circle text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{{ __('Price From') }}</p>
+                                @if($tour->sale_price)
+                                    <div class="flex flex-col">
+                                        <p class="text-2xl font-black text-gray-900 dark:text-white leading-none">${{ number_format($tour->sale_price) }}</p>
+                                        <p class="text-xs font-bold text-gray-400 line-through mt-1">${{ number_format($tour->price) }}</p>
+                                    </div>
+                                @else
+                                    <p class="text-2xl font-black text-gray-900 dark:text-white leading-none">${{ number_format($tour->price) }}</p>
+                                @endif
+                            </div>
                         </div>
-                        <div class="text-left">
-                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">{{ __('Price From') }}</p>
-                            @if($tour->sale_price)
-                                <div class="flex items-center gap-2">
-                                    <p class="text-3xl font-black text-gray-900 dark:text-white">${{ number_format($tour->sale_price) }}</p>
-                                    <p class="text-sm font-bold text-gray-400 line-through">${{ number_format($tour->price) }}</p>
+                    </div>
+
+                    <!-- Duration Stats -->
+                    <div class="group bg-gray-50/50 dark:bg-gray-800/40 hover:bg-white dark:hover:bg-gray-800 p-6 rounded-[2.5rem] border border-gray-100 dark:border-gray-700 transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-1 border-b-4 border-b-transparent hover:border-b-amber-500">
+                        <div class="flex items-center gap-5">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-500 flex items-center justify-center text-white shadow-lg shadow-amber-500/20 group-hover:scale-110 transition-transform duration-500">
+                                <i class="fi fi-rr-clock text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{{ __('Duration') }}</p>
+                                <p class="text-2xl font-black text-gray-900 dark:text-white leading-none">
+                                    {{ $tour->duration_days }} <span class="text-xs font-bold text-gray-400 lowercase">{{ __('Days') }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category/Type Stats -->
+                    <div class="group bg-gray-50/50 dark:bg-gray-800/40 hover:bg-white dark:hover:bg-gray-800 p-6 rounded-[2.5rem] border border-gray-100 dark:border-gray-700 transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-1 border-b-4 border-b-transparent hover:border-b-emerald-500">
+                        <div class="flex items-center gap-5">
+                             <div class="w-14 h-14 rounded-2xl bg-emerald-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform duration-500">
+                                <i class="fi fi-rr-map-marker text-2xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{{ __('Tour Type') }}</p>
+                                <div class="flex items-center gap-1 text-xl font-black text-gray-900 dark:text-white whitespace-nowrap">
+                                    {{ __('Private') }}
+                                    <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left' : 'fi-rr-arrow-small-right' }} text-gray-300 text-sm group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                                 </div>
-                            @else
-                                <p class="text-3xl font-black text-gray-900 dark:text-white">${{ number_format($tour->price) }}</p>
-                            @endif
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Vertical Divider -->
-                    <div class="hidden lg:block w-px h-16 bg-gray-100 dark:bg-gray-800"></div>
-
-                    <!-- Duration Card -->
-                    <div class="flex items-center gap-5">
-                        <div class="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-500 flex-shrink-0 border border-orange-100 dark:border-orange-800">
-                            <i class="fi fi-rr-clock text-2xl"></i>
-                        </div>
-                        <div class="text-left">
-                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">{{ __('Duration') }}</p>
-                            <p class="text-2xl font-black text-gray-900 dark:text-white">{{ $tour->duration_days }} <span class="text-sm font-bold opacity-60">{{ __('Days') }}</span></p>
-                        </div>
-                    </div>
-
-                    <!-- Type Card -->
-                    <div class="flex items-center gap-5 p-4 lg:p-0">
-                        <div class="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-500 flex-shrink-0 border border-green-100 dark:border-green-800">
-                            <i class="fi fi-rr-map-marker text-2xl"></i>
-                        </div>
-                        <div class="text-left">
-                            <p class="text-[11px] font-black text-gray-400 uppercase tracking-widest mb-1">{{ __('Tour Type') }}</p>
-                            <a href="/tailor-made" class="text-xl font-black text-gray-900 dark:text-white hover:text-blue-600 transition-colors flex items-center gap-1 group/link">
-                                {{ __('Private') }}
-                                <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left group-hover/link:-translate-x-1' : 'fi-rr-arrow-small-right group-hover/link:translate-x-1' }} text-gray-400 group-hover/link:text-blue-600 transition-all"></i>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Initialize Swiper -->
     <script>
@@ -776,6 +981,14 @@
                             onChange: function(selectedDates, dateStr, instance) {
                                 document.getElementById('booking-date').dispatchEvent(new Event('input'));
                             }
+                        });
+
+                        // Mobile Gallery Slider
+                        new Swiper(".mobileGallerySwiper", {
+                            slidesPerView: "auto",
+                            spaceBetween: 12,
+                            grabCursor: true,
+                            freeMode: true,
                         });
                     });
                 </script>
