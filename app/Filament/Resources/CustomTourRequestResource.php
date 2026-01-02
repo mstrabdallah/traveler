@@ -126,22 +126,28 @@ class CustomTourRequestResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('request_title')
+                    ->label(__('Request title'))
                     ->searchable()
                     ->limit(20),
                 Tables\Columns\TextColumn::make('email')
+                    ->label(__('Email address'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
+                    ->label(__('Phone Number'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('arrival_date')
+                    ->label(__('Arrival Date'))
                     ->date()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('adults')
                     ->numeric()
-                    ->label('Adults')
+                    ->label(__('Adults'))
                     ->sortable(),
                  Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Created at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

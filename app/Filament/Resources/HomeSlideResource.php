@@ -96,20 +96,22 @@ class HomeSlideResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')
+                    ->label(__('Image'))
                     ->circular(),
                 Tables\Columns\TextColumn::make('title_en')
-                    ->label('Title (EN)')
+                    ->label(__('Title (EN)'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title_ar')
-                    ->label('Title (AR)')
+                    ->label(__('Title (AR)'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('Active')
+                    ->label(__('Active'))
                     ->boolean()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('sort_order')
+                    ->label(__('Sort order'))
                     ->numeric()
                     ->sortable(),
             ])

@@ -113,16 +113,21 @@ class ArticleResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label(__('Image')),
                 Tables\Columns\TextColumn::make('title')
+                    ->label(__('Title'))
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('published_at')
+                    ->label(__('Published At'))
                     ->date()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_visible')
+                    ->label(__('Active'))
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Created at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

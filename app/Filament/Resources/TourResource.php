@@ -109,11 +109,11 @@ class TourResource extends Resource
                             ->description(__('Upload high-quality images for the tour.'))
                             ->headerActions([
                                 Forms\Components\Actions\Action::make('import_url')
-                                    ->label('Fetch from URL')
+                                    ->label(__('Fetch from URL'))
                                     ->icon('heroicon-o-link')
                                     ->form([
                                         Forms\Components\TextInput::make('url')
-                                            ->label('Image URL')
+                                            ->label(__('Image URL'))
                                             ->required()
                                             ->url(),
                                     ])
@@ -128,9 +128,9 @@ class TourResource extends Resource
                                             $state = $get('images') ?? [];
                                             $state[] = $path;
                                             $set('images', $state);
-                                            \Filament\Notifications\Notification::make()->title('Image fetched!')->success()->send();
+                                            \Filament\Notifications\Notification::make()->title(__('Image fetched!'))->success()->send();
                                         } catch (\Exception $e) {
-                                            \Filament\Notifications\Notification::make()->title('Error')->body($e->getMessage())->danger()->send();
+                                            \Filament\Notifications\Notification::make()->title(__('Error'))->body($e->getMessage())->danger()->send();
                                         }
                                     }),
                             ])
@@ -152,7 +152,7 @@ class TourResource extends Resource
                                     ->label('')
                                     ->content(new \Illuminate\Support\HtmlString('
                                         <div class="mt-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 rounded-lg text-sm text-blue-700 dark:text-blue-300">
-                                            <strong>ملاحظة:</strong> الصورة الأولى في الترتيب ستكون هي الصورة الرئيسية للرحلة.
+                                            <strong>' . __('Note:') . '</strong> ' . __('The first image in the order will be the tour\'s main image.') . '
                                         </div>
                                     ')),
                             ]),
@@ -183,12 +183,12 @@ class TourResource extends Resource
 
                         // Section 5: Map
                         Forms\Components\Section::make(__('Location Map'))
-                            ->description('Embed a Google Map for this tour.')
+                            ->description(__('Embed a Google Map for this tour.'))
                             ->schema([
                                 Forms\Components\TextInput::make('map_url')
-                                    ->label('Google Maps Embed URL / Iframe Tag')
-                                    ->placeholder('Paste iframe tag or URL here')
-                                    ->helperText('Paste the full <iframe> from Google Maps and we will clean it for you.')
+                                    ->label(__('Google Maps Embed URL / Iframe Tag'))
+                                    ->placeholder(__('Paste iframe tag or URL here'))
+                                    ->helperText(__('Paste the full <iframe> from Google Maps and we will clean it for you.'))
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(function (Set $set, ?string $state) {
                                         if (!$state) return;
@@ -235,7 +235,7 @@ class TourResource extends Resource
                                     ])
                                     ->collapsible()
                                     ->collapsed()
-                                    ->itemLabel(fn (array $state): ?string => $state['day_title'] ?? null)
+                                    ->itemLabel(fn (array $state): ?string => $state['day_title_ar'] ?? $state['day_title'] ?? null)
                                     ->columnSpanFull(),
                             ]),
 
@@ -284,12 +284,12 @@ class TourResource extends Resource
                                     ]),
 
                                 Forms\Components\Repeater::make('price_tiers')
-                                    ->label('Standard Group Tiers (2+ Guests)')
+                                    ->label(__('Standard Group Tiers (2+ Guests)'))
                                     ->schema([
-                                        Forms\Components\TextInput::make('min_people')->numeric()->required()->label('Min'),
-                                        Forms\Components\TextInput::make('max_people')->numeric()->required()->label('Max'),
-                                        Forms\Components\TextInput::make('price_per_person')->numeric()->prefix('$')->required()->label('Adult Price'),
-                                        Forms\Components\TextInput::make('child_price_per_person')->numeric()->prefix('$')->label('Child Price'),
+                                        Forms\Components\TextInput::make('min_people')->numeric()->required()->label(__('Min')),
+                                        Forms\Components\TextInput::make('max_people')->numeric()->required()->label(__('Max')),
+                                        Forms\Components\TextInput::make('price_per_person')->numeric()->prefix('$')->required()->label(__('Adult Price')),
+                                        Forms\Components\TextInput::make('child_price_per_person')->numeric()->prefix('$')->label(__('Child Price')),
                                     ])
                                     ->columns(4)
                                     ->hidden(fn (Forms\Get $get) => !$get('has_price_tiers'))
@@ -301,13 +301,13 @@ class TourResource extends Resource
                                     ->hidden(fn (Forms\Get $get) => !$get('has_seasonal_prices')),
 
                                 Forms\Components\Repeater::make('seasonal_prices')
-                                    ->label('Seasonal Price Variations')
+                                    ->label(__('Seasonal Price Variations'))
                                     ->schema([
                                         Forms\Components\Grid::make(3)
                                             ->schema([
-                                                Forms\Components\TextInput::make('name')->required()->placeholder('e.g. Christmas Season'),
-                                                Forms\Components\DatePicker::make('start_date')->required(),
-                                                Forms\Components\DatePicker::make('end_date')->required(),
+                                                Forms\Components\TextInput::make('name')->label(__('Name'))->required()->placeholder(__('e.g. Christmas Season')),
+                                                Forms\Components\DatePicker::make('start_date')->label(__('Start date'))->required(),
+                                                Forms\Components\DatePicker::make('end_date')->label(__('End date'))->required(),
                                             ]),
 
                                         Forms\Components\Grid::make(2)
@@ -315,27 +315,27 @@ class TourResource extends Resource
                                                 Forms\Components\TextInput::make('solo_price')
                                                     ->numeric()
                                                     ->prefix('$')
-                                                    ->label('Season Solo Adult Price'),
+                                                    ->label(__('Season Solo Adult Price')),
                                                 Forms\Components\TextInput::make('child_solo_price')
                                                     ->numeric()
                                                     ->prefix('$')
-                                                    ->label('Season Solo Child Price'),
+                                                    ->label(__('Season Solo Child Price')),
                                             ]),
                                         
                                         Forms\Components\Repeater::make('tiers')
-                                            ->label('Season Price Tiers')
+                                            ->label(__('Season Price Tiers'))
                                             ->schema([
-                                                Forms\Components\TextInput::make('min_people')->numeric()->required()->label('Min'),
-                                                Forms\Components\TextInput::make('max_people')->numeric()->required()->label('Max'),
-                                                Forms\Components\TextInput::make('price_per_person')->numeric()->prefix('$')->required()->label('Adult'),
-                                                Forms\Components\TextInput::make('child_price_per_person')->numeric()->prefix('$')->label('Child'),
+                                                Forms\Components\TextInput::make('min_people')->numeric()->required()->label(__('Min')),
+                                                Forms\Components\TextInput::make('max_people')->numeric()->required()->label(__('Max')),
+                                                Forms\Components\TextInput::make('price_per_person')->numeric()->prefix('$')->required()->label(__('Adult')),
+                                                Forms\Components\TextInput::make('child_price_per_person')->numeric()->prefix('$')->label(__('Child')),
                                             ])
                                             ->columns(4)
                                             ->columnSpanFull(),
                                     ])
                                     ->hidden(fn (Forms\Get $get) => !$get('has_seasonal_prices'))
                                     ->collapsible()
-                                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? 'New Season')
+                                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? __('New Season'))
                                     ->columnSpanFull(),
 
                                 Forms\Components\Placeholder::make('extras_divider')
@@ -343,22 +343,25 @@ class TourResource extends Resource
                                     ->content(new \Illuminate\Support\HtmlString('<hr class="my-4 opacity-50">')),
 
                                 Forms\Components\Repeater::make('extras')
-                                    ->label('Tour Extras & Add-ons')
+                                    ->label(__('Tour Extras & Add-ons'))
                                     ->schema([
                                         Forms\Components\TextInput::make('name')
+                                            ->label(__('Name'))
                                             ->required()
-                                            ->placeholder('e.g. Airport Transfer'),
+                                            ->placeholder(__('e.g. Airport Transfer')),
                                         Forms\Components\TextInput::make('name_ar')
-                                            ->label('Name (Arabic)')
-                                            ->placeholder('مثلاً: توصيل للمطار'),
+                                            ->label(__('Name (Arabic)'))
+                                            ->placeholder(__('مثلاً: توصيل للمطار')),
                                         Forms\Components\TextInput::make('price')
+                                            ->label(__('Price'))
                                             ->numeric()
                                             ->prefix('$')
                                             ->required(),
                                         Forms\Components\Select::make('type')
+                                            ->label(__('Type'))
                                             ->options([
-                                                'per_booking' => 'Per Booking',
-                                                'per_person' => 'Per Person',
+                                                'per_booking' => __('Per Booking'),
+                                                'per_person' => __('Per Person'),
                                             ])
                                             ->required()
                                             ->default('per_person'),
@@ -366,7 +369,7 @@ class TourResource extends Resource
                                     ->columns(3)
                                     ->columnSpanFull()
                                     ->collapsible()
-                                    ->itemLabel(fn (array $state): ?string => $state['name'] ?? 'New Extra'),
+                                    ->itemLabel(fn (array $state): ?string => $state['name_ar'] ?? $state['name'] ?? __('New Extra')),
                             ]),
                     ])->columnSpan(['lg' => 2]),
 
@@ -389,23 +392,30 @@ class TourResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('Name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('destination.name')
+                    ->label(__('Destination'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('price')
+                    ->label(__('Price'))
                     ->money()
                     ->sortable(),
                 Tables\Columns\IconColumn::make('is_active')
+                    ->label(__('Active'))
                     ->boolean(),
                  Tables\Columns\IconColumn::make('is_featured')
+                    ->label(__('Featured Tour'))
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Created at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('destination')
+                    ->label(__('Destination'))
                     ->relationship('destination', 'name'),
             ])
             ->actions([

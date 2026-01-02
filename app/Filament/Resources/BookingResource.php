@@ -130,21 +130,25 @@ class BookingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable(),
+                Tables\Columns\TextColumn::make('id')->label(__('Id'))->sortable(),
                 Tables\Columns\TextColumn::make('tour.name')
+                    ->label(__('Tour'))
                     ->searchable()
                     ->sortable()
                     ->limit(30),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable()
-                    ->label('Customer'),
+                    ->label(__('Customer')),
                 Tables\Columns\TextColumn::make('date')
                     ->date()
+                    ->label(__('Date'))
                     ->sortable(),
                 Tables\Columns\TextColumn::make('total_price')
+                    ->label(__('Total price'))
                     ->money('USD')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->label(__('Status'))
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
@@ -152,6 +156,7 @@ class BookingResource extends Resource
                         'cancelled' => 'danger',
                     }),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label(__('Created at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -159,10 +164,11 @@ class BookingResource extends Resource
             ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
+                    ->label(__('Status'))
                     ->options([
-                        'pending' => 'Pending',
-                        'confirmed' => 'Confirmed',
-                        'cancelled' => 'Cancelled',
+                        'pending' => __('Pending'),
+                        'confirmed' => __('Confirmed'),
+                        'cancelled' => __('Cancelled'),
                     ]),
             ])
             ->actions([
