@@ -16,9 +16,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class ArticleResource extends Resource
 {
     protected static ?string $model = Article::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
-    protected static ?string $navigationLabel = 'Blog';
+    
+    public static function getNavigationLabel(): string { return __('Articles'); }
+    public static function getNavigationGroup(): ?string { return __('Content Management'); }
+    public static function getModelLabel(): string { return __('Article'); }
+    public static function getPluralModelLabel(): string { return __('Articles'); }
+    
     protected static ?int $navigationSort = 3;
 
     public static function form(Form $form): Form
@@ -30,39 +34,44 @@ class ArticleResource extends Resource
                         Forms\Components\Section::make()
                             ->schema([
                                 Forms\Components\TextInput::make('title')
+                                    ->label(__('Title'))
                                     ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (string $operation, $state, Forms\Set $set) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null),
 
                                 Forms\Components\TextInput::make('title_ar')
-                                    ->label('Title (Arabic)')
+                                    ->label(__('Title (Arabic)'))
                                     ->required(),
 
                                 Forms\Components\TextInput::make('slug')
+                                    ->label(__('Slug'))
                                     ->disabled()
                                     ->dehydrated()
                                     ->required()
                                     ->unique(Article::class, 'slug', ignoreRecord: true),
 
                                 Forms\Components\RichEditor::make('content')
+                                    ->label(__('Content'))
                                     ->required()
                                     ->columnSpan('full'),
 
                                 Forms\Components\RichEditor::make('content_ar')
-                                    ->label('Content (Arabic)')
+                                    ->label(__('Content (Arabic)'))
                                     ->required()
                                     ->columnSpan('full'),
 
                                 Forms\Components\Textarea::make('excerpt')
+                                    ->label(__('Excerpt'))
                                     ->rows(2)
                                     ->columnSpan('full'),
                                 
                                 Forms\Components\Textarea::make('excerpt_ar')
-                                    ->label('Excerpt (Arabic)')
+                                    ->label(__('Excerpt (Arabic)'))
                                     ->rows(2)
                                     ->columnSpan('full'),
                                 
                                 Forms\Components\FileUpload::make('image')
+                                    ->label(__('Image'))
                                     ->image()
                                     ->disk('public')
                                     ->directory('articles')
@@ -75,22 +84,24 @@ class ArticleResource extends Resource
 
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Status')
+                        Forms\Components\Section::make(__('Status'))
                             ->schema([
                                 Forms\Components\Toggle::make('is_visible')
-                                    ->label('Visible')
-                                    ->helperText('This article will be hidden from all channels.')
+                                    ->label(__('Show on Website'))
+                                    ->helperText(__('This article will be hidden from all channels.'))
                                     ->default(true),
 
                                 Forms\Components\DatePicker::make('published_at')
-                                    ->label('Availability')
+                                    ->label(__('Published At'))
                                     ->default(now()),
                             ]),
 
-                        Forms\Components\Section::make('SEO')
+                        Forms\Components\Section::make(__('SEO'))
                             ->schema([
-                                Forms\Components\TextInput::make('seo_title'),
-                                Forms\Components\Textarea::make('seo_description'),
+                                Forms\Components\TextInput::make('seo_title')
+                                    ->label(__('SEO Title')),
+                                Forms\Components\Textarea::make('seo_description')
+                                    ->label(__('SEO Description')),
                             ]),
                     ])
                     ->columnSpan(['lg' => 1]),

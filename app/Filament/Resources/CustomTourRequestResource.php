@@ -16,9 +16,13 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class CustomTourRequestResource extends Resource
 {
     protected static ?string $model = CustomTourRequest::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-left-right';
-    protected static ?string $navigationLabel = 'Tailor-Made Requests';
+    
+    public static function getNavigationLabel(): string { return __('Custom Tour Requests'); }
+    public static function getNavigationGroup(): ?string { return __('Booking Management'); }
+    public static function getModelLabel(): string { return __('Custom Tour Request'); }
+    public static function getPluralModelLabel(): string { return __('Custom Tour Requests'); }
+    
     protected static ?int $navigationSort = 2;
 
     public static function getNavigationBadge(): ?string
@@ -50,54 +54,68 @@ class CustomTourRequestResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Personal Information')
+                Forms\Components\Section::make(__('Personal Information'))
                     ->schema([
                         Forms\Components\TextInput::make('name')
+                            ->label(__('Full Name'))
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('email')
+                            ->label(__('Email address'))
                             ->email()
                             ->required()
                             ->maxLength(255),
                         Forms\Components\TextInput::make('phone')
+                            ->label(__('Phone Number'))
                             ->tel()
                             ->maxLength(20),
                         Forms\Components\TextInput::make('nationality')
+                            ->label(__('Nationality'))
                             ->maxLength(255),
                     ])->columns(2),
 
-                Forms\Components\Section::make('Trip Details')
+                Forms\Components\Section::make(__('Trip Details'))
                     ->schema([
                         Forms\Components\TextInput::make('request_title')
+                            ->label(__('Request title'))
                             ->maxLength(255)
                             ->columnSpanFull(),
-                        Forms\Components\DatePicker::make('arrival_date'),
-                        Forms\Components\DatePicker::make('departure_date'),
+                        Forms\Components\DatePicker::make('arrival_date')
+                            ->label(__('Arrival Date')),
+                        Forms\Components\DatePicker::make('departure_date')
+                            ->label(__('Departure Date')),
                         Forms\Components\TextInput::make('adults')
+                            ->label(__('Adults'))
                             ->numeric()
                             ->default(1),
                         Forms\Components\TextInput::make('children')
+                            ->label(__('Children'))
                             ->numeric()
                             ->default(0),
                         Forms\Components\TextInput::make('ages_range')
+                            ->label(__('Children Ages'))
                             ->maxLength(255),
                     ])->columns(3),
 
-                Forms\Components\Section::make('Preferences & Notes')
+                Forms\Components\Section::make(__('Preferences & Notes'))
                     ->schema([
                         Forms\Components\TagsInput::make('destinations')
-                            ->placeholder('Destinations')
+                            ->label(__('Destinations'))
+                            ->placeholder(__('Destinations'))
                             ->columnSpanFull(),
                          Forms\Components\Select::make('accommodation')
+                            ->label(__('Accommodation Preference'))
                             ->options([
-                                '5_star_luxury' => 'Luxury (5 Star Ultra)',
-                                '5_star_standard' => 'Gold (5 Star Standard)',
-                                '4_star' => 'Silver (4 Star)',
-                                '3_star' => 'Bronze (3 Star)',
+                                '5_star_luxury' => __('Luxury (5 Star Ultra)'),
+                                '5_star_standard' => __('Gold (5 Star Standard)'),
+                                '4_star' => __('Silver (4 Star)'),
+                                '3_star' => __('Bronze (3 Star)'),
                             ]),
                         Forms\Components\TextInput::make('referral_source')
+                            ->label(__('How did you hear about us?'))
                             ->maxLength(255),
                         Forms\Components\Textarea::make('notes')
+                            ->label(__('Notes'))
                             ->columnSpanFull(),
                     ])->columns(2),
             ]);

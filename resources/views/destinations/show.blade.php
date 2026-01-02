@@ -21,7 +21,7 @@
             <h2 class="text-3xl font-bold tracking-tight text-primary-900 dark:text-white font-display sm:text-4xl text-center mb-16">{{ __('Available Tours in') }} {{ $destination->display_name }}</h2>
              <div class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                  @forelse($destination->tours as $tour)
-                    <article class="flex flex-col items-start justify-between bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 dark:border-gray-700">
+                    <article class="relative flex flex-col items-start justify-between bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 dark:border-gray-700">
                         <div class="relative w-full overflow-hidden">
                             @php
                                 $firstMedia = $tour->images ? $tour->images[0] : null;
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="max-w-xl p-6 flex flex-col flex-1">
-                            <div class="group relative flex-1">
+                            <div class="group flex-1">
                                 <h3 class="mt-3 text-lg font-semibold leading-6 text-primary-900 dark:text-white group-hover:text-primary-600 dark:group-hover:text-blue-400 transition-colors">
                                     <a href="{{ route('tours.show', $tour) }}">
                                         <span class="absolute inset-0"></span>
@@ -63,7 +63,7 @@
                                 </h3>
                                 <p class="mt-3 line-clamp-3 text-sm leading-6 text-gray-600 dark:text-gray-300">{{ Str::limit(strip_tags($tour->description), 100) }}</p>
                             </div>
-                             <div class="relative mt-8 flex items-center gap-x-4 w-full justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+                             <div class="mt-8 flex items-center gap-x-4 w-full justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
                                 <div class="flex flex-col">
                                     <span class="text-xs text-gray-500 dark:text-gray-400">{!! __('Starting from') !!}</span>
                                     <span class="text-lg font-bold text-accent-600">

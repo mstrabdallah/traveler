@@ -39,7 +39,7 @@
                                 </h3>
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div class="space-y-1">
-                                        <label for="name" class="block text-sm font-semibold text-gray-700">Full Name <span class="text-red-500">*</span></label>
+                                        <label for="name" class="block text-sm font-semibold text-gray-700">{{ __('Full Name') }} <span class="text-red-500">*</span></label>
                                         <input type="text" name="name" id="name" required class="block w-full rounded-xl border-gray-200 bg-gray-50 px-4 py-3.5 text-gray-900 focus:border-accent-500 focus:bg-white focus:ring-accent-500 transition duration-200" placeholder="{{ __('John Doe') }}">
                                     </div>
                                     
@@ -50,18 +50,23 @@
     
                                     <div class="space-y-1">
                                         <label for="nationality" class="block text-sm font-semibold text-gray-700">{{ __('Nationality') }}</label>
-                                        <select name="nationality" id="nationality" class="block w-full rounded-xl border-gray-200 bg-gray-50 px-4 py-3.5 text-gray-900 focus:border-accent-500 focus:bg-white focus:ring-accent-500 transition duration-200">
-                                            <option value="">{{ __('Select your nationality') }}</option>
-                                            <option value="US">American</option>
-                                            <option value="UK">British</option>
-                                            <option value="CA">Canadian</option>
-                                            <option value="AU">Australian</option>
-                                            <option value="DE">German</option>
-                                            <option value="FR">French</option>
-                                            <option value="IT">Italian</option>
-                                            <option value="ES">Spanish</option>
-                                            <option value="other">Other</option>
-                                        </select>
+                                        <div class="relative">
+                                            <select name="nationality" id="nationality" class="appearance-none !bg-none block w-full rounded-xl border-gray-200 bg-gray-50 ps-4 pe-10 py-3.5 text-gray-900 focus:border-accent-500 focus:bg-white focus:ring-accent-500 transition duration-200">
+                                                <option value="">{{ __('Select your nationality') }}</option>
+                                                <option value="US">American</option>
+                                                <option value="UK">British</option>
+                                                <option value="CA">Canadian</option>
+                                                <option value="AU">Australian</option>
+                                                <option value="DE">German</option>
+                                                <option value="FR">French</option>
+                                                <option value="IT">Italian</option>
+                                                <option value="ES">Spanish</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                            <div class="absolute inset-y-0 end-0 pe-4 flex items-center pointer-events-none text-gray-400">
+                                                <i class="fi fi-rr-angle-small-down"></i>
+                                            </div>
+                                        </div>
                                     </div>
                                     
                                     <div class="space-y-1">
@@ -89,7 +94,7 @@
                                     <div class="relative space-y-1">
                                         <label for="arrival_date" class="block text-sm font-semibold text-gray-700">{{ __('Planned Arrival') }}</label>
                                         <div class="relative">
-                                            <input type="text" name="arrival_date" id="arrival_date" class="block w-full rounded-xl border-gray-200 bg-white pl-12 pr-4 py-3.5 text-gray-900 focus:border-accent-500 focus:ring-accent-500 shadow-sm transition duration-200 cursor-pointer" placeholder="Select Date">
+                                            <input type="text" name="arrival_date" id="arrival_date" class="block w-full rounded-xl border-gray-200 bg-white pl-12 pr-4 py-3.5 text-gray-900 focus:border-accent-500 focus:ring-accent-500 shadow-sm transition duration-200 cursor-pointer" placeholder="{{ __('Select Date') }}">
                                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                                 <i class="fi fi-rr-calendar text-gray-400"></i>
                                             </div>
@@ -99,7 +104,7 @@
                                     <div class="relative space-y-1">
                                         <label for="departure_date" class="block text-sm font-semibold text-gray-700">{{ __('Planned Departure') }}</label>
                                         <div class="relative">
-                                            <input type="text" name="departure_date" id="departure_date" class="block w-full rounded-xl border-gray-200 bg-white pl-12 pr-4 py-3.5 text-gray-900 focus:border-accent-500 focus:ring-accent-500 shadow-sm transition duration-200 cursor-pointer" placeholder="Select Date">
+                                            <input type="text" name="departure_date" id="departure_date" class="block w-full rounded-xl border-gray-200 bg-white pl-12 pr-4 py-3.5 text-gray-900 focus:border-accent-500 focus:ring-accent-500 shadow-sm transition duration-200 cursor-pointer" placeholder="{{ __('Select Date') }}">
                                             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                                                 <i class="fi fi-rr-calendar text-gray-400"></i>
                                             </div>
@@ -158,11 +163,11 @@
                                     <div>
                                          <label class="block text-sm font-semibold text-gray-700 mb-4">{{ __('Destinations of Interest') }}</label>
                                          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                                             @foreach(['Cairo', 'Luxor', 'Aswan', 'Hurghada', 'Sharm El Sheikh', 'Alexandria', 'Siwa Oasis', 'Nile Cruise'] as $place)
+                                             @foreach($destinations as $destination)
                                                 <label class="cursor-pointer group relative">
-                                                    <input type="checkbox" name="destinations[]" value="{{ $place }}" class="peer sr-only">
-                                                    <div class="p-4 rounded-xl border-2 border-gray-100 bg-gray-50 peer-checked:border-accent-500 peer-checked:bg-accent-50 transition-all duration-200 hover:border-accent-200 text-center">
-                                                        <span class="block text-sm font-medium text-gray-700 peer-checked:text-accent-700 group-hover:text-accent-600">{{ __($place) }}</span>
+                                                    <input type="checkbox" name="destinations[]" value="{{ $destination->name }}" class="peer sr-only">
+                                                    <div class="p-4 rounded-xl border-2 border-gray-100 bg-gray-50 peer-checked:border-accent-500 peer-checked:bg-accent-50 transition-all duration-200 hover:border-accent-200 text-center h-full flex items-center justify-center">
+                                                        <span class="block text-sm font-medium text-gray-700 peer-checked:text-accent-700 group-hover:text-accent-600">{{ $destination->display_name }}</span>
                                                     </div>
                                                     <div class="absolute top-2 right-2 opacity-0 peer-checked:opacity-100 transition-opacity text-accent-600">
                                                         <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
@@ -244,7 +249,7 @@
                                              @foreach(['Search Engine', 'Social Media', 'TripAdvisor', 'A Friend'] as $source)
                                              <label class="inline-flex items-center">
                                                  <input type="radio" name="referral_source" value="{{ Str::slug($source, '_') }}" class="form-radio h-4 w-4 text-accent-600 border-gray-300 focus:ring-accent-500">
-                                                 <span class="ml-2 text-sm text-gray-700">{{ __($source) }}</span>
+                                                 <span class="ms-2 text-sm text-gray-700">{{ __($source) }}</span>
                                              </label>
                                              @endforeach
                                         </div>

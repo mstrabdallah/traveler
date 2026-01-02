@@ -23,10 +23,10 @@
                          <div class="mb-6">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('Search') }}</label>
                             <div class="relative">
-                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                                <span class="absolute inset-y-0 start-0 flex items-center ps-3 text-gray-400">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                                 </span>
-                                <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('Where to?') }}" class="pl-10 w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm dark:placeholder-gray-500">
+                                <input type="text" name="search" value="{{ request('search') }}" placeholder="{{ __('Where to?') }}" class="ps-10 w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm dark:placeholder-gray-500">
                             </div>
                         </div>
 
@@ -34,8 +34,8 @@
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('Date From') }}</label>
                             <div class="relative">
-                                <input type="text" name="date_from" id="date_from_filter" value="{{ request('date_from') }}" class="w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm dark:placeholder-gray-500" placeholder="{{ __('Pick a date') }}">
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                <input type="text" name="date_from" id="date_from_filter" value="{{ request('date_from') }}" class="w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm dark:placeholder-gray-500 ps-4 pe-10" placeholder="{{ __('Pick a date') }}">
+                                <div class="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none text-gray-400">
                                    <i class="fi fi-rr-calendar"></i>
                                 </div>
                             </div>
@@ -45,8 +45,8 @@
                         <div class="mb-6 relative" 
                              x-data="{ 
                                 open: false,
-                                counts: { person: {{ request('guests', 2) > 1 ? request('guests', 2) - 1 : 1 }}, adult: 1, child: 0 },
-                                get total() { return this.counts.person + this.counts.adult + this.counts.child; }
+                                 counts: { adult: {{ request('guests', 2) }}, child: 0 },
+                                 get total() { return this.counts.adult + this.counts.child; }
                              }"
                              @click.outside="open = false">
                             
@@ -55,9 +55,9 @@
                             <div class="relative cursor-pointer" @click="open = !open">
                                 <input type="text" readonly 
                                        :value="total" 
-                                       class="w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm cursor-pointer"
+                                       class="w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm cursor-pointer ps-4 pe-10"
                                 >
-                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+                                <div class="absolute inset-y-0 end-0 flex items-center pe-3 pointer-events-none text-gray-400">
                                    <i class="fi fi-rr-users"></i>
                                 </div>
                             </div>
@@ -76,18 +76,7 @@
                                  class="absolute top-full left-0 mt-2 w-72 bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-6 z-50 border border-gray-100 dark:border-gray-700"
                                  style="display: none;">
                                 
-                                <!-- Person Row -->
-                                <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
-                                    <span class="text-gray-700 font-medium"><span x-text="counts.person"></span> {{ __('person') }}</span>
-                                    <div class="flex items-center gap-3">
-                                        <button type="button" @click="if(counts.person > 0) counts.person--" class="w-8 h-8 rounded-lg bg-[#2A2C3E] text-white flex items-center justify-center hover:bg-opacity-90 transition disabled:opacity-50" :disabled="counts.person <= 0">
-                                            <i class="fi fi-rr-minus text-xs"></i>
-                                        </button>
-                                        <button type="button" @click="counts.person++" class="w-8 h-8 rounded-lg bg-[#2A2C3E] text-white flex items-center justify-center hover:bg-opacity-90 transition">
-                                            <i class="fi fi-rr-plus text-xs"></i>
-                                        </button>
-                                    </div>
-                                </div>
+
 
                                 <!-- Adult Row -->
                                 <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-100">
@@ -122,29 +111,33 @@
                             </div>
                         </div>
 
-                        <!-- Category Filter -->
                         <div class="mb-6">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ __('Tour Type') }}</label>
-                            <select name="category" class="w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm">
-                                <option value="">{{ __('All Types') }}</option>
-                                @foreach($headerCategories as $cat)
-                                    <option value="{{ $cat->slug }}" {{ request('category') == $cat->slug ? 'selected' : '' }}>{{ $cat->display_name }}</option>
-                                @endforeach
-                            </select>
+                            <div class="relative">
+                                <select name="category" class="appearance-none !bg-none w-full rounded-lg border-gray-200 dark:border-gray-600 focus:border-accent-500 focus:ring-accent-500 bg-gray-50 dark:bg-gray-900 dark:text-white text-sm ps-4 pe-10 py-2">
+                                    <option value="">{{ __('All Types') }}</option>
+                                    @foreach($headerCategories as $cat)
+                                        <option value="{{ $cat->slug }}" {{ request('category') == $cat->slug ? 'selected' : '' }}>{{ $cat->display_name }}</option>
+                                    @endforeach
+                                </select>
+                                <div class="absolute inset-y-0 end-0 pe-3 flex items-center pointer-events-none text-gray-400">
+                                    <i class="fi fi-rr-angle-small-down"></i>
+                                </div>
+                            </div>
                         </div>
 
                         <!-- Price Range -->
                          <div class="mb-8" x-data="{ minPrice: {{ request('min_price', 0) }}, maxPrice: {{ request('max_price', 5000) }} }">
                             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">{{ __('Price Range') }}</label>
-                            <div class="flex items-center gap-4 mb-4">
+                             <div class="flex items-center gap-4 mb-4">
                                 <div class="relative w-full">
-                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
-                                    <input type="number" name="min_price" x-model="minPrice" class="w-full pl-6 py-1 rounded border-gray-200 dark:border-gray-600 dark:bg-gray-900 dark:text-white text-xs">
+                                    <span class="absolute start-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                    <input type="number" name="min_price" x-model="minPrice" class="w-full ps-6 py-1 rounded border-gray-200 dark:border-gray-600 dark:bg-gray-900 dark:text-white text-xs">
                                 </div>
                                 <span class="text-gray-400">-</span>
                                 <div class="relative w-full">
-                                    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
-                                    <input type="number" name="max_price" x-model="maxPrice" class="w-full pl-6 py-1 rounded border-gray-200 dark:border-gray-600 dark:bg-gray-900 dark:text-white text-xs">
+                                    <span class="absolute start-3 top-1/2 -translate-y-1/2 text-gray-500 text-xs">$</span>
+                                    <input type="number" name="max_price" x-model="maxPrice" class="w-full ps-6 py-1 rounded border-gray-200 dark:border-gray-600 dark:bg-gray-900 dark:text-white text-xs">
                                 </div>
                             </div>
                             <input type="range" x-model="maxPrice" min="0" max="10000" step="100" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-accent-600">
@@ -208,13 +201,18 @@
                                 <input type="hidden" name="{{ $key }}" value="{{ $value }}">
                             @endforeach
                             <label for="sort" class="text-sm text-gray-600 dark:text-gray-400">{{ __('Sort by:') }}</label>
-                            <select name="sort" id="sort" onchange="document.getElementById('sortForm').submit()" class="border-none bg-transparent font-semibold text-gray-900 dark:text-white text-sm focus:ring-0 cursor-pointer">
-                                <option value="featured" {{ request('sort') == 'featured' ? 'selected' : '' }}>{{ __('Featured') }}</option>
-                                <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>{{ __('Price: Low to High') }}</option>
-                                <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>{{ __('Price: High to Low') }}</option>
-                                <option value="duration_asc" {{ request('sort') == 'duration_asc' ? 'selected' : '' }}>{{ __('Duration: Shortest') }}</option>
-                                <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>{{ __('Newest') }}</option>
-                            </select>
+                            <div class="relative">
+                                <select name="sort" id="sort" onchange="document.getElementById('sortForm').submit()" class="appearance-none !bg-none border-none bg-transparent font-semibold text-gray-900 dark:text-white text-sm focus:ring-0 cursor-pointer ps-2 pe-8">
+                                    <option value="featured" {{ request('sort') == 'featured' ? 'selected' : '' }}>{{ __('Featured') }}</option>
+                                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>{{ __('Price: Low to High') }}</option>
+                                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>{{ __('Price: High to Low') }}</option>
+                                    <option value="duration_asc" {{ request('sort') == 'duration_asc' ? 'selected' : '' }}>{{ __('Duration: Shortest') }}</option>
+                                    <option value="newest" {{ request('sort') == 'newest' ? 'selected' : '' }}>{{ __('Newest') }}</option>
+                                </select>
+                                <div class="absolute inset-y-0 end-0 pe-2 flex items-center pointer-events-none text-gray-400">
+                                    <i class="fi fi-rr-angle-small-down"></i>
+                                </div>
+                            </div>
                         </form>
                     </div>
 

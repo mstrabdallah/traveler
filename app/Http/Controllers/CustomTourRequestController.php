@@ -10,7 +10,8 @@ class CustomTourRequestController extends Controller
 {
     public function create()
     {
-        return view('custom-tour-request.create');
+        $destinations = \App\Models\Destination::where('is_active', true)->get();
+        return view('custom-tour-request.create', compact('destinations'));
     }
 
     public function store(Request $request)
@@ -35,6 +36,6 @@ class CustomTourRequestController extends Controller
 
         CustomTourRequest::create($validated);
 
-        return redirect()->route('custom-tour.create')->with('success', 'Your inquiry has been sent successfully! We will contact you soon.');
+        return redirect()->route('custom-tour.create')->with('success', __('Your inquiry has been sent successfully! We will contact you soon.'));
     }
 }

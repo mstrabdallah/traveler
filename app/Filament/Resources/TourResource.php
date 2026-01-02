@@ -17,7 +17,11 @@ class TourResource extends Resource
     protected static ?string $model = Tour::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-globe-alt';
-    protected static ?string $navigationGroup = 'Content Management';
+
+    public static function getNavigationLabel(): string { return __('Tours'); }
+    public static function getNavigationGroup(): ?string { return __('Content Management'); }
+    public static function getModelLabel(): string { return __('Tour'); }
+    public static function getPluralModelLabel(): string { return __('Tours'); }
 
     public static function form(Form $form): Form
     {
@@ -26,72 +30,83 @@ class TourResource extends Resource
                 Forms\Components\Group::make()
                     ->schema([
                         // Section 1: Basic Information
-                        Forms\Components\Section::make('Basic Information')
-                            ->description('Identify the tour and set its base price.')
+                        Forms\Components\Section::make(__('Basic Information'))
+                            ->description(__('Identify the tour and set its base price.'))
                             ->schema([
                                 Forms\Components\TextInput::make('name')
+                                    ->label(__('Name'))
                                     ->required()
                                     ->live(onBlur: true)
                                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state)))
                                     ->columnSpan(2),
                                 Forms\Components\TextInput::make('name_ar')
-                                    ->label('Name (Arabic)')
+                                    ->label(__('Name (Arabic)'))
                                     ->required()
                                     ->columnSpan(2),
                                 Forms\Components\TextInput::make('slug')
+                                    ->label(__('Slug'))
                                     ->required()
                                     ->unique(ignoreRecord: true)
                                     ->columnSpan(2),
                                 Forms\Components\Select::make('destination_id')
+                                    ->label(__('Destination'))
                                     ->relationship('destination', 'name')
                                     ->required()
                                     ->searchable()
                                     ->preload(),
                                 Forms\Components\Select::make('categories')
+                                    ->label(__('Categories'))
                                     ->relationship('categories', 'name')
                                     ->multiple()
                                     ->preload()
                                     ->searchable(),
                                 Forms\Components\TextInput::make('price')
+                                    ->label(__('Price'))
                                     ->required()
                                     ->numeric()
                                     ->prefix('$'),
                                 Forms\Components\TextInput::make('sale_price')
+                                    ->label(__('Sale price'))
                                     ->numeric()
                                     ->prefix('$'),
                                 Forms\Components\RichEditor::make('description')
+                                    ->label(__('Description'))
                                     ->columnSpanFull(),
                                 Forms\Components\RichEditor::make('description_ar')
-                                    ->label('Description (Arabic)')
+                                    ->label(__('Description (Arabic)'))
                                     ->columnSpanFull(),
                             ])->columns(2),
 
                         // Section 2: Logistics & Duration
-                        Forms\Components\Section::make('Logistics & Availability')
-                            ->description('Set timing and location details.')
+                        Forms\Components\Section::make(__('Logistics & Availability'))
+                            ->description(__('Set timing and location details.'))
                             ->schema([
                                 Forms\Components\TextInput::make('duration_days')
+                                    ->label(__('Duration (Days)'))
                                     ->required()
                                     ->numeric()
-                                    ->suffix('Days'),
+                                    ->suffix(__('Days')),
                                 Forms\Components\TextInput::make('duration_nights')
+                                    ->label(__('Duration (Nights)'))
                                     ->numeric()
-                                    ->suffix('Nights'),
+                                    ->suffix(__('Nights')),
                                 Forms\Components\TextInput::make('availability')
-                                    ->placeholder('e.g. Daily, Every Monday'),
+                                    ->label(__('Tour Availability'))
+                                    ->placeholder(__('e.g. Daily, Every Monday')),
                                 Forms\Components\TextInput::make('availability_ar')
-                                    ->label('Availability (Arabic)')
-                                    ->placeholder('مثلاً: يومياً، كل اثنين'),
+                                    ->label(__('Availability (Arabic)'))
+                                    ->placeholder(__('e.g. Daily, Every Monday')),
                                 Forms\Components\TextInput::make('pickup_location')
-                                    ->placeholder('e.g. Cairo Airport, Hotel Pickup'),
+                                    ->label(__('Pickup Location'))
+                                    ->placeholder(__('e.g. Cairo Airport, Hotel Pickup')),
                                 Forms\Components\TextInput::make('pickup_location_ar')
-                                    ->label('Pickup Location (Arabic)')
-                                    ->placeholder('مثلاً: مطار القاهرة، الاستلام من الفندق'),
+                                    ->label(__('Pickup Location (Arabic)'))
+                                    ->placeholder(__('e.g. Cairo Airport, Hotel Pickup')),
                             ])->columns(2),
 
                         // Section 3: Media
-                        Forms\Components\Section::make('Gallery')
-                            ->description('Upload high-quality images for the tour.')
+                        Forms\Components\Section::make(__('Gallery'))
+                            ->description(__('Upload high-quality images for the tour.'))
                             ->headerActions([
                                 Forms\Components\Actions\Action::make('import_url')
                                     ->label('Fetch from URL')
@@ -121,7 +136,7 @@ class TourResource extends Resource
                             ])
                             ->schema([
                                 Forms\Components\FileUpload::make('images')
-                                    ->label('Gallery (Images & Videos)')
+                                    ->label(__('Gallery (Images & Videos)'))
                                     ->acceptedFileTypes(['image/*', 'video/*'])
                                     ->disk('public')
                                     ->directory('tours')
@@ -143,23 +158,23 @@ class TourResource extends Resource
                             ]),
 
                         // Section 4: Content
-                        Forms\Components\Section::make('Included / Excluded')
+                        Forms\Components\Section::make(__('Included / Excluded'))
                             ->schema([
                                 Forms\Components\Grid::make(2)
                                     ->schema([
                                         Forms\Components\Repeater::make('included')
-                                            ->label('Included Items')
+                                            ->label(__('Included Items'))
                                             ->schema([
-                                                Forms\Components\TextInput::make('item')->required(),
-                                                Forms\Components\TextInput::make('item_ar')->label('Item (Arabic)'),
+                                                Forms\Components\TextInput::make('item')->label(__('Item'))->required(),
+                                                Forms\Components\TextInput::make('item_ar')->label(__('Item (Arabic)')),
                                             ])
                                             ->columns(2)
                                             ->collapsible(),
                                         Forms\Components\Repeater::make('excluded')
-                                            ->label('Excluded Items')
+                                            ->label(__('Excluded Items'))
                                             ->schema([
-                                                Forms\Components\TextInput::make('item')->required(),
-                                                Forms\Components\TextInput::make('item_ar')->label('Item (Arabic)'),
+                                                Forms\Components\TextInput::make('item')->label(__('Item'))->required(),
+                                                Forms\Components\TextInput::make('item_ar')->label(__('Item (Arabic)')),
                                             ])
                                             ->columns(2)
                                             ->collapsible(),
@@ -167,7 +182,7 @@ class TourResource extends Resource
                             ]),
 
                         // Section 5: Map
-                        Forms\Components\Section::make('Location Map')
+                        Forms\Components\Section::make(__('Location Map'))
                             ->description('Embed a Google Map for this tour.')
                             ->schema([
                                 Forms\Components\TextInput::make('map_url')
@@ -200,20 +215,23 @@ class TourResource extends Resource
                             ]),
 
                         // Section 6: Itinerary
-                        Forms\Components\Section::make('Daily Itinerary')
+                        Forms\Components\Section::make(__('Daily Itinerary'))
                             ->schema([
                                 Forms\Components\Repeater::make('itinerary')
+                                    ->label(__('Daily Itinerary'))
                                     ->schema([
                                         Forms\Components\TextInput::make('day_title')
-                                            ->placeholder('e.g. Day 1: Arrival and Cairo Tour')
+                                            ->label(__('Day Title'))
+                                            ->placeholder(__('e.g. Day 1: Arrival and Cairo Tour'))
                                             ->required(),
                                         Forms\Components\TextInput::make('day_title_ar')
-                                            ->label('Day Title (Arabic)')
-                                            ->placeholder('مثلاً: اليوم الأول: الوصول وجولة في القاهرة')
+                                            ->label(__('Day Title (Arabic)'))
+                                            ->placeholder(__('e.g. Day 1: Arrival and Cairo Tour'))
                                             ->required(),
-                                        Forms\Components\RichEditor::make('description'),
+                                        Forms\Components\RichEditor::make('description')
+                                            ->label(__('Description')),
                                         Forms\Components\RichEditor::make('description_ar')
-                                            ->label('Description (Arabic)'),
+                                            ->label(__('Description (Arabic)')),
                                     ])
                                     ->collapsible()
                                     ->collapsed()
@@ -222,22 +240,22 @@ class TourResource extends Resource
                             ]),
 
                         // Section 7: Pricing & Discounts (Moved to Main Column)
-                        Forms\Components\Section::make('Pricing & Seasonal Discounts')
-                            ->description('Configure group discounts and seasonal price variations.')
+                        Forms\Components\Section::make(__('Pricing & Seasonal Discounts'))
+                            ->description(__('Configure group discounts and seasonal price variations.'))
                             ->icon('heroicon-o-currency-dollar')
                             ->schema([
                                 Forms\Components\Grid::make(2)
                                     ->schema([
                                         Forms\Components\Toggle::make('has_price_tiers')
-                                            ->label('Group Discounts')
-                                            ->helperText('Price varies by number of guests.')
+                                            ->label(__('Group Discounts'))
+                                            ->helperText(__('Price varies by number of guests.'))
                                             ->live()
                                             ->afterStateUpdated(function ($state, Forms\Set $set) {
                                                 if ($state) $set('has_seasonal_prices', false);
                                             }),
                                         Forms\Components\Toggle::make('has_seasonal_prices')
-                                            ->label('Seasonal Pricing')
-                                            ->helperText('Price varies by date ranges.')
+                                            ->label(__('Seasonal Pricing'))
+                                            ->helperText(__('Price varies by date ranges.'))
                                             ->live()
                                             ->afterStateUpdated(function ($state, Forms\Set $set) {
                                                 if ($state) $set('has_price_tiers', false);
@@ -250,19 +268,19 @@ class TourResource extends Resource
                                             ->numeric()
                                             ->prefix('$')
                                             ->required()
-                                            ->label('Base Adult Price'),
+                                            ->label(__('Base Adult Price')),
                                         Forms\Components\TextInput::make('child_price')
                                             ->numeric()
                                             ->prefix('$')
-                                            ->label('Base Child Price'),
+                                            ->label(__('Base Child Price')),
                                         Forms\Components\TextInput::make('solo_price')
                                             ->numeric()
                                             ->prefix('$')
-                                            ->label('Solo Adult Price'),
+                                            ->label(__('Solo Adult Price')),
                                         Forms\Components\TextInput::make('child_solo_price')
                                             ->numeric()
                                             ->prefix('$')
-                                            ->label('Solo Child Price'),
+                                            ->label(__('Solo Child Price')),
                                     ]),
 
                                 Forms\Components\Repeater::make('price_tiers')
@@ -354,13 +372,13 @@ class TourResource extends Resource
 
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Visibility Status')
+                        Forms\Components\Section::make(__('Visibility Status'))
                             ->schema([
                                 Forms\Components\Toggle::make('is_active')
-                                    ->label('Show on Website')
+                                    ->label(__('Show on Website'))
                                     ->default(true),
                                 Forms\Components\Toggle::make('is_featured')
-                                    ->label('Featured Tour'),
+                                    ->label(__('Featured Tour')),
                             ]),
                     ])->columnSpan(['lg' => 1]),
             ])->columns(3);

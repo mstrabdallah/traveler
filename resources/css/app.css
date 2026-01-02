@@ -20,7 +20,14 @@ html[lang="ar"] textarea {
     font-family: var(--font-arabic-sans) !important;
 }
 
+/* Ensure placeholders are right-aligned in Arabic for all inputs, especially phone */
+html[lang="ar"] input::placeholder,
+html[lang="ar"] textarea::placeholder {
+    text-align: right;
+}
+
 html[lang="ar"] .font-display,
+html[lang="ar"] .font-handwriting,
 html[lang="ar"] h1,
 html[lang="ar"] h2,
 html[lang="ar"] h3,
@@ -49,6 +56,10 @@ html[lang="ar"] h6 {
         animation: fadeInUp 0.8s ease-out forwards;
     }
 
+    .animate-ken-burns {
+        animation: kenburns 20s ease-out infinite alternate;
+    }
+
     .delay-100 {
         animation-delay: 0.1s;
     }
@@ -68,6 +79,43 @@ html[lang="ar"] h6 {
             opacity: 1;
             transform: translateY(0);
         }
+    }
+
+    @keyframes kenburns {
+        0% {
+            transform: scale(1);
+        }
+        100% {
+            transform: scale(1.15);
+        }
+    }
+
+    @keyframes kenburns-subtle {
+        0% {
+            transform: scale(1.05);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .animate-ken-burns-subtle {
+        animation: kenburns-subtle 10s ease-out infinite alternate;
+    }
+
+    /* Hero Animation Triggers */
+    .hero-animate-fadeInUp {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1.2s cubic-bezier(0.21, 0.6, 0.35, 1),
+            transform 1.2s cubic-bezier(0.21, 0.6, 0.35, 1);
+        transition-delay: var(--delay, 0s);
+        will-change: opacity, transform;
+    }
+
+    .swiper-slide-active .hero-animate-fadeInUp {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
 

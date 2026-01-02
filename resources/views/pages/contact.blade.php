@@ -51,18 +51,18 @@
                         <h2 class="text-4xl font-bold text-yellow-500 mb-10">{{ __('Contact us') }}</h2>
                         
                         <div class="space-y-8 mb-12">
-                            <a href="tel:01141812709" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
+                            <a href="tel:01092378888" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
                                 <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-yellow-100 dark:group-hover:bg-yellow-900/30 transition-colors">
                                     <i class="fi fi-rr-phone-call text-xl"></i>
                                 </div>
-                                <span class="text-lg font-medium">01141812709</span>
+                                <span class="text-lg font-medium">01092378888</span>
                             </a>
                             
-                            <a href="mailto:info@traveleregypt.com" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
+                            <a href="mailto:mohamedmooosa11@gmail.com" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
                                 <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center group-hover:bg-yellow-100 dark:group-hover:bg-yellow-900/30 transition-colors">
                                     <i class="fi fi-rr-envelope text-xl"></i>
                                 </div>
-                                <span class="text-lg font-medium">info@traveleregypt.com</span>
+                                <span class="text-lg font-medium">mohamedmooosa11@gmail.com</span>
                             </a>
                             
                             <a href="https://maps.app.goo.gl/9u3J3Y5P7mD6hEFA9" target="_blank" class="flex items-center gap-4 text-[#345BA8] dark:text-blue-400 hover:text-yellow-500 dark:hover:text-yellow-400 transition-colors group">
@@ -86,20 +86,9 @@
 
             </div>
         </div>
-
-        <!-- Full Width Map -->
-        <div class="mt-20 w-full h-[500px] bg-gray-100 dark:bg-gray-800">
-            <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3454.945899881845!2d31.1945617!3d30.0119149!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x145846f2b739e785%3A0xd7c2ab3cc88ac77b!2s72%20King%20Faisal%20St%2C%20Abu%20Qatadah%2C%20Boulaq%20Al%20Dakrour%2C%20Giza%20Governorate%203714330%2C%20Egypt!5e0!3m2!1sen!2seg!4v1702528765432!5m2!1sen!2seg" 
-                width="100%" 
-                height="100%" 
-                style="border:0;" 
-                allowfullscreen="" 
-                loading="lazy" 
-                referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-        </div>
     </div>
+
+
 
     @push('scripts')
         <script>
@@ -109,6 +98,7 @@
                 
                 const iti = window.intlTelInput(phoneInput, {
                     initialCountry: "auto",
+                    rtl: document.documentElement.dir === "rtl",
                     geoIpLookup: function(success, failure) {
                         fetch("https://ipapi.co/json")
                             .then(res => res.json())

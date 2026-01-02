@@ -18,35 +18,45 @@ class TourCategoryResource extends Resource
     protected static ?string $model = TourCategory::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
-    protected static ?string $navigationGroup = 'Content Management';
+    
+    public static function getNavigationLabel(): string { return __('Tour Categories'); }
+    public static function getNavigationGroup(): ?string { return __('Content Management'); }
+    public static function getModelLabel(): string { return __('Tour Category'); }
+    public static function getPluralModelLabel(): string { return __('Tour Categories'); }
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('Name'))
                     ->required()
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Forms\Set $set, ?string $state) => $set('slug', \Illuminate\Support\Str::slug($state)))
                     ->maxLength(255),
                 Forms\Components\TextInput::make('name_ar')
-                    ->label('Name (Arabic)')
+                    ->label(__('Name (Arabic)'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('slug')
+                    ->label(__('Slug'))
                     ->required()
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
+                    ->label(__('Description'))
                     ->columnSpanFull(),
                 Forms\Components\Textarea::make('description_ar')
-                    ->label('Description (Arabic)')
+                    ->label(__('Description (Arabic)'))
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
+                    ->label(__('Image'))
                     ->image(),
                 Forms\Components\Toggle::make('is_active')
+                    ->label(__('Active'))
                     ->required(),
                 Forms\Components\TextInput::make('sort_order')
+                    ->label(__('Sort order'))
                     ->required()
                     ->numeric()
                     ->default(0),

@@ -23,7 +23,7 @@
                     <div>
                         <span class="font-handwriting text-3xl text-yellow-500">{{ __('Learn about us') }}</span>
                         <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#345BA8] dark:text-blue-400 leading-tight">
-                            {{ __('Discover with :name', ['name' => config('app.name', 'Mo travels')]) }}
+                            {{ __('Discover with :name', ['name' => __(config('app.name', 'Mo Travel'))]) }}
                         </h2>
                     </div>
 
@@ -86,50 +86,53 @@
         </div>
     </div>
 
+    @php
+        $testimonials = [
+            [
+                'name' => 'أحمد منصور',
+                'role' => app()->getLocale() == 'ar' ? 'مسافر منفرد' : 'Solo Traveler',
+                'image' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400',
+                'rate' => '5.0',
+                'description' => 'تجربتي مع مو تراڤيل كانت استثنائية بكل المقاييس. التنظيم دقيق جداً والمرشدين على مستوى عالٍ من الثقافة والرقي. شكراً لكم.'
+            ],
+            [
+                'name' => 'Sarah Jenkins',
+                'role' => 'Adventure Seeker',
+                'image' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400',
+                'rate' => '5.0',
+                'description' => 'Our honeymoon in Egypt was flawless. From the VIP Cairo pick-up to the private Nile cruise, every detail was handled with care.'
+            ],
+            [
+                'name' => 'Mark Thompson',
+                'role' => 'History Buff',
+                'image' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400',
+                'rate' => '4.9',
+                'description' => 'The 10-day luxury tour surpassed all expectations. The historical knowledge of our guide in Luxor was mind-blowing.'
+            ],
+            [
+                'name' => 'Emily Roberts',
+                'role' => 'Solo Traveler',
+                'image' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400',
+                'rate' => '5.0',
+                'description' => 'As a solo female traveler, I felt incredibly safe and supported. The boutique hotels they booked were stunning.'
+            ],
+            [
+                'name' => 'David Wilson',
+                'role' => 'Travel Expert',
+                'image' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400',
+                'rate' => '4.9',
+                'description' => 'Forget the typical tourist traps. Mo Travels gives you an inside look at the real Egypt. The desert safari was an adrenaline-pumping adventure.'
+            ]
+        ];
+    @endphp
+
     <!-- Testimonials Section -->
-   <!-- Testimonials Section -->
      <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-800 relative transition-colors duration-300 overflow-hidden" 
           x-data='{ 
             active: 2,
             touchStartX: 0,
             touchEndX: 0,
-            testimonials: [
-                { 
-                    name: "Sarah Jenkins", 
-                    role: @json(__('Solo Traveler')), 
-                    image: "{{ asset('images/testimonials/testimonial-1.jpg') }}", 
-                    rate: "5.0", 
-                    description: @json(__('Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend!')) 
-                },
-                { 
-                    name: "Mark Thompson", 
-                    role: @json(__('Adventure Seeker')), 
-                    image: "{{ asset('images/testimonials/testimonial-2.jpg') }}", 
-                    rate: "5.0", 
-                    description: @json(__('Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic.')) 
-                },
-                { 
-                    name: "Yusuf Mahtow", 
-                    role: @json(__('Egypt Tour Guide')), 
-                    image: "{{ asset('images/testimonials/testimonial-3.jpg') }}", 
-                    rate: "4.8", 
-                    description: @json(__('No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing.')) 
-                },
-                { 
-                    name: "Emily Roberts", 
-                    role: @json(__('History Buff')), 
-                    image: "{{ asset('images/testimonials/testimonial-4.jpg') }}", 
-                    rate: "4.9", 
-                    description: @json(__('The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized.')) 
-                },
-                { 
-                    name: "Michael Chen", 
-                    role: @json(__('Food Blogger')), 
-                    image: "{{ asset('images/testimonials/testimonial-2.jpg') }}", 
-                    rate: "4.7", 
-                    description: @json(__('An absolute culinary delight! The local food tours were the highlight of our trip. Highly recommended.')) 
-                }
-            ],
+            testimonials: @json($testimonials),
             next() {
                 this.active = (this.active + 1) % this.testimonials.length;
             },
@@ -329,7 +332,7 @@
 
                 <span class="font-handwriting text-3xl lg:text-4xl text-yellow-400 mb-2 block">{{ __('Are you ready to travel?') }}</span>
                 <h2 class="text-4xl lg:text-6xl font-display font-bold text-white max-w-4xl mx-auto leading-tight">
-                    {{ __(':name is an online tour booking platform', ['name' => config('app.name', 'Mo travels')]) }}
+                    {{ __(':name is an online tour booking platform', ['name' => __(config('app.name', 'Mo Travel'))]) }}
                 </h2>
             </div>
         </div>

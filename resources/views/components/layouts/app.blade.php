@@ -130,7 +130,7 @@
     </script>
     @stack('styles')
 </head>
-<body class="font-sans antialiased text-gray-900 bg-white dark:bg-gray-900 dark:text-white selection:bg-accent selection:text-white">
+<body class="font-sans antialiased text-gray-900 bg-white dark:bg-gray-900 dark:text-white selection:bg-accent selection:text-white {{ app()->getLocale() == 'ar' ? 'ar rtl' : '' }}">
 @props([])
     
     <!-- Navbar -->
@@ -146,7 +146,7 @@
         <nav class="flex items-center justify-between p-1 mx-auto max-w-7xl lg:px-8" aria-label="Global">
             <div class="flex ">
                 <a href="/" class="-m-1.5 p-1.5 flex items-center gap-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Mo travels" class="h-20 w-auto">
+                    <img src="{{ asset('images/logo.png') }}" alt="{{ __(config('app.name', 'Mo Travel')) }}" class="h-20 w-auto">
                 </a>
             </div>
             <div class="flex lg:hidden items-center gap-3">
@@ -254,18 +254,18 @@
          
              
 
-                <a href="{{ route('custom-tour.create') }}" class="px-5 py-2.5 text-sm font-semibold text-white transition-all bg-accent-600 rounded-full hover:bg-accent-500 shadow-lg shadow-accent-600/20 ml-4">
+                <a href="{{ route('custom-tour.create') }}" class="px-5 py-2.5 text-sm font-semibold text-white transition-all bg-accent-600 rounded-full hover:bg-accent-500 shadow-lg shadow-accent-600/20 ms-4">
                    {{ __('Tailor-Made Your Tour') }} <span aria-hidden="true">{!! app()->getLocale() == 'ar' ? '&larr;' : '&rarr;' !!}</span>
                 </a>
 
 
 
                 <!-- Combined Language & Settings UI -->
-                <div class="relative ml-4 flex items-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-sm transition-all duration-300 hover:bg-white/10 group">
+                <div class="relative ms-4 flex items-center bg-white/5 backdrop-blur-md rounded-full border border-white/10 shadow-sm transition-all duration-300 hover:bg-white/10 group">
                     <!-- Language Part -->
                     <div class="relative w-[102px] flex-shrink-0" x-data="{ open: false }" @click.outside="open = false">
                         <button @click="open = !open" 
-                                class="notranslate flex items-center gap-2 px-4 py-2 text-white hover:text-accent-400 transition-all duration-300 focus:outline-none rounded-l-full active:scale-95 " 
+                                class="notranslate flex items-center gap-2 px-4 py-2 text-white hover:text-accent-400 transition-all duration-300 focus:outline-none rounded-s-full active:scale-95 " 
                                 aria-label="Change Language">
                              <span x-text="$store.language.languages[$store.language.current].flag" class="text-xl leading-none transition-transform group-hover:scale-110 w-[20px] h-[20px]"></span>
                              <span x-text="$store.language.languages[$store.language.current].label" class="text-xs font-bold tracking-widest opacity-90"></span>
@@ -279,7 +279,7 @@
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                              x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-                             class="notranslate absolute right-0 mt-3 w-64 bg-white dark:bg-gray-900 backdrop-blur-2xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] py-3 z-50 ring-1 ring-black/5 dark:ring-white/10 overflow-hidden"
+                             class="notranslate absolute end-0 mt-3 w-64 bg-white dark:bg-gray-900 backdrop-blur-2xl rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.4)] py-3 z-50 ring-1 ring-black/5 dark:ring-white/10 overflow-hidden"
                              style="display: none;">
                             
                             <div class="px-2.5 space-y-1">
@@ -298,8 +298,8 @@
                                     <a href="javascript:void(0)" onclick="changeLanguage('{{ $code }}')" 
                                        class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-semibold transition-all duration-200 group"
                                        :class="$store.language.current === '{{ $code }}' ? 'bg-accent-600/10 text-accent-600 dark:text-accent-400' : 'text-gray-700 dark:text-gray-300 hover:bg-accent-600/5 hover:text-accent-600 dark:hover:text-accent-400'">
-                                         <div class="flex items-center">
-                                             <span class="mr-4 text-2xl group-hover:scale-125 transition-transform duration-300">{{ $data[0] }}</span> 
+                                         <div class="flex items-center group">
+                                             <span class="me-4 text-2xl group-hover:scale-125 transition-transform duration-300">{{ $data[0] }}</span> 
                                              <span class="tracking-tight">{{ $data[1] }}</span>
                                          </div>
                                          <div x-show="$store.language.current === '{{ $code }}'" 
@@ -318,7 +318,7 @@
 
                     <!-- Settings Part -->
                     <div class="relative" x-data="{ open: false }" @click.outside="open = false">
-                        <button @click="open = !open" class="flex items-center justify-center w-10 h-10 rounded-r-full text-white hover:text-accent-400 transition-all duration-300 focus:outline-none active:scale-95" aria-label="Settings">
+                        <button @click="open = !open" class="flex items-center justify-center w-10 h-10 rounded-e-full text-white hover:text-accent-400 transition-all duration-300 focus:outline-none active:scale-95" aria-label="Settings">
                              <i class="fi fi-rr-settings text-xl leading-none"></i>
                         </button>
                         
@@ -329,13 +329,13 @@
                              x-transition:leave="transition ease-in duration-150"
                              x-transition:leave-start="opacity-100 scale-100 translate-y-0"
                              x-transition:leave-end="opacity-0 scale-95 translate-y-2"
-                             class="absolute right-0 mt-3 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-3 z-50 ring-1 ring-black/5 dark:ring-white/10 focus:outline-none"
+                             class="absolute end-0 mt-3 w-48 bg-white dark:bg-gray-800 rounded-xl shadow-xl py-3 z-50 ring-1 ring-black/5 dark:ring-white/10 focus:outline-none"
                              style="display: none;">
                             
                             <!-- Appearance Section -->
                             <div class="px-4">
                                 <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                                    Appearance
+                                    {{ __('Appearance') }}
                                 </div>
                                 <div class="bg-gray-100 dark:bg-gray-700/50 p-1 rounded-lg flex items-center justify-between">
                                     <button @click="$store.darkMode.set('light')" 
@@ -394,7 +394,7 @@
                                 <div class="flex h-full flex-col overflow-y-scroll bg-primary-950 shadow-2xl" @click.outside="mobileMenuOpen = false">
                                     <div class="flex items-center justify-between px-6 py-6 border-b border-gray-800">
                                         <div class="flex items-center gap-2">
-                                            <img src="{{ asset('images/logo.png') }}" alt="Mo travels" class="h-10 w-auto">
+                                            <img src="{{ asset('images/logo.png') }}" alt="{{ __(config('app.name', 'Mo Travel')) }}" class="h-10 w-auto">
                                         </div>
                                         <button type="button" @click="mobileMenuOpen = false" class="rounded-md text-gray-400 hover:text-white focus:outline-none">
                                             <span class="sr-only">Close panel</span>
@@ -523,13 +523,15 @@
         <!-- Main Footer Card -->
         <div class="bg-white dark:bg-gray-800 rounded-[40px] pt-4 pb-8 px-6 lg:px-8 shadow-[0px_20px_84px_0px_rgba(73,118,231,0.20)] dark:shadow-none relative z-10 max-w-7xl mx-auto max-md:mt-5 max-md:bg-white max-md:dark:bg-gray-800 border dark:border-gray-700">
              <div class="max-w-7xl mx-auto mt-7">
-                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 border-b border-gray-200 dark:border-gray-700 pb-12">
+                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 border-b border-gray-200 dark:border-gray-700 pb-12">
                       <!-- Brand -->
-                      <div class="lg:col-span-4 space-y-6">
+                      <div class="space-y-6">
                            <a href="/" class="flex items-center gap-3">
-                                <img src="{{ asset('images/logo.png') }}" alt="Mo travels" class="h-20 w-auto bg-white rounded-xl p-1 shadow-sm">
+                                <img src="{{ asset('images/logo.png') }}" alt="{{ __(config('app.name', 'Mo Travel')) }}" class="h-20 w-auto bg-white rounded-xl p-1 shadow-sm">
                            </a>
-                                {{ __("Mo travels is the best travel agency specializing in providing a wide range of tour packages throughout Egypt.") }}
+                           <p class="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+                               {{ __("Mo travels is the best travel agency specializing in providing a wide range of tour packages throughout Egypt.") }}
+                           </p>
                            <!-- Social Icons -->
                            <div class="flex gap-4">
                                 <a href="https://www.facebook.com/mohamed.ibrahim.459408" class="w-10 h-10 rounded-full bg-[#29385f] flex items-center justify-center text-white hover:bg-[#1e2a4a] transition">
@@ -539,87 +541,87 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
                                 </a>
                            </div>
-
-                           <!-- Subscription Form -->
-                           <div class="pt-4">
-                               <h5 class="text-sm font-bold text-[#272727] dark:text-white mb-3">{{ __('Subscribe to our newsletter') }}</h5>
-                               <form class="flex flex-col sm:flex-row gap-2">
-                                   <div class="relative flex-grow">
-                                       <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                           <i class="fi fi-rr-envelope text-gray-400"></i>
-                                       </div>
-                                       <input type="email" placeholder="{{ __("Email address") }}" class="w-full pl-10 pr-4 py-2.5 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg text-sm text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500" required>
-                                   </div>
-                                   <button type="submit" class="px-5 py-2.5 bg-[#355fbf] text-white text-sm font-semibold rounded-lg hover:bg-[#2a4a9a] transition shadow-md flex items-center justify-center gap-2">
-                                       <span>{{ __('Join') }}</span>
-                                       <i class="fi fi-rr-paper-plane"></i>
-                                   </button>
-                               </form>
-                           </div>
                       </div>
 
-                      <!-- Links -->
-                      <div class="lg:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
-                           <!-- Quick Links -->
-                           <div class="space-y-4">
-                                <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __("Quick Links") }}</h4>
-                                <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
-                                    <li><a href="/" class="hover:text-blue-500 transition">{{ __('Home') }}</a></li>
-                                    <li><a href="{{ route('about') }}" class="hover:text-blue-500 transition">{{ __('About Us') }}</a></li>
-                                    <li><a href="{{ route('tours.index') }}" class="hover:text-blue-500 transition">{{ __('Tours') }}</a></li>
-                                    <li><a href="{{ route('destinations.index') }}" class="hover:text-blue-500 transition">{{ __('Destinations') }}</a></li>
-                                    <li><a href="{{ route('articles.index') }}" class="hover:text-blue-500 transition">{{ __('Blogs') }}</a></li>
-                                </ul>
-                           </div>
+                       <!-- Quick Links -->
+                       <div class="space-y-4">
+                            <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __("Quick Links") }}</h4>
+                            <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
+                                <li><a href="/" class="hover:text-blue-500 transition">{{ __('Home') }}</a></li>
+                                <li><a href="{{ route('about') }}" class="hover:text-blue-500 transition">{{ __('About Us') }}</a></li>
+                                <li><a href="{{ route('tours.index') }}" class="hover:text-blue-500 transition">{{ __('Tours') }}</a></li>
+                                <li><a href="{{ route('destinations.index') }}" class="hover:text-blue-500 transition">{{ __('Destinations') }}</a></li>
+                                <li><a href="{{ route('articles.index') }}" class="hover:text-blue-500 transition">{{ __('Blogs') }}</a></li>
+                            </ul>
+                       </div>
 
-                           <!-- More Links -->
-                           <div class="space-y-4">
-                                <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __("Resources") }}</h4>
-                                <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
-                                    <li><a href="{{ route('contact') }}" class="hover:text-blue-500 transition">{{ __('Contact Us') }}</a></li>
-                                    <li><a href="#" class="hover:text-blue-500 transition">{{ __('Privacy Policy') }}</a></li>
-                                    <li><a href="#" class="hover:text-blue-500 transition">{{ __('Terms of Use') }}</a></li>
-                                </ul>
-                           </div>
+                       <!-- Resources -->
+                       <div class="space-y-4">
+                            <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __("Resources") }}</h4>
+                            <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
+                                <li><a href="{{ route('contact') }}" class="hover:text-blue-500 transition">{{ __('Contact Us') }}</a></li>
+                                <li><a href="#" class="hover:text-blue-500 transition">{{ __('Privacy Policy') }}</a></li>
+                                <li><a href="#" class="hover:text-blue-500 transition">{{ __('Terms of Use') }}</a></li>
+                            </ul>
+                       </div>
 
+                       <!-- Contact Info -->
+                       <div class="space-y-4 lg:col-span-1">
+                            <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __('Contact') }}</h4>
+                            <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
+                                <li>
+                                    <a href="tel:01092378888" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
+                                        <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
+                                            <i class="fi fi-rr-phone-call text-sm"></i>
+                                        </div>
+                                        <span class="truncate">01092378888</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="mailto:mohamedmooosa11@gmail.com" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
+                                        <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
+                                            <i class="fi fi-rr-envelope text-sm"></i>
+                                        </div>
+                                        <span class="text-xs sm:text-sm">mohamedmooosa11@gmail.com</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://maps.app.goo.gl/9u3J3Y5P7mD6hEFA9" target="_blank" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
+                                        <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
+                                            <i class="fi fi-rr-marker text-sm"></i>
+                                        </div>
+                                        <span class="text-sm">{{ __('الفيوم,المسلة') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                       </div>
+                 </div>
 
-                   
-                           <!-- Contact Info -->
-                           <div class="space-y-4">
-                                <h4 class="text-base font-bold text-[#272727] dark:text-white">{{ __('Contact') }}</h4>
-                                <ul class="space-y-3 text-base font-normal text-[#3a3a3a] dark:text-gray-400">
-                                    <li>
-                                        <a href="tel:01141812709" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
-                                            <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
-                                                <i class="fi fi-rr-phone-call text-sm"></i>
-                                            </div>
-                                            <span>01141812709</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="mailto:info@traveleregypt.com" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
-                                            <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
-                                                <i class="fi fi-rr-envelope text-sm"></i>
-                                            </div>
-                                            <span>info@traveleregypt.com</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://maps.app.goo.gl/9u3J3Y5P7mD6hEFA9" target="_blank" class="flex items-center gap-3 hover:text-[#4875e5] transition-colors group">
-                                            <div class="w-8 h-8 relative overflow-hidden flex-shrink-0 bg-[#4875e5]/10 rounded-lg flex items-center justify-center text-[#4875e5] group-hover:bg-[#4875e5] group-hover:text-white transition-all">
-                                                <i class="fi fi-rr-marker text-sm"></i>
-                                            </div>
-                                            <span>{{ __('72 King Faisal Street') }}</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                 <!-- Newsletter Section -->
+                 <div class="py-12 border-b border-gray-200 dark:border-gray-700">
+                      <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                           <div class="max-w-xl text-center lg:text-start">
+                               <h3 class="text-2xl font-bold text-[#272727] dark:text-white mb-2">{{ __('Subscribe to our newsletter') }}</h3>
+                               <p class="text-gray-600 dark:text-gray-400 text-sm italic">{{ __('Get the latest tour updates and travel tips directly in your inbox.') }}</p>
                            </div>
+                           <form class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto min-w-[300px] sm:min-w-[450px]">
+                               <div class="relative flex-grow">
+                                   <div class="absolute inset-y-0 start-0 ps-4 flex items-center pointer-events-none">
+                                       <i class="fi fi-rr-envelope text-gray-400"></i>
+                                   </div>
+                                   <input type="email" placeholder="{{ __("Email address") }}" class="w-full ps-12 pe-4 py-3.5 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl text-sm text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all shadow-sm" required>
+                               </div>
+                               <button type="submit" class="px-8 py-3.5 bg-[#355fbf] text-white text-sm font-bold rounded-xl hover:bg-[#2a4a9a] transition-all transform active:scale-95 shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2">
+                                   <span>{{ __('Join Now') }}</span>
+                                   <i class="fi fi-rr-paper-plane"></i>
+                               </button>
+                           </form>
                       </div>
                  </div>
 
                  <!-- Footer Bottom -->
                  <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm font-light text-[#3a3a3a] dark:text-gray-400">
-                      <p>&copy; {{ date('Y') }} {{ config('app.name', 'Mo travels') }}. {{ __('All rights reserved.') }}</p>
+                      <p>&copy; {{ date('Y') }} {{ __(config('app.name', 'Mo Travel')) }}. {{ __('All rights reserved.') }}</p>
                       <div class="flex gap-4 font-medium">
                           <a href="#" class="w-10 h-10 rounded-full bg-[#f3f4f6] dark:bg-gray-700 flex items-center justify-center text-[#3a3a3a] dark:text-white hover:bg-[#4976e7] hover:text-white transition">
                               <i class="fi fi-rr-arrow-small-up text-xl"></i>
@@ -693,12 +695,12 @@
     </style>
 
     <!-- WhatsApp Floating Button -->
-    <a class="float-button" href="https://api.whatsapp.com/send/?phone=201141812709&amp;text=Inquiry%20for:%20{{ urlencode(url()->current()) }}&amp;type=phone_number&amp;app_absent=0" rel="nofollow" target="_blank">
+    <a class="float-button" href="https://api.whatsapp.com/send/?phone=2001092378888&amp;text=Inquiry%20for:%20{{ urlencode(url()->current()) }}&amp;type=phone_number&amp;app_absent=0" rel="nofollow" target="_blank">
         <svg fill="#fff" height="20" width="20" id="Bold" enable-background="new 0 0 24 24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="m17.507 14.307-.009.075c-2.199-1.096-2.429-1.242-2.713-.816-.197.295-.771.964-.944 1.162-.175.195-.349.21-.646.075-.3-.15-1.263-.465-2.403-1.485-.888-.795-1.484-1.77-1.66-2.07-.293-.506.32-.578.878-1.634.1-.21.049-.375-.025-.524-.075-.15-.672-1.62-.922-2.206-.24-.584-.487-.51-.672-.51-.576-.05-.997-.042-1.368.344-1.614 1.774-1.207 3.604.174 5.55 2.714 3.552 4.16 4.206 6.804 5.114.714.227 1.365.195 1.88.121.574-.091 1.767-.721 2.016-1.426.255-.705.255-1.29.18-1.425-.074-.135-.27-.21-.57-.345z"></path>
             <path d="m20.52 3.449c-7.689-7.433-20.414-2.042-20.419 8.444 0 2.096.549 4.14 1.595 5.945l-1.696 6.162 6.335-1.652c7.905 4.27 17.661-1.4 17.665-10.449 0-3.176-1.24-6.165-3.495-8.411zm1.482 8.417c-.006 7.633-8.385 12.4-15.012 8.504l-.36-.214-3.75.975 1.005-3.645-.239-.375c-4.124-6.565.614-15.145 8.426-15.145 2.654 0 5.145 1.035 7.021 2.91 1.875 1.859 2.909 4.35 2.909 6.99z"></path>
         </svg>
-        <span class="ml-2 font-bold">Whatsapp Me</span>
+        <span class="ms-2 font-bold">{{ __('Whatsapp Me') }}</span>
     </a>
 </body>
 </html>

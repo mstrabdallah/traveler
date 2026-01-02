@@ -13,9 +13,12 @@ use Filament\Tables\Table;
 class BookingResource extends Resource
 {
     protected static ?string $model = Booking::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-ticket';
-    protected static ?string $navigationGroup = 'Bookings';
+    
+    public static function getNavigationLabel(): string { return __('Bookings'); }
+    public static function getNavigationGroup(): ?string { return __('Booking Management'); }
+    public static function getModelLabel(): string { return __('Booking'); }
+    public static function getPluralModelLabel(): string { return __('Bookings'); }
 
     public static function getNavigationBadge(): ?string
     {
@@ -48,66 +51,74 @@ class BookingResource extends Resource
             ->schema([
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Booking Information')
+                        Forms\Components\Section::make(__('Booking Information'))
                             ->schema([
                                 Forms\Components\Select::make('tour_id')
+                                    ->label(__('Tour'))
                                     ->relationship('tour', 'name')
                                     ->required()
                                     ->searchable()
                                     ->preload(),
                                 Forms\Components\DatePicker::make('date')
+                                    ->label(__('Date'))
                                     ->required(),
                                 Forms\Components\TextInput::make('total_price')
+                                    ->label(__('Total price'))
                                     ->required()
                                     ->numeric()
                                     ->prefix('$'),
                                 Forms\Components\Select::make('status')
+                                    ->label(__('Status'))
                                     ->options([
-                                        'pending' => 'Pending',
-                                        'confirmed' => 'Confirmed',
-                                        'cancelled' => 'Cancelled',
+                                        'pending' => __('Pending'),
+                                        'confirmed' => __('Confirmed'),
+                                        'cancelled' => __('Cancelled'),
                                     ])
                                     ->required(),
                             ])->columns(2),
                         
-                        Forms\Components\Section::make('Extra Details')
+                        Forms\Components\Section::make(__('Extra Details'))
                             ->schema([
                                 Forms\Components\TextInput::make('meta.time')
-                                    ->label('Preferred Time'),
+                                    ->label(__('Preferred Time')),
                                 Forms\Components\Toggle::make('meta.service_booking')
-                                    ->label('Service per Booking (+$30)'),
+                                    ->label(__('Service per Booking (+$30)')),
                                 Forms\Components\Toggle::make('meta.service_person')
-                                    ->label('Service per Person (+$15)'),
+                                    ->label(__('Service per Person (+$15)')),
                             ])->columns(3),
                     ])->columnSpan(['lg' => 2]),
 
                 Forms\Components\Group::make()
                     ->schema([
-                        Forms\Components\Section::make('Customer')
+                        Forms\Components\Section::make(__('Customer'))
                             ->schema([
                                 Forms\Components\TextInput::make('name')
+                                    ->label(__('Full Name'))
                                     ->required(),
                                 Forms\Components\TextInput::make('email')
+                                    ->label(__('Email address'))
                                     ->email()
                                     ->required(),
                                 Forms\Components\TextInput::make('phone')
+                                    ->label(__('Phone Number'))
                                     ->tel()
                                     ->required(),
                                 Forms\Components\Grid::make(2)
                                     ->schema([
                                         Forms\Components\TextInput::make('adults')
-                                            ->label('Adults')
+                                            ->label(__('Adults'))
                                             ->numeric()
                                             ->default(1),
                                         Forms\Components\TextInput::make('children')
-                                            ->label('Children')
+                                            ->label(__('Children'))
                                             ->numeric()
                                             ->default(0),
                                     ]),
                             ]),
-                        Forms\Components\Section::make('Notes')
+                        Forms\Components\Section::make(__('Notes'))
                             ->schema([
                                 Forms\Components\Textarea::make('notes')
+                                    ->label(__('Notes'))
                                     ->rows(3),
                             ]),
                     ])->columnSpan(['lg' => 1]),

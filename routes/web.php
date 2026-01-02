@@ -15,7 +15,9 @@ Route::get('/', function () {
     $toursCount = Tour::where('is_active', true)->count();
     $destinationsCount = Destination::where('is_active', true)->count();
     
-    return view('pages.welcome', compact('featuredTours', 'destinations', 'latestArticles', 'toursCount', 'destinationsCount'));
+    $homeSlides = \App\Models\HomeSlide::where('is_active', true)->orderBy('sort_order')->get();
+    
+    return view('pages.welcome', compact('featuredTours', 'destinations', 'latestArticles', 'toursCount', 'destinationsCount', 'homeSlides'));
 });
 
 Route::get('/destinations', [DestinationController::class, 'index'])->name('destinations.index');

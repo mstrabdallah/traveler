@@ -188,52 +188,93 @@
         </div>
     </div>
 
-    <!-- Lightbox Overlay -->
+    <!-- Premium Lightbox Overlay -->
     <div x-show="lightboxOpen" 
-         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter="transition ease-out duration-500"
          x-transition:enter-start="opacity-0"
          x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave="transition ease-in duration-300"
          x-transition:leave-start="opacity-100"
          x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm"
-         style="display: none;">
+         class="fixed inset-0 z-[100] flex flex-col bg-gray-950/98 backdrop-blur-xl"
+         style="display: none;"
+         @click.self="closeLightbox()">
         
-        <!-- Close Button -->
-        <button @click="closeLightbox()" class="absolute top-6 right-6 text-white text-4xl hover:text-gray-300 z-[110] p-2">
-            <i class="fi fi-rr-cross-small"></i>
-        </button>
+        <!-- Top Bar: Title & Close -->
+        <div class="absolute top-0 left-0 right-0 p-6 flex items-center justify-between z-[110] bg-gradient-to-b from-black/60 to-transparent">
+            <div class="flex items-center gap-4">
+                <div class="h-10 w-1px bg-accent-500 hidden sm:block"></div>
+                <div>
+                    <h3 class="text-white font-display font-bold text-lg sm:text-xl tracking-tight leading-none">{{ $tour->display_name }}</h3>
+                    <p class="text-gray-400 text-[10px] uppercase tracking-[0.2em] font-black mt-1">{{ __('Exclusive Gallery') }}</p>
+                </div>
+            </div>
+            <button @click="closeLightbox()" class="w-12 h-12 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all border border-white/10 group backdrop-blur-md">
+                <i class="fi fi-rr-cross-small text-2xl group-hover:rotate-90 transition-transform duration-300"></i>
+            </button>
+        </div>
 
-        <!-- Navigation Arrows -->
-        <button @click="prevImage()" class="absolute left-6 text-white text-5xl hover:text-blue-400 transition-colors z-[110] p-4 hidden sm:block">
-            <i class="fi fi-rr-angle-left"></i>
-        </button>
-        <button @click="nextImage()" class="absolute right-6 text-white text-5xl hover:text-blue-400 transition-colors z-[110] p-4 hidden sm:block">
-            <i class="fi fi-rr-angle-right"></i>
-        </button>
-
-        <!-- Main Image/Video Container -->
-        <div class="relative w-full h-full p-4 flex flex-col items-center justify-center" @click.self="closeLightbox()">
-            <template x-if="!galleryData[activeImageIndex].isVideo">
-                <img :src="galleryData[activeImageIndex].url" 
-                     class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl transition-all duration-300"
-                     x-transition:enter="transition ease-out duration-300 transform scale-95"
-                     x-transition:enter-start="scale-95 opacity-0"
-                     x-transition:enter-end="scale-100 opacity-100">
-            </template>
-            <template x-if="galleryData[activeImageIndex].isVideo">
-                <video x-ref="lightboxVideo" 
-                       :src="galleryData[activeImageIndex].url" 
-                       controls 
-                       class="max-w-full max-h-[85vh] rounded-lg shadow-2xl"
-                       x-transition:enter="transition ease-out duration-300 transform scale-95"
-                       x-transition:enter-start="scale-95 opacity-0"
-                       x-transition:enter-end="scale-100 opacity-100"></video>
-            </template>
+         <!-- Main Content Holder -->
+        <div class="relative flex-1 flex items-center justify-center p-4 sm:p-12" @click.self="closeLightbox()">
+            <!-- Media Content -->
+            <div class="relative max-w-7xl max-h-full flex items-center justify-center" @click.stop>
+                <template x-if="!galleryData[activeImageIndex].isVideo">
+                    <img :src="galleryData[activeImageIndex].url" 
+                         class="max-w-full max-h-[70vh] object-contain rounded-2xl shadow-[0_0_80px_rgba(0,0,0,0.5)] border border-white/5"
+                         x-transition:enter="transition ease-out duration-500"
+                         x-transition:enter-start="scale-90 opacity-0"
+                         x-transition:enter-end="scale-100 opacity-100">
+                </template>
+                <template x-if="galleryData[activeImageIndex].isVideo">
+                    <video x-ref="lightboxVideo" 
+                           :src="galleryData[activeImageIndex].url" 
+                           controls 
+                           class="max-w-full max-h-[70vh] rounded-2xl shadow-[0_0_80px_rgba(0,0,0,0.5)] border border-white/5"
+                           x-transition:enter="transition ease-out duration-500"
+                           x-transition:enter-start="scale-90 opacity-0"
+                           x-transition:enter-end="scale-100 opacity-100"></video>
+                </template>
+            </div>
             
-            <!-- Index Counter -->
-            <div class="mt-6 px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-white text-sm font-bold">
-                <span x-text="activeImageIndex + 1"></span> / <span x-text="galleryData.length"></span>
+            <!-- Navigation Arrows - Always visible and RTL-aware -->
+            <button @click="prevImage()" class="fixed start-4 sm:start-10 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center rounded-full bg-accent-500 text-white transition-all z-[150] backdrop-blur-md border border-white/30 group shadow-2xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="{{ app()->getLocale() == 'ar' ? 'M9 5l7 7-7 7' : 'M15 19l-7-7 7-7' }}" />
+                </svg>
+            </button>
+            <button @click="nextImage()" class="fixed end-4 sm:end-10 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center rounded-full bg-accent-500 text-white transition-all z-[150] backdrop-blur-md border border-white/30 group shadow-2xl">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="{{ app()->getLocale() == 'ar' ? 'M15 19l-7-7 7-7' : 'M9 5l7 7-7 7' }}" />
+                </svg>
+            </button>
+        </div>
+
+         <!-- Bottom Thumbnails Strip -->
+        <div class="w-full bg-gradient-to-t from-black/60 to-transparent p-6 pb-10 z-[110]" @click.self="closeLightbox()">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-center gap-3 overflow-x-auto pb-4 scrollbar-hide no-scrollbar">
+                    <template x-for="(item, index) in galleryData" :key="index">
+                        <button @click="activeImageIndex = index" 
+                                class="relative flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all duration-300"
+                                :class="activeImageIndex === index ? 'border-accent-500 scale-110 shadow-[0_0_20px_rgba(var(--accent-500-rgb),0.4)]' : 'border-transparent opacity-40 hover:opacity-100'">
+                            <img :src="item.url" class="w-full h-full object-cover">
+                            <div x-show="item.isVideo" class="absolute inset-0 flex items-center justify-center bg-black/40">
+                                <i class="fi fi-ss-play text-white text-[10px]"></i>
+                            </div>
+                        </button>
+                    </template>
+                </div>
+                
+                <!-- Index Counter with Progress bar -->
+                <div class="flex flex-col items-center gap-3 mt-4">
+                    <div class="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
+                        <div class="h-full bg-accent-500 transition-all duration-500" 
+                             :style="`width: ${((activeImageIndex + 1) / galleryData.length) * 100}%`"></div
+                    </div>
+                    <div class="text-white/60 text-[10px] font-black uppercase tracking-[0.2em]">
+                        <span x-text="activeImageIndex + 1" class="text-white"></span> / <span x-text="galleryData.length"></span> {{ __('Items') }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -295,21 +336,22 @@
                         </div>
                     </div>
 
-                    <!-- Category/Type Stats -->
+                    <!-- Location Stats -->
                     <div class="group bg-gray-50/50 dark:bg-gray-800/40 hover:bg-white dark:hover:bg-gray-800 p-6 rounded-[2.5rem] border border-gray-100 dark:border-gray-700 transition-all duration-500 shadow-sm hover:shadow-2xl hover:-translate-y-1 border-b-4 border-b-transparent hover:border-b-emerald-500">
                         <div class="flex items-center gap-5">
                              <div class="w-14 h-14 rounded-2xl bg-emerald-500 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:scale-110 transition-transform duration-500">
-                                <i class="fi fi-rr-map-marker text-2xl"></i>
+                                <i class="fi fi-rr-marker text-2xl"></i>
                             </div>
                             <div>
-                                <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{{ __('Tour Type') }}</p>
+                                <p class="text-[10px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-1">{{ __('Tour Location') }}</p>
                                 <div class="flex items-center gap-1 text-xl font-black text-gray-900 dark:text-white whitespace-nowrap">
-                                    {{ __('Private') }}
+                                    {{ $tour->destination ? $tour->destination->display_name : __('Egypt') }}
                                     <i class="fi {{ app()->getLocale() == 'ar' ? 'fi-rr-arrow-small-left' : 'fi-rr-arrow-small-right' }} text-gray-300 text-sm group-hover:text-emerald-500 group-hover:translate-x-1 transition-all"></i>
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
                 </div>
             </div>
@@ -696,7 +738,7 @@
             <!-- Right Column: Sidebar -->
             <div class="lg:col-span-1 mt-12 lg:mt-0 space-y-8">
 
-                       <div x-data='{
+                <div x-data='{
                     date: "",
                     currentLocale: "{{ app()->getLocale() }}",
                     time: "11:45 am",
@@ -829,7 +871,7 @@
                             this.isLoading = false;
                         });
                     }
-                }' class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative overflow-hidden lg:sticky lg:top-[160px] overflow-y-auto">
+                }' class="rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 sm:p-8 shadow-sm font-sans relative lg:sticky lg:top-[160px] max-h-[calc(100vh-180px)] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-200 dark:scrollbar-thumb-gray-700">
                     
                     <!-- Success Message Overlay -->
                     <div x-show="showSuccess" 
@@ -862,7 +904,7 @@
                             <div class="mb-6">
                                 <label class="block text-base font-bold text-gray-900 dark:text-white mb-2">{{ __('From:') }}</label>
                                 <div class="relative">
-                                     <input type="text" x-model="date" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 pl-10 focus:border-blue-500 focus:ring-blue-500 py-3 font-medium text-gray-700 dark:text-white dark:bg-gray-900 dark:placeholder-gray-400" placeholder="{{ __('Select Date') }}" id="booking-date">
+                                     <input type="text" x-model="date" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 pl-10 focus:border-blue-500 focus:ring-blue-500 py-3 font-medium text-gray-700 dark:text-white dark:bg-gray-900 dark:placeholder-gray-400 rtl:placeholder:text-right" placeholder="{{ __('Select Date') }}" id="booking-date">
                                      <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                          <i class="fi fi-rr-calendar text-blue-600 text-lg"></i>
                                      </div>
@@ -934,9 +976,9 @@
                                 <!-- Client Details -->
                                 <div class="mb-6 space-y-4">
                                      <label class="block text-base font-bold text-gray-900 dark:text-white">{{ __('Your Details') }}</label>
-                                     <input type="text" x-model="name" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="{{ __('Full Name') }}">
-                                     <input type="email" x-model="email" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="{{ __('Email Address') }}">
-                                     <input type="tel" x-model="phone" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500" placeholder="{{ __('Phone Number') }}">
+                                     <input type="text" x-model="name" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500 rtl:placeholder:text-right" placeholder="{{ __('Full Name') }}">
+                                     <input type="email" x-model="email" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500 rtl:placeholder:text-right" placeholder="{{ __('Email Address') }}">
+                                     <input type="tel" x-model="phone" required class="block w-full rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-900 dark:text-white py-3 px-4 focus:border-blue-500 focus:ring-blue-500 text-sm placeholder-gray-400 dark:placeholder-gray-500 rtl:placeholder:text-right" placeholder="{{ __('Phone Number') }}">
                                 </div>
                                 
                                 <div class="h-px bg-gray-100 my-6"></div>

@@ -19,6 +19,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        \BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch::configureUsing(function (\BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch $switch) {
+            $switch
+                ->locales(['ar', 'en']);
+        });
+
         view()->composer('*', function ($view) {
             $view->with([
                 'headerDestinations' => \App\Models\Destination::where('is_active', true)->get(),

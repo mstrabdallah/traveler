@@ -1,142 +1,173 @@
 <x-layouts.app>
     <!-- Hero Section -->
     <!-- Hero Section with Swiper -->
-    <div class="relative h-[calc(100vh-104px)]   bg-primary-900">
+    <div class="relative h-[calc(100vh-144px)]   bg-primary-900">
         <div class="swiper heroSwiper h-full">
             <div class="swiper-wrapper">
-                @foreach($destinations as $destination)
-                    <div class="swiper-slide relative">
-                        <div class="absolute inset-0">
-                            <img src="{{ Storage::url($destination->image) }}" alt="{{ $destination->display_name }}" class="h-full w-full object-cover">
-                            <div class="absolute inset-0 bg-primary-950/40"></div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-primary-950/90 via-transparent to-primary-950/30"></div>
+                @if($homeSlides && $homeSlides->count() > 0)
+                    @foreach($homeSlides as $slide)
+                        <div class="swiper-slide relative overflow-hidden group">
+                            <div class="absolute inset-0">
+                                <img src="{{ Storage::url($slide->image) }}" alt="{{ $slide->title }}" class="h-full w-full object-cover animate-ken-burns-subtle">
+                                <div class="absolute inset-0 bg-primary-950/40"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-primary-950/90 via-transparent to-primary-950/30"></div>
+                            </div>
+                            <div class="relative h-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col justify-center items-center text-center pb-25">
+                                @if($slide->subtitle)
+                                    <span class="block font-handwriting text-2xl md:text-3xl text-yellow-400 mb-4 hero-animate-fadeInUp" style="--delay: 0.2s">
+                                        {{ $slide->subtitle }}
+                                    </span>
+                                @endif
+                                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white font-display mb-6 hero-animate-fadeInUp" style="--delay: 0.4s">
+                                    {!! $slide->title !!}
+                                </h1>
+                                @if($slide->description)
+                                    <p class="max-w-2xl text-lg md:text-xl text-gray-200 hero-animate-fadeInUp" style="--delay: 0.6s">
+                                        {{ $slide->description }}
+                                    </p>
+                                @endif
+                                @if($slide->button_text && $slide->button_url)
+                                    <div class="mt-8 hero-animate-fadeInUp" style="--delay: 0.8s">
+                                        <a href="{{ $slide->button_url }}" class="px-8 py-4 bg-accent-600 hover:bg-accent-500 text-white font-bold rounded-full shadow-lg shadow-accent-600/20 transition transform hover:-translate-y-1 inline-block">
+                                            {{ $slide->button_text }}
+                                        </a>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
-                        <div class="relative h-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col justify-center items-center text-center pb-25">
-                            <span class="font-handwriting text-5xl md:text-7xl text-yellow-400 mb-4 animate-fade-in-up">{{ __('Traveling') }}</span>
-                            <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white font-display mb-6 animate-fade-in-up delay-100">
-                                {{ __('Your Journey') }} <span class="border-b-4 border-white pb-2">{{ __('Begins Here') }}</span>
-                            </h1>
-                            <p class="max-w-2xl text-lg md:text-xl text-gray-200 animate-fade-in-up delay-200">
-                                {{ __('Explore the timeless wonders of :name with our exclusive tour packages.', ['name' => $destination->display_name]) }}
-                            </p>
+                    @endforeach
+                @else
+                    @foreach($destinations as $destination)
+                        <div class="swiper-slide relative overflow-hidden group">
+                            <div class="absolute inset-0">
+                                <img src="{{ Storage::url($destination->image) }}" alt="{{ $destination->display_name }}" class="h-full w-full object-cover animate-ken-burns-subtle">
+                                <div class="absolute inset-0 bg-primary-950/40"></div>
+                                <div class="absolute inset-0 bg-gradient-to-t from-primary-950/90 via-transparent to-primary-950/30"></div>
+                            </div>
+                            <div class="relative h-full max-w-7xl mx-auto px-6 lg:px-8 flex flex-col justify-center items-center text-center pb-25">
+                                <span class="block font-handwriting text-2xl md:text-3xl text-yellow-400 mb-4 hero-animate-fadeInUp" style="--delay: 0.2s">
+                                    {{ __('Traveling') }}
+                                </span>
+                                <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white font-display mb-6 hero-animate-fadeInUp" style="--delay: 0.4s">
+                                    {{ __('Your Journey') }} <span class="border-b-4 border-white pb-2">{{ __('Begins Here') }}</span>
+                                </h1>
+                                <p class="max-w-2xl text-lg md:text-xl text-gray-200 hero-animate-fadeInUp" style="--delay: 0.6s">
+                                    {{ __('Explore the timeless wonders of :name with our exclusive tour packages.', ['name' => $destination->display_name]) }}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
             
-            <div class="swiper-button-next !w-12 !h-12 !bg-white/10 max-sm:!hidden !backdrop-blur-sm !rounded-full !text-white hover:!bg-white/20 transition-all after:!text-xl"></div>
-            <div class="swiper-button-prev !w-12 !h-12 !bg-white/10 max-sm:!hidden !backdrop-blur-sm !rounded-full !text-white hover:!bg-white/20 transition-all after:!text-xl"></div>
+            <div class="swiper-button-next !w-14 !h-14 !bg-white/5 hover:!bg-white/10 max-sm:!hidden !backdrop-blur-md !rounded-full !text-white transition-all after:!text-lg border border-white/10 shadow-2xl"></div>
+            <div class="swiper-button-prev !w-14 !h-14 !bg-white/5 hover:!bg-white/10 max-sm:!hidden !backdrop-blur-md !rounded-full !text-white transition-all after:!text-lg border border-white/10 shadow-2xl"></div>
+            
+            <div class="swiper-pagination hero-pagination !bottom-32"></div>
         </div>
 
         <!-- Search Form -->
-        <div class="relative z-20 -mt-24 px-4 w-full">
-            <div class="max-w-5xl mx-auto bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl border border-white/40 dark:border-gray-700 rounded-3xl shadow-2xl p-6 md:p-8 animate-fade-in-up delay-300">
-                <form action="{{ route('tours.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    
-                    <!-- Hidden Filters -->
-                    <input type="hidden" name="search" value="">
-                    <input type="hidden" name="min_price" value="0">
-                    <input type="hidden" name="max_price" value="5000">
+        <div class="relative z-20 -mt-16 sm:-mt-20 px-4 w-full">
+            <div class="max-w-4xl mx-auto mt-[25px]">
+                {{-- Background Glow Effect --}}
+                <div class="absolute inset-0 bg-accent-600/20 blur-[80px] rounded-full -z-10 opacity-50 dark:opacity-20"></div>
+                
+                <div class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-3xl border border-white/40 dark:border-gray-800 rounded-[32px] md:rounded-full shadow-[0_32px_64px_-16px_rgba(0,0,0,0.12)] dark:shadow-none p-2 animate-fade-in-up delay-300">
+                    <form action="{{ route('tours.index') }}" method="GET" class="flex flex-col md:flex-row items-center w-full">
 
-                    <!-- Date From -->
-                    <div class="col-span-1 md:col-span-4 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 dark:border-gray-700 pb-4 md:pb-0 md:pr-6 relative group">
-                        <label for="date_from" class="flex items-center gap-2 text-[#345BA8] dark:text-blue-400 font-bold mb-2 group-focus-within:text-[#2A4A8A] dark:group-focus-within:text-blue-300 transition-colors">
-                             <i class="fi fi-rr-calendar-clock text-xl"></i>
-                             <span class="text-sm uppercase tracking-wider">{{ __('When') }}</span>
-                        </label>
-                        <input type="text" id="date_from" name="date_from" placeholder="{{ __('Select Date') }}" class="w-full border-0 p-0 text-gray-900 dark:text-white font-bold focus:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 bg-transparent text-lg cursor-pointer">
-                    </div>
-
-                    <!-- Guests Dropdown -->
-                     <div class="col-span-1 md:col-span-4 border-b-2 md:border-b-0 md:border-r-2 border-gray-100 dark:border-gray-700 pb-4 md:pb-0 md:pr-6 md:pl-6 relative" 
-                          x-data="{ 
-                             open: false,
-                             counts: { person: 0, adult: 0, child: 0 },
-                             get total() { return this.counts.person + this.counts.adult + this.counts.child; }
-                          }"
-                          @click.outside="open = false">
-                         
-                         <label @click="open = !open" class="flex items-center gap-2 text-[#345BA8] dark:text-blue-400 font-bold mb-2 cursor-pointer hover:text-[#2A4A8A] dark:hover:text-blue-300 transition-colors">
-                              <i class="fi fi-rr-users-alt text-xl"></i>
-                              <span class="text-sm uppercase tracking-wider">{{ __('Guests') }}</span>
-                         </label>
-                        
-                        <!-- Main Display Input -->
-                        <div @click="open = !open" class="cursor-pointer">
-                            <input type="text" readonly 
-                                   :value="total ? total + ' ' + '{{ __('Guests') }}' : ''"
-                                   placeholder="{{ __('Add Guests') }}" 
-                                   class="w-full border-0 placeholder:text-gray-400 dark:placeholder:text-gray-500 p-0 text-gray-900 dark:text-white font-bold focus:ring-0 cursor-pointer text-lg bg-transparent"
-                            >
+                        <!-- Date From -->
+                        <div class="flex-[1.2] w-full flex items-center gap-5 px-8 py-5 md:py-4 hover:bg-gray-50/80 dark:hover:bg-gray-800/50 rounded-full transition-all duration-300 cursor-pointer group relative">
+                            <div class="w-12 h-12 rounded-2xl bg-amber-50 dark:bg-amber-900/20 flex items-center justify-center text-amber-600 dark:text-amber-400 group-hover:rotate-12 transition-transform duration-300">
+                                <i class="fi fi-rr-calendar-clock text-xl"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <label for="date_from" class="block text-[11px] uppercase tracking-[0.2em] font-black text-gray-400 dark:text-gray-500 mb-1 cursor-pointer group-hover:text-amber-600 transition-colors">{{ __('When') }}</label>
+                                <input type="text" id="date_from" name="date_from" placeholder="{{ __('Select Date') }}" 
+                                       class="w-full border-0 p-0 text-gray-900 dark:text-white font-extrabold focus:ring-0 placeholder:text-gray-400 dark:placeholder:text-gray-600 bg-transparent text-base cursor-pointer">
+                            </div>
+                            {{-- Vertical Divider --}}
+                            <div class="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 h-10 w-[1px] bg-gray-100 dark:bg-gray-800"></div>
                         </div>
-                        <!-- Actual Input for Form Submission -->
-                        <input type="hidden" name="guests" :value="total">
 
-                        <!-- Dropdown -->
-                        <div x-show="open" 
-                             x-transition:enter="transition ease-out duration-200"
-                             x-transition:enter-start="opacity-0 translate-y-4"
-                             x-transition:enter-end="opacity-100 translate-y-0"
-                             x-transition:leave="transition ease-in duration-150"
-                             x-transition:leave-start="opacity-100 translate-y-0"
-                             x-transition:leave-end="opacity-0 translate-y-4"
-                             class="absolute top-full left-0 mt-6 w-72 bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 z-50 border border-gray-100 dark:border-gray-700 ring-1 ring-black/5"
-                             style="display: none;">
+                        <!-- Guests Section -->
+                        <div class="flex-[1.2] w-full relative" 
+                             x-data="{ 
+                                open: false,
+                                openUp: false,
+                                 counts: { adult: 1, child: 0 },
+                                 get total() { return this.counts.adult + this.counts.child; },
+                                toggle() {
+                                    if (!this.open) {
+                                        const rect = this.$el.getBoundingClientRect();
+                                        const spaceBelow = window.innerHeight - rect.bottom;
+                                        // If less than 400px below, open up
+                                        this.openUp = spaceBelow < 400;
+                                    }
+                                    this.open = !this.open;
+                                }
+                             }"
+                             @click.outside="open = false">
                             
-                            <!-- Person Row -->
-                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-50 dark:border-gray-700">
-                                <span class="text-gray-700 dark:text-gray-200 font-medium"><span x-text="counts.person"></span> {{ __('person') }}</span>
-                                <div class="flex items-center gap-3">
-                                    <button type="button" @click="if(counts.person > 0) counts.person--" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.person <= 0">
-                                        <i class="fi fi-rr-minus text-xs"></i>
-                                    </button>
-                                    <button type="button" @click="counts.person++" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition">
-                                        <i class="fi fi-rr-plus text-xs"></i>
-                                    </button>
+                            <div @click="toggle()" class="flex items-center gap-5 px-8 py-5 md:py-4 hover:bg-gray-50/80 dark:hover:bg-gray-800/50 rounded-full transition-all duration-300 cursor-pointer group">
+                                <div class="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-900/20 flex items-center justify-center text-indigo-600 dark:text-indigo-400 group-hover:-rotate-12 transition-transform duration-300">
+                                    <i class="fi fi-rr-users-alt text-xl"></i>
                                 </div>
+                                <div class="flex-1 min-w-0">
+                                    <label class="block text-[11px] uppercase tracking-[0.2em] font-black text-gray-400 dark:text-gray-500 mb-1 group-hover:text-indigo-600 transition-colors">{{ __('Guests') }}</label>
+                                    <div class="text-base text-gray-900 dark:text-white font-extrabold truncate">
+                                        <span x-text="total ? (total === 1 ? '{{ __('One Guest') }}' : total + ' ' + '{{ __('Guests_plural') }}') : '{{ __('Add Guests') }}'"></span>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="guests" :value="total">
                             </div>
 
-                            <!-- Adult Row -->
-                            <div class="flex items-center justify-between mb-4 pb-4 border-b border-gray-50">
-                                <span class="text-gray-700 font-medium"><span x-text="counts.adult"></span> {{ __('Adult') }}</span>
-                                <div class="flex items-center gap-3">
-                                    <button type="button" @click="if(counts.adult > 0) counts.adult--" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.adult <= 0">
-                                        <i class="fi fi-rr-minus text-xs"></i>
-                                    </button>
-                                    <button type="button" @click="counts.adult++" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition">
-                                        <i class="fi fi-rr-plus text-xs"></i>
-                                    </button>
+                            <!-- Modern Dropdown -->
+                            <div x-show="open" 
+                                 x-transition:enter="transition ease-out duration-300"
+                                 x-transition:enter-start="opacity-0 scale-95"
+                                 :x-transition:enter-start="openUp ? 'opacity-0 translate-y-8 scale-95' : 'opacity-0 -translate-y-8 scale-95'"
+                                 x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                                 x-transition:leave="transition ease-in duration-200"
+                                 x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                                 :x-transition:leave-end="openUp ? 'opacity-0 translate-y-8 scale-95' : 'opacity-0 -translate-y-8 scale-95'"
+                                 class="absolute left-0 md:right-0 w-80 bg-white/95 dark:bg-gray-900/95 backdrop-blur-2xl rounded-3xl shadow-[0_24px_48px_-12px_rgba(0,0,0,0.18)] p-7 z-[60] border border-gray-100/50 dark:border-gray-800"
+                                 :class="openUp ? 'bottom-full mb-6' : 'top-full mt-6'"
+                                 style="display: none;">
+                                
+                                <h4 class="text-xs uppercase tracking-widest font-black text-gray-400 mb-6">{{ __('Traveling with') }}</h4>
+                                
+                                <div class="space-y-6">
+                                    <template x-for="(label, key) in { adult: '{{ __('Adult') }}', child: '{{ __('child') }}' }" :key="key">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <span class="block text-gray-900 dark:text-white font-bold text-sm" x-text="label"></span>
+                                                <span class="text-[10px] text-gray-400 uppercase font-bold" x-text="key === 'child' ? '0-12 yrs' : '12+ yrs'"></span>
+                                            </div>
+                                            <div class="flex items-center gap-4 bg-gray-50 dark:bg-gray-800/50 p-1.5 rounded-2xl">
+                                                <button type="button" @click="if(counts[key] > 0) counts[key]--" class="w-8 h-8 rounded-xl bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-accent-600 hover:text-white transition-all shadow-sm disabled:opacity-30" :disabled="counts[key] <= 0">
+                                                    <i class="fi fi-rr-minus text-[10px]"></i>
+                                                </button>
+                                                <span class="w-5 text-center font-black text-gray-900 dark:text-white text-sm" x-text="counts[key]"></span>
+                                                <button type="button" @click="counts[key]++" class="w-8 h-8 rounded-xl bg-white dark:bg-gray-700 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:bg-accent-600 hover:text-white transition-all shadow-sm">
+                                                    <i class="fi fi-rr-plus text-[10px]"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </template>
                                 </div>
                             </div>
+                        </div>
 
-                            <!-- Child Row -->
-                            <div class="flex items-center justify-between mb-6 pb-4 border-b border-gray-50">
-                                <span class="text-gray-700 font-medium"><span x-text="counts.child"></span> {{ __('child') }}</span>
-                                <div class="flex items-center gap-3">
-                                    <button type="button" @click="if(counts.child > 0) counts.child--" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition disabled:opacity-50" :disabled="counts.child <= 0">
-                                        <i class="fi fi-rr-minus text-xs"></i>
-                                    </button>
-                                    <button type="button" @click="counts.child++" class="w-8 h-8 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-[#345BA8] hover:text-white transition">
-                                        <i class="fi fi-rr-plus text-xs"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Apply Button -->
-                            <button type="button" @click="open = false" class="w-full py-3 bg-[#345BA8] text-white font-bold rounded-lg hover:bg-[#2A4A8A] transition text-sm tracking-wider uppercase shadow-lg shadow-blue-900/10">
-                                 {{ __('Apply Selection') }}
+                        <!-- Search Button -->
+                        <div class="w-full md:w-auto p-2">
+                            <button type="submit" class="w-full md:h-[68px] md:px-10 flex items-center justify-center gap-3 bg-accent-600 hover:bg-accent-700 text-white rounded-full md:rounded-full transition-all duration-300 shadow-xl shadow-accent-600/25 active:scale-95 group overflow-hidden relative">
+                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                                <i class="fi fi-rr-search text-xl"></i>
+                                <span class="font-black tracking-widest text-xs uppercase">{{ __('SEARCH') }}</span>
                             </button>
                         </div>
-                    </div>
-
-                    <!-- Search Button -->
-                    <div class="col-span-1 md:col-span-4 w-full">
-                        <button type="submit" class="w-full md:w-auto px-10 py-5 bg-[#345BA8] text-white font-bold rounded-2xl hover:bg-[#2A4A8A] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 flex items-center justify-center gap-3 uppercase tracking-wide text-sm group">
-                            <i class="fi fi-rr-search text-lg group-hover:scale-110 transition-transform"></i>
-                            {{ __('Search') }}
-                        </button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -148,10 +179,18 @@
             // Hero Swiper
             new Swiper(".heroSwiper", {
                 effect: "fade",
+                fadeEffect: {
+                    crossFade: true
+                },
+                speed: 2000,
                 loop: true,
                 autoplay: {
-                    delay: 5000,
+                    delay: 7000,
                     disableOnInteraction: false,
+                },
+                pagination: {
+                    el: ".hero-pagination",
+                    clickable: true,
                 },
                 navigation: {
                     nextEl: ".swiper-button-next",
@@ -174,8 +213,8 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <!-- Header -->
             <div class="text-center mb-12">
-                <span class="font-handwriting text-3xl text-yellow-500">Destinations lists</span>
-                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">Discover With Us</h2>
+                <span class="font-handwriting text-3xl text-yellow-500">{{ __('Destinations lists') }}</span>
+                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">{{ __('Discover With Us') }}</h2>
             </div>
 
             <!-- Dynamic Grid -->
@@ -274,7 +313,7 @@
                     
                     <!-- Intro Paragraph -->
                     <p class="text-xl text-[#040404] dark:text-gray-300 font-display font-medium leading-relaxed mb-12 max-w-lg">
-                        Traveler Egypt Tours is The Best travel agency that offers a variety of tour packages throughout Egypt. Their services include day tours, multi-day tours, and specialized packages.
+                        {{ __('Traveler Egypt Tours is The Best travel agency that offers a variety of tour packages throughout Egypt. Their services include day tours, multi-day tours, and specialized packages.') }}
                     </p>
 
                     <!-- Features List -->
@@ -288,7 +327,7 @@
                              <div>
                                 <h3 class="text-2xl font-display font-extrabold text-[#040404] dark:text-white uppercase mb-2">{{ __('Safety and Security') }}</h3>
                                 <p class="text-lg font-display text-gray-600 dark:text-gray-400 leading-snug">
-                                    The company emphasizes safety and security for all travelers.
+                                   {{ __('The company emphasizes safety and security for all travelers.') }}
                                 </p>
                              </div>
                         </div>
@@ -339,8 +378,8 @@
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             <!-- Header -->
             <div class="text-center mb-12">
-                <span class="font-handwriting text-3xl text-yellow-500">Featured tours</span>
-                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">Most Popular Tours</h2>
+                <span class="font-handwriting text-3xl text-yellow-500">{{ __('Featured tours') }}</span>
+                <h2 class="mt-2 text-4xl lg:text-5xl font-display font-bold text-[#2A2C3E] dark:text-white">{{ __('Most Popular Tours') }}</h2>
             </div>
             
             <!-- Swiper Carousel -->
@@ -436,49 +475,52 @@
         </div>
     </div>
     
-    <!-- Testimonials Section -->
+    @php
+        $testimonials = [
+            [
+                'name' => 'أحمد منصور',
+                'role' => app()->getLocale() == 'ar' ? 'مسافر منفرد' : 'Solo Traveler',
+                'image' => 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400',
+                'rate' => '5.0',
+                'description' => 'تجربتي مع مو تراڤيل كانت استثنائية بكل المقاييس. التنظيم دقيق جداً والمرشدين على مستوى عالٍ من الثقافة والرقي. شكراً لكم.'
+            ],
+            [
+                'name' => 'Sarah Jenkins',
+                'role' => 'Adventure Seeker',
+                'image' => 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400',
+                'rate' => '5.0',
+                'description' => 'Our honeymoon in Egypt was flawless. From the VIP Cairo pick-up to the private Nile cruise, every detail was handled with care.'
+            ],
+            [
+                'name' => 'Mark Thompson',
+                'role' => 'History Buff',
+                'image' => 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400',
+                'rate' => '4.9',
+                'description' => 'The 10-day luxury tour surpassed all expectations. The historical knowledge of our guide in Luxor was mind-blowing.'
+            ],
+            [
+                'name' => 'Emily Roberts',
+                'role' => 'Solo Traveler',
+                'image' => 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400',
+                'rate' => '5.0',
+                'description' => 'As a solo female traveler, I felt incredibly safe and supported. The boutique hotels they booked were stunning.'
+            ],
+            [
+                'name' => 'David Wilson',
+                'role' => 'Travel Expert',
+                'image' => 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=400',
+                'rate' => '4.9',
+                'description' => 'Forget the typical tourist traps. Mo Travels gives you an inside look at the real Egypt. The desert safari was an adrenaline-pumping adventure.'
+            ]
+        ];
+    @endphp
+
      <div class="py-20 max-lg:py-10 bg-white dark:bg-gray-800 relative transition-colors duration-300 overflow-hidden" 
           x-data='{ 
             active: 2,
             touchStartX: 0,
             touchEndX: 0,
-            testimonials: [
-                { 
-                    name: "Sarah Jenkins", 
-                    role: @json(__('Solo Traveler')), 
-                    image: "{{ asset('images/testimonials/testimonial-1.jpg') }}", 
-                    rate: "5.0", 
-                     description: @json(__('Everything was well-organized, and we felt safe and taken care of throughout the entire journey. Highly recommend!')) 
-                },
-                { 
-                    name: "Mark Thompson", 
-                    role: @json(__('Adventure Seeker')), 
-                    image: "{{ asset('images/testimonials/testimonial-2.jpg') }}", 
-                    rate: "5.0", 
-                    description: @json(__('Best of the Best Cairo Tour Experience!!! The tour was perfectly arranged, and the guide was fantastic.')) 
-                },
-                { 
-                    name: "Yusuf Mahtow", 
-                    role: @json(__('Egypt Tour Guide')), 
-                    image: "{{ asset('images/testimonials/testimonial-3.jpg') }}", 
-                    rate: "4.8", 
-                    description: @json(__('Excellent service and very knowledgeable guides. We had an amazing time exploring the historical sites.')) 
-                },
-                { 
-                    name: "Emily Roberts", 
-                    role: @json(__('History Buff')), 
-                    image: "{{ asset('images/testimonials/testimonial-4.jpg') }}", 
-                    rate: "4.9", 
-                    description: @json(__('The guides were incredibly knowledgeable and made the history come alive. Everything was well-organized.')) 
-                },
-                { 
-                    name: "Michael Chen", 
-                    role: @json(__('Food Blogger')), 
-                    image: "{{ asset('images/testimonials/testimonial-2.jpg') }}", 
-                    rate: "4.7", 
-                    description: @json(__('An absolute culinary delight! The local food tours were the highlight of our trip. Highly recommended.')) 
-                }
-            ],
+            testimonials: @json($testimonials),
             next() {
                 this.active = (this.active + 1) % this.testimonials.length;
             },

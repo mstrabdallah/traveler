@@ -24,7 +24,7 @@
              x-transition:leave-end="opacity-0"
              class="absolute inset-0">
             <img src="{{ Storage::url($destination->image) }}" 
-                 alt="{{ $destination->name }}" 
+                 alt="{{ $destination->display_name }}" 
                  class="w-full h-full object-cover">
         </div>
     @endforeach

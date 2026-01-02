@@ -8,7 +8,7 @@ class AboutController extends Controller
 {
     public function index()
     {
-        $destinations = \App\Models\Destination::select('id', 'name', 'image')->get();
+        $destinations = \App\Models\Destination::where('is_active', true)->get();
         $toursCount = \App\Models\Tour::where('is_active', true)->count();
         $destinationsCount = \App\Models\Destination::where('is_active', true)->count();
         

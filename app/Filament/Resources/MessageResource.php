@@ -16,10 +16,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class MessageResource extends Resource
 {
     protected static ?string $model = Message::class;
-
     protected static ?string $navigationIcon = 'heroicon-o-inbox';
-    protected static ?string $navigationLabel = 'Inbox Messages';
-    protected static ?string $pluralModelLabel = 'Inbox Messages';
+    
+    public static function getNavigationLabel(): string { return __('Messages'); }
+    public static function getNavigationGroup(): ?string { return __('Booking Management'); }
+    public static function getModelLabel(): string { return __('Message'); }
+    public static function getPluralModelLabel(): string { return __('Messages'); }
 
     public static function getNavigationBadge(): ?string
     {
@@ -51,13 +53,18 @@ class MessageResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('Full Name'))
                     ->required(),
                 Forms\Components\TextInput::make('email')
+                    ->label(__('Email address'))
                     ->email()
                     ->required(),
-                Forms\Components\TextInput::make('phone'),
-                Forms\Components\TextInput::make('subject'),
+                Forms\Components\TextInput::make('phone')
+                    ->label(__('Phone Number')),
+                Forms\Components\TextInput::make('subject')
+                    ->label(__('Subject')),
                 Forms\Components\Textarea::make('message')
+                    ->label(__('Message Content'))
                     ->required()
                     ->columnSpanFull(),
             ]);
